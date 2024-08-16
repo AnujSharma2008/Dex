@@ -1,4 +1,4 @@
-<h1 align="center">IP file class XI science - Anuj</h1>
+<h1 align="center">IP file class - XI science</h1>
 
 # Index
 
@@ -29,6 +29,20 @@
 ---
 # Page 1
 ### #1 Swapping of two numbers individually.
+```
+num1 = int(input("Enter your first number: "))
+num2 = int(input("Enter your second number: "))
+temp = num1
+num1 = num2
+num2 = temp
+print("\nValue of first number:", num1, "\nValue of second number:", num2)
+```
+**Output**
+
+![Alt text](https://i.postimg.cc/HsJGGztG/1.png)
+---
+# Page 2
+### #2 Palindrome of Numbers and Strings.
 ```
 num1 = int(input("Enter your first number: "))
 num2 = int(input("Enter your second number: "))
