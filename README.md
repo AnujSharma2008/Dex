@@ -40,7 +40,9 @@ print("\nValue of first number:", num1, "\nValue of second number:", num2)
 **Output**
 
 ![Alt text](https://i.postimg.cc/HsJGGztG/1.png)
+
 ---
+
 # Page 2
 ### #2 Palindrome of Numbers and Strings.
 ```
