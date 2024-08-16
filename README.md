@@ -1,4 +1,4 @@
-# <p align="center">IP file class XI science - Anuj</p>
+<h1 align="center">IP file class XI science - Anuj</h1>
 
 # Index
 
