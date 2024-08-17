@@ -480,8 +480,8 @@ Smallest number: 7
 Press Enter to exit terminal
 ```
 
-# Page 17
-### #17 Calculate Simple Interest.
+# Page 18
+### #18 Calculate Simple Interest.
 ```
 principal = float(input("Enter the principal amount: "))
 rate = float(input("Enter the interest rate (in %): "))
@@ -505,8 +505,8 @@ The simple interest is: 100.00
 Press Enter to exit terminal
 ```
 
-# Page 18
-### #18 Calculate Average.
+# Page 19
+### #19 Calculate Average.
 ```
 numbers = [10, 20, 30, 40, 50]
 add = 0
@@ -527,8 +527,8 @@ The average is: 30.00
 Press Enter to exit terminal
 ```
 
-# Page 19
-### #19 Calculate Sum.
+# Page 20
+### #20 Calculate Sum.
 ```
 numbers = [100, 250, 32540, 4450, 9820]
 add = 0
@@ -546,3 +546,108 @@ The addition is: 47160
 ** Process exited - Return Code: 0 **
 Press Enter to exit terminal
 ```
+
+# Page 21
+### #21 Calculate the Grade on the basis of Percentage.
+```
+percentage = float(input("Enter the percentage: "))
+
+if percentage >= 95:
+    grade = "A+"
+elif percentage >= 90:
+    grade = "A"
+elif percentage >= 85:
+    grade = "B+"
+elif percentage >= 80:
+    grade = "B"
+elif percentage >= 75:
+    grade = "C+"
+elif percentage >= 70:
+    grade = "C"
+elif percentage >= 65:
+    grade = "D+"
+elif percentage >= 60:
+    grade = "D"
+elif percentage >= 55:
+    grade = "E+"
+elif percentage >= 50:
+    grade = "E"
+else:
+    grade = "F"
+
+print(f"Grade: {grade}")
+```
+**Output**
+
+```
+Enter the percentage: 
+80.2
+Grade: B
+
+
+** Process exited - Return Code: 0 **
+Press Enter to exit terminal
+```
+
+# Page 22
+### #22 Calculator using If Else.
+```
+print("Simple Calculator")
+print("1. Addition")
+print("2. Subtraction")
+print("3. Multiplication")
+print("4. Division")
+
+choice = int(input("Enter your choice (1/2/3/4): "))
+
+if choice == 1:
+    num1 = float(input("Enter first number: "))
+    num2 = float(input("Enter second number: "))
+    result = num1 + num2
+    print("Result: ", result)
+
+elif choice == 2:
+    num1 = float(input("Enter first number: "))
+    num2 = float(input("Enter second number: "))
+    result = num1 - num2
+    print("Result: ", result)
+
+elif choice == 3:
+    num1 = float(input("Enter first number: "))
+    num2 = float(input("Enter second number: "))
+    result = num1 * num2
+    print("Result: ", result)
+
+elif choice == 4:
+    num1 = float(input("Enter first number: "))
+    num2 = float(input("Enter second number: "))
+    if num2 != 0:
+        result = num1 / num2
+        print("Result: ", result)
+    else:
+        print("Error! Division by zero is not allowed.")
+
+else:
+    print("Invalid choice. Please choose a valid option.")
+```
+**Output**
+
+```
+Simple Calculator
+1. Addition
+2. Subtraction
+3. Multiplication
+4. Division
+Enter your choice (1/2/3/4): 
+2
+Enter first number: 
+1.5
+Enter second number: 
+6.5
+Result:  -5.0
+
+
+** Process exited - Return Code: 0 **
+Press Enter to exit terminal
+```
+# 
