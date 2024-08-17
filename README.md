@@ -256,3 +256,27 @@ Enter the digit
 ** Process exited - Return Code: 0 **
 Press Enter to exit terminal
 ```
+# Page 8
+### #8 	Printing of a series in a fraction format.
+```
+from fractions import Fraction
+num = int(input("Enter your number: "))
+for i in range(1, num + 1):
+    print(Fraction(i, num))
+```
+**Output**
+
+```
+Enter your number: 
+5
+
+1/5
+2/5
+3/5
+4/5
+1
+
+
+** Process exited - Return Code: 0 **
+Press Enter to exit terminal
+```
