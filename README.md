@@ -219,3 +219,40 @@ Enter your number:
 ** Process exited - Return Code: 0 **
 Press Enter to exit terminal
 ```
+# Page 7
+### #7 	Fibonacci Series.
+```
+num = int(input("Enter the digit"))
+x = 0
+y = 1
+print(x)
+print(y)
+for i in range(1,num):
+    z = x + y
+    print(z)
+    x,y = y,z
+```
+**Output**
+
+```
+Enter the digit
+12
+
+0
+1
+1
+2
+3
+5
+8
+13
+21
+34
+55
+89
+144
+
+
+** Process exited - Return Code: 0 **
+Press Enter to exit terminal
+```
