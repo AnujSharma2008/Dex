@@ -302,7 +302,7 @@ The random pokemon selected is Charizard
 Press Enter to exit terminal
 ```
 # Page 10
-### #10 	List with function sort ascending and descending.
+### #10 List with function sort ascending and descending.
 ```
 num = []
 num_inp = input("Enter numbers separated by spaces: ").split()
@@ -320,6 +320,33 @@ Enter numbers separated by spaces:
 69 54 78 25 46 86 66 7 458
 Numbers in ascending order [7, 25, 46, 54, 66, 69, 78, 86, 458]
 Numbers in descending order [458, 86, 78, 69, 66, 54, 46, 25, 7]
+
+
+** Process exited - Return Code: 0 **
+Press Enter to exit terminal
+```
+# Page 11
+### #11 List with Delete, Drop and Remove.
+```
+list1 = ["apple", "banana", "cherry"]
+print("Original List: ",list1)
+remove = input("Enter a value to remove :")
+list1.remove(remove)
+print("Updated List: ",list1)
+delete = int(input("Enter a index to delete"))
+del list1[delete]
+print("Updated List: ",list1)
+```
+**Output**
+
+```
+Original List:  ['apple', 'banana', 'cherry']
+Enter a value to remove :
+banana
+Updated List:  ['apple', 'cherry']
+Enter a index to delete
+1
+Updated List:  ['apple']
 
 
 ** Process exited - Return Code: 0 **
