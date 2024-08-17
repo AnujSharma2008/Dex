@@ -39,14 +39,26 @@ print("\nValue of first number:", num1, "\nValue of second number:", num2)
 ```
 **Output**
 
-![Test Case 1](https://i.postimg.cc/HsJGGztG/1.png)
+```
+Enter your first number: 
+100
+Enter your second number: 
+200
+
+Value of first number: 200 
+Value of second number: 100
+
+
+** Process exited - Return Code: 0 **
+Press Enter to exit terminal
+```
 
 ---
 
 # Page 2
 ### #2 Palindrome of Numbers and Strings.
 ```
-string = input("Enter you word or number: ")
+string = input("Enter your word or number: ")
 if isinstance(string, str):
     string = string.lower()
 temp = ""
@@ -60,8 +72,26 @@ else:
 ```
 **Output**
 
-![For String](https://i.postimg.cc/x8k9YfTv/2a.png)
-![For Numbers](https://i.postimg.cc/KcVZfMJJ/2b.png)
+**Test Case - 1**
+```
+Enter you word or number: 
+Racecar
+Yes, it's a palindrome.
+
+
+** Process exited - Return Code: 0 **
+Press Enter to exit terminal
+```
+**Test Case - 2**
+```
+Enter you word or number: 
+Racecar
+Yes, it's a palindrome.
+
+
+** Process exited - Return Code: 0 **
+Press Enter to exit terminal
+```
 
 ---
 
@@ -81,7 +111,15 @@ else:
 ```
 **Output**
 
-![Test Case 1](https://i.postimg.cc/T1mYg2MR/image.png)
+```
+Enter your number: 
+5
+Factorial of 5 is 120
+
+
+** Process exited - Return Code: 0 **
+Press Enter to exit terminal
+```
 
 ---
 
@@ -96,7 +134,28 @@ else:
 ```
 **Output**
 
-![Test Case 1](https://i.postimg.cc/P579sW-vR/4.png)
+**Test Case - 1**
+```
+Enter your number: 
+7
+7 is an odd number.
+
+
+** Process exited - Return Code: 0 **
+Press Enter to exit terminal
+```
+**Test Case - 2**
+```
+Enter your number: 
+154
+154 is an even number.
+
+
+** Process exited - Return Code: 0 **
+Press Enter to exit terminal
+```
+
+
 # Page 5
 ### #5 	Even and Odd count in loop.
 ```
@@ -113,4 +172,50 @@ print("Odd numbers:", count_odd)
 ```
 **Output**
 
-![Test Case 1](https://i.postimg.cc/2Snhrm1N/5.png)
+```
+Enter a number: 
+138
+Even numbers: 69
+Odd numbers: 69
+
+
+** Process exited - Return Code: 0 **
+Press Enter to exit terminal
+```
+
+# Page 6
+### #6 	Prime Number.
+```
+num = int(input("Enter your number: "))
+if num == 1:
+    print(num, "is not a prime number.")
+else:
+    for i in range(2, (num//2)+1):
+        if (num % i) == 0:
+            print(num, "is not a prime number.")
+            break
+    else:
+        print(num, "is a prime number.")
+```
+**Output**
+
+**Test Case - 1**
+```
+Enter your number: 
+101
+101 is a prime number.
+
+
+** Process exited - Return Code: 0 **
+Press Enter to exit terminal
+```
+**Test Case - 2**
+```
+Enter your number: 
+54
+54 is not a prime number.
+
+
+** Process exited - Return Code: 0 **
+Press Enter to exit terminal
+```
