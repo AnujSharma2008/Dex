@@ -403,17 +403,144 @@ Press Enter to exit terminal
 ```
 # Page 14
 ### #14 Calculate a building using If Else.
+
+Leave a page for it.
+
+# Page 15
+### #15 Loop for printing Table.
 ```
-numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
-slice_index = input("Enter a ratio for slicing :").split()
-print(numbers[int(slice_index[0]):int(slice_index[1])])
+num = int(input("Enter your number: "))
+for i in range(1, 11):
+    print(f"{num} * {i} = {num*i}")
 ```
 **Output**
 
 ```
-Enter a ratio for slicing :
-3 7
-[4, 5, 6, 7]
+Enter your number: 
+16
+16 * 1 = 16
+16 * 2 = 32
+16 * 3 = 48
+16 * 4 = 64
+16 * 5 = 80
+16 * 6 = 96
+16 * 7 = 112
+16 * 8 = 128
+16 * 9 = 144
+16 * 10 = 160
+
+
+** Process exited - Return Code: 0 **
+Press Enter to exit terminal
+```
+# Page 16
+### #16 Loop for printing Pyramid Pattern.
+```
+num = int(input("Enter your number: "))
+for i in range(1, num + 1):
+    print(i*"*")
+```
+**Output**
+
+```
+Enter your number: 
+5
+O 
+O O 
+O O O 
+O O O O 
+O O O O O 
+
+
+** Process exited - Return Code: 0 **
+Press Enter to exit terminal
+```
+# Page 17
+### #17 Finding largest or smallest number.
+```
+numbers = [12, 45, 7, 23, 56, 89, 34]
+largest = numbers[0]
+smallest = numbers[0]
+for num in numbers:
+    if num > largest:
+        largest = num
+    elif num < smallest:
+        smallest = num
+print(f"Largest number: {largest}")
+print(f"Smallest number: {smallest}")
+```
+**Output**
+
+```
+Largest number: 89
+Smallest number: 7
+
+
+** Process exited - Return Code: 0 **
+Press Enter to exit terminal
+```
+
+# Page 17
+### #17 Calculate Simple Interest.
+```
+principal = float(input("Enter the principal amount: "))
+rate = float(input("Enter the interest rate (in %): "))
+time = float(input("Enter the time period (in years): "))
+si = (principal * rate * time) / 100
+print(f"The simple interest is: {si:.2f}")
+```
+**Output**
+
+```
+Enter the principal amount: 
+50
+Enter the interest rate (in %): 
+100
+Enter the time period (in years): 
+2
+The simple interest is: 100.00
+
+
+** Process exited - Return Code: 0 **
+Press Enter to exit terminal
+```
+
+# Page 18
+### #18 Calculate Average.
+```
+numbers = [10, 20, 30, 40, 50]
+add = 0
+size = 0
+for i in numbers:
+    add += i
+    size += 1
+avg = add / size
+print(f"The average is: {avg:.2f}")
+```
+**Output**
+
+```
+The average is: 30.00
+
+
+** Process exited - Return Code: 0 **
+Press Enter to exit terminal
+```
+
+# Page 19
+### #19 Calculate Sum.
+```
+numbers = [100, 250, 32540, 4450, 9820]
+add = 0
+size = 0
+for i in numbers:
+    add += i
+print(f"The addition is: {add}")
+```
+**Output**
+
+```
+The addition is: 47160
 
 
 ** Process exited - Return Code: 0 **
