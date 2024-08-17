@@ -370,3 +370,52 @@ Enter a ratio for slicing :
 ** Process exited - Return Code: 0 **
 Press Enter to exit terminal
 ```
+# Page 13
+### #13 Vowels finding using If Else.
+```
+word = input("Enter a word: ")
+vowels = ''
+if 'a' in word.lower():
+    vowels += 'a '
+if 'e' in word.lower():
+    vowels += 'e '
+if 'i' in word.lower():
+    vowels += 'i '
+if 'o' in word.lower():
+    vowels += 'o '
+if 'u' in word.lower():
+    vowels += 'u '
+if vowels:
+    print("The word contains vowels:", vowels)
+else:
+    print("The word does not contain vowels.")
+```
+**Output**
+
+```
+Enter a word: 
+anuj sharma
+The word contains vowels: a u 
+
+
+** Process exited - Return Code: 0 **
+Press Enter to exit terminal
+```
+# Page 14
+### #14 Calculate a building using If Else.
+```
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+slice_index = input("Enter a ratio for slicing :").split()
+print(numbers[int(slice_index[0]):int(slice_index[1])])
+```
+**Output**
+
+```
+Enter a ratio for slicing :
+3 7
+[4, 5, 6, 7]
+
+
+** Process exited - Return Code: 0 **
+Press Enter to exit terminal
+```
