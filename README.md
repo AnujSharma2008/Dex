@@ -68,19 +68,32 @@ else:
 # Page 3
 ### #3 	Factorial of Number.
 ```
-string = input("Enter you word or number: ")
-if isinstance(string, str):
-    string = string.lower()
-temp = ""
-length = int(len(string))
-for i in range(0,length):
-    temp = string[i] + temp
-if string == temp:
-    print("Yes, it's a palindrome.")
-else:
-    print("No, it's not a palindrome.")
+num = int(input("Enter your number: "))
+factorial = 1
+for i in range(1,num + 1):
+    factorial = factorial * i
+if num == 0:
+    print("Factorial of 0 is 1")
+elif num < 0:
+    print("Factorial of negative numbers not exists")
+else: 
+    print("Factorial of", num, "is", factorial)
 ```
 **Output**
 
-![For String](https://i.postimg.cc/x8k9YfTv/2a.png)
-![For Numbers](https://i.postimg.cc/KcVZfMJJ/2b.png)
+![Test Case 1](https://i.postimg.cc/T1mYg2MR/image.png)
+
+---
+
+# Page 4
+### #4 	Even and Odd numbers individually.
+```
+num = int(input("Enter your number: "))
+if num % 2 == 0:
+    print(num, "is an even number.")
+else:
+    print(num, "is an odd number.")
+```
+**Output**
+
+![Test Case 1](https://i.postimg.cc/P579sW-vR/4.png)
