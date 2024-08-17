@@ -352,3 +352,21 @@ Updated List:  ['apple']
 ** Process exited - Return Code: 0 **
 Press Enter to exit terminal
 ```
+# Page 12
+### #12 List with Slice.
+```
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+slice_index = input("Enter a ratio for slicing :").split()
+print(numbers[int(slice_index[0]):int(slice_index[1])])
+```
+**Output**
+
+```
+Enter a ratio for slicing :
+3 7
+[4, 5, 6, 7]
+
+
+** Process exited - Return Code: 0 **
+Press Enter to exit terminal
+```
