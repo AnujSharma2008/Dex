@@ -301,3 +301,27 @@ The random pokemon selected is Charizard
 ** Process exited - Return Code: 0 **
 Press Enter to exit terminal
 ```
+# Page 10
+### #10 	List with function sort ascending and descending.
+```
+num = []
+num_inp = input("Enter numbers separated by spaces: ").split()
+for i in num_inp:
+    num.append(int(i))
+num.sort()
+print("Numbers in ascending order", num)
+num.sort(reverse=True)
+print("Numbers in descending order", num)
+```
+**Output**
+
+```
+Enter numbers separated by spaces: 
+69 54 78 25 46 86 66 7 458
+Numbers in ascending order [7, 25, 46, 54, 66, 69, 78, 86, 458]
+Numbers in descending order [458, 86, 78, 69, 66, 54, 46, 25, 7]
+
+
+** Process exited - Return Code: 0 **
+Press Enter to exit terminal
+```
