@@ -280,3 +280,24 @@ Enter your number:
 ** Process exited - Return Code: 0 **
 Press Enter to exit terminal
 ```
+# Page 9
+### #9 	List with function.
+```
+import random
+pokemon = []
+poke_inp = input("Enter Pokémon names separated by spaces: ").split()
+pokemon.extend(poke_inp)
+poke_rnd = random.choice(pokemon)
+print("The random pokemon selected is", poke_rnd)
+```
+**Output**
+
+```
+Enter Pokémon names separated by spaces: 
+Pikachu Charizard Calyrex Mewtwo Arceus
+The random pokemon selected is Charizard
+
+
+** Process exited - Return Code: 0 **
+Press Enter to exit terminal
+```
