@@ -97,3 +97,20 @@ else:
 **Output**
 
 ![Test Case 1](https://i.postimg.cc/P579sW-vR/4.png)
+# Page 5
+### #5 	Even and Odd count in loop.
+```
+num = int(input("Enter a number: "))
+count_even = 0
+count_odd = 0
+for i in range(1, num + 1):
+    if i % 2 == 0:
+        count_even += 1
+    else:
+        count_odd += 1
+print("Even numbers:", count_even)
+print("Odd numbers:", count_odd)
+```
+**Output**
+
+![Test Case 1](https://i.postimg.cc/2Snhrm1N/5.png)
