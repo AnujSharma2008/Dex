@@ -39,20 +39,48 @@ print("\nValue of first number:", num1, "\nValue of second number:", num2)
 ```
 **Output**
 
-![Alt text](https://i.postimg.cc/HsJGGztG/1.png)
+![Test Case 1](https://i.postimg.cc/HsJGGztG/1.png)
 
 ---
 
 # Page 2
 ### #2 Palindrome of Numbers and Strings.
 ```
-num1 = int(input("Enter your first number: "))
-num2 = int(input("Enter your second number: "))
-temp = num1
-num1 = num2
-num2 = temp
-print("\nValue of first number:", num1, "\nValue of second number:", num2)
+string = input("Enter you word or number: ")
+if isinstance(string, str):
+    string = string.lower()
+temp = ""
+length = int(len(string))
+for i in range(0,length):
+    temp = string[i] + temp
+if string == temp:
+    print("Yes, it's a palindrome.")
+else:
+    print("No, it's not a palindrome.")
 ```
 **Output**
 
-![Alt text](https://i.postimg.cc/HsJGGztG/1.png)
+![For String](https://i.postimg.cc/x8k9YfTv/2a.png)
+![For Numbers](https://i.postimg.cc/KcVZfMJJ/2b.png)
+
+---
+
+# Page 3
+### #3 	Factorial of Number.
+```
+string = input("Enter you word or number: ")
+if isinstance(string, str):
+    string = string.lower()
+temp = ""
+length = int(len(string))
+for i in range(0,length):
+    temp = string[i] + temp
+if string == temp:
+    print("Yes, it's a palindrome.")
+else:
+    print("No, it's not a palindrome.")
+```
+**Output**
+
+![For String](https://i.postimg.cc/x8k9YfTv/2a.png)
+![For Numbers](https://i.postimg.cc/KcVZfMJJ/2b.png)
