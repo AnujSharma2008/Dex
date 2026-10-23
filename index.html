@@ -83,10 +83,288 @@ body:before{will-change:transform}
 .party-fall{position:fixed;top:-40px;z-index:130;pointer-events:none;animation:partyFall linear forwards;filter:drop-shadow(0 3px 3px #0001)}
 @keyframes partyFall{to{transform:translate3d(var(--drift,30px),110vh,0) rotate(540deg);opacity:.18}}
 
+
+/* Extra playful moments: Poké Ball transition, achievement pop-up, wish and secret ending */
+.poke-transition{display:none!important;position:fixed;inset:0;z-index:150;background:radial-gradient(circle,#fff7fc 0%,#e9dcff 48%,#ffddeb 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#7c3b91;gap:22px;animation:transitionFade .35s both}
+.poke-transition p{font-weight:800;letter-spacing:.05em;animation:softPop .5s both}
+.transition-ball{width:120px;height:120px;border:7px solid #29233b;border-radius:50%;position:relative;overflow:hidden;background:linear-gradient(#ff4d83 0 47%,#29233b 47% 53%,#fff 53%);box-shadow:0 0 0 10px #ffffff77,0 0 65px #e879f988;animation:ballSpin 1.2s cubic-bezier(.3,.8,.3,1) infinite}
+.transition-ball:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,#ffffff77,transparent);animation:ballShine 1.2s linear infinite}
+.transition-ball span{position:absolute;width:34px;height:34px;left:calc(50% - 17px);top:calc(50% - 17px);border:7px solid #29233b;background:#fff;border-radius:50%;z-index:2;box-shadow:0 0 0 5px #fff}
+@keyframes ballSpin{0%{transform:rotate(-15deg) scale(.7)}50%{transform:rotate(15deg) scale(1.08)}100%{transform:rotate(-15deg) scale(.7)}}
+@keyframes ballShine{from{transform:translateX(-120%)}to{transform:translateX(120%)}}
+@keyframes transitionFade{from{opacity:0}to{opacity:1}}
+.achievement-toast{position:fixed;top:24px;right:22px;z-index:145;display:flex;align-items:center;gap:13px;max-width:min(390px,calc(100vw - 28px));padding:15px 18px;border:1px solid #f9a8d4;border-radius:18px;background:linear-gradient(135deg,#fff7fb,#f3e8ff);color:#4c245d;box-shadow:0 16px 55px #c084fc66;animation:achievementIn .6s cubic-bezier(.2,.9,.2,1) both}
+.achievement-icon{font-size:2.2rem;animation:stickerDance 1.6s infinite}.achievement-toast small{display:block;font-weight:900;letter-spacing:.12em;color:#c02679;font-size:.62rem}.achievement-toast strong{display:block;margin:4px 0;font-size:.83rem}.achievement-toast p{margin:0;font-size:.75rem}
+@keyframes achievementIn{from{opacity:0;transform:translate(35px,-10px) scale(.9)}to{opacity:1;transform:none}}
+.wish-button{margin:0 auto 8px;display:block}.wish-message{font-weight:800!important;color:#a23a87!important;animation:softPop .4s both}.wish-spark{position:fixed;z-index:140;pointer-events:none;animation:wishFly 1.8s ease-out forwards}
+@keyframes wishFly{to{transform:translate(var(--x),-100vh) rotate(360deg) scale(.2);opacity:0}}
+.secret-ending{position:relative;text-align:center;padding:14px;margin-top:16px;border-radius:18px;background:linear-gradient(135deg,#fff4fb,#f2eaff);border:1px solid #e9b8ff;color:#49315a}
+.secret-star{display:inline-block;font-size:1.4rem;cursor:pointer;animation:starPulse 1.4s ease-in-out infinite;filter:drop-shadow(0 0 10px #fbbf24);user-select:none}
+@keyframes starPulse{50%{transform:scale(1.35) rotate(18deg)}}
+.secret-hint{font-size:.75rem;margin:6px;color:#8b6b9b}.secret-title{font-weight:900;color:#b83280;letter-spacing:.08em}.secret-ending p{line-height:1.7}
+@media(max-width:560px){.achievement-toast{top:12px;right:12px}.transition-ball{width:96px;height:96px}}
+
+
+/* Secret-ending Pokémon battle scene */
+.secret-ending{background:linear-gradient(145deg,#fff2fb,#f0e8ff 52%,#e3f7ff)!important;border:1px solid #f0b9ed!important;border-radius:26px!important;box-shadow:0 24px 80px #d8b4fe66!important;padding:24px!important;overflow:hidden}
+.secret-title{font-size:clamp(1rem,3vw,1.45rem);font-weight:900;color:#b83280;letter-spacing:.06em;margin:8px 0 16px;text-align:center;animation:secretTitleGlow 2.5s ease-in-out infinite}
+.battle-arena{height:300px;position:relative;overflow:hidden;border-radius:20px;border:1px solid #e8c7fa;background:radial-gradient(ellipse at 20% 90%,#d8f8d9 0 20%,transparent 21%),radial-gradient(ellipse at 80% 90%,#d8f8d9 0 20%,transparent 21%),linear-gradient(#c8e8ff 0%,#f8e7ff 58%,#d9f6d6 58%,#b9e8b8 100%);box-shadow:inset 0 -8px 0 #a3d6a2}
+.battle-stars{position:absolute;inset:14px 0 auto;text-align:center;color:#fff;font-size:1.3rem;text-shadow:0 0 12px #c084fc;animation:twinkle 1.2s infinite alternate}
+.battle-side{position:absolute;top:48px;width:42%;height:220px;text-align:center}
+.pokemon-niku{left:3%;animation:battleBounce 1.7s ease-in-out infinite}
+.pokemon-saran{right:3%;animation:battleBounce 1.9s ease-in-out infinite .2s}
+.battle-name{font-size:.72rem;font-weight:900;color:#53376a;background:#ffffffd9;border-radius:10px;padding:7px;box-shadow:0 4px 10px #9b75bd30}
+.battle-name span{color:#e05c9a;margin-left:5px}
+.pokemon-sprite{font-size:3.2rem;filter:drop-shadow(0 5px 3px #6d548455);margin-top:16px;animation:spriteSway 2s ease-in-out infinite}
+.battle-pokemon{font-size:3.5rem;margin-top:-4px;filter:drop-shadow(0 8px 5px #7352a044);animation:monHop 1.1s ease-in-out infinite}
+.saran-mon{animation-delay:.3s}
+.battle-shadow{width:90px;height:12px;border-radius:50%;background:#4b806755;margin:-1px auto 0;animation:shadowPulse 1.1s ease-in-out infinite}
+.battle-vs{position:absolute;top:48%;left:50%;transform:translate(-50%,-50%) rotate(-8deg);font-weight:1000;font-size:1.6rem;color:#ff5d9e;text-shadow:2px 3px #fff,0 0 18px #fff;background:#fff8;border-radius:50%;padding:12px;animation:vsPop 1.8s ease-in-out infinite}
+.kiss-wave{position:absolute;left:38%;top:44%;width:24%;height:90px;pointer-events:none}
+.kiss-wave span{position:absolute;font-size:1.5rem;opacity:0;animation:kissFly 2.5s ease-in-out infinite}
+.kiss-wave span:nth-child(1){animation-delay:0s}.kiss-wave span:nth-child(2){animation-delay:.5s}.kiss-wave span:nth-child(3){animation-delay:1s}.kiss-wave span:nth-child(4){animation-delay:1.5s}
+.battle-dialogue{margin:15px auto;padding:15px 18px;border:2px solid #d9b8f1;border-radius:15px;background:#ffffffd9;box-shadow:0 8px 22px #c084fc22;text-align:left;max-width:620px}
+.battle-dialogue p{margin:3px 0;color:#633a7b;font-weight:800;line-height:1.6}.battle-dialogue .battle-subtext{font-size:.8rem;color:#c04489}
+@keyframes battleBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes spriteSway{0%,100%{rotate:-5deg}50%{rotate:5deg}}
+@keyframes monHop{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-10px) scale(1.04)}}
+@keyframes shadowPulse{50%{transform:scaleX(.72);opacity:.5}}
+@keyframes vsPop{50%{scale:1.12;rotate:5deg}}
+@keyframes kissFly{0%{opacity:0;transform:translate(0,22px) scale(.5)}25%{opacity:1}100%{opacity:0;transform:translate(80px,-65px) scale(1.3)}}
+@keyframes twinkle{to{opacity:.5;transform:translateY(4px)}}
+@keyframes secretTitleGlow{50%{text-shadow:0 0 18px #f9a8d4;transform:translateY(-2px)}}
+.battle-flash{animation:battleFlash .5s ease-out}@keyframes battleFlash{50%{filter:brightness(1.25) saturate(1.3);box-shadow:inset 0 0 60px #fb718566}}
+
+/* Secret-ending battle health and move UI */
+
+.battle-hud{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px auto;max-width:700px;text-align:left}
+.health-card{padding:12px 14px;border:1px solid #e6c9f4;border-radius:15px;background:#ffffffdf;box-shadow:0 7px 18px #9b75bd20}
+.health-top,.health-numbers{display:flex;align-items:center;justify-content:space-between;gap:8px;color:#5b3971;font-size:.8rem}
+.health-top span{color:#b83280;font-weight:900}.health-track{height:12px;border-radius:99px;background:#eadff0;overflow:hidden;margin:9px 0 5px;box-shadow:inset 0 1px 3px #6b4a7933}
+.health-fill{height:100%;width:100%;border-radius:99px;background:linear-gradient(90deg,#72d98b,#b5ed8d);transition:width 1.1s ease,background .4s}
+.health-fill.low{background:linear-gradient(90deg,#ffb34e,#ff5b8e)}.health-fill.critical{background:linear-gradient(90deg,#ff4d7d,#c02679);animation:hpCritical .45s infinite alternate}
+.saran-fill{background:linear-gradient(90deg,#f9a8d4,#c4b5fd)}
+.health-numbers{font-size:.72rem}.health-numbers strong{font-variant-numeric:tabular-nums}
+.focus-sash{max-width:620px;margin:12px auto;padding:14px 16px;border-radius:14px;background:linear-gradient(90deg,#fff7d6,#ffe4f1);border:2px solid #f6c453;color:#7c3d12;font-weight:900;line-height:1.5;font-size:clamp(.88rem,2.8vw,1rem);text-align:center;box-shadow:0 6px 18px #f6c45325;animation:focusSashPop .55s cubic-bezier(.2,.9,.2,1) both}
+.move-choices{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:620px;margin:12px auto}
+.move-btn{display:flex;align-items:center;gap:12px;text-align:left;border:2px solid #f0a6d1;border-radius:17px;padding:13px 15px;background:linear-gradient(135deg,#fff0f8,#f6e8ff);color:#78365f;cursor:pointer;box-shadow:0 7px 0 #e7b6dc,0 12px 20px #d8b4fe30;transition:transform .2s,box-shadow .2s}
+.move-btn:hover{transform:translateY(-3px);box-shadow:0 10px 0 #e7b6dc,0 15px 25px #d8b4fe55}.move-btn:active{transform:translateY(3px);box-shadow:0 3px 0 #e7b6dc}
+.move-emoji{font-size:2rem}.move-btn strong,.move-btn small{display:block}.move-btn strong{font-size:.82rem;letter-spacing:.04em}.move-btn small{font-size:.68rem;margin-top:4px;line-height:1.35;color:#9d5484}
+.battle-arena.attract-mode .saran-mon{animation:heartEyes 1.1s ease-in-out 3}.battle-arena.holdhands-mode .niku-sprite{animation:holdHandsNiku .9s ease-in-out 3}
+.battle-arena.blush-mode .niku-sprite,.battle-arena.blush-mode .pokemon-niku{filter:drop-shadow(0 0 16px #ff8dbd);animation:blushShake .3s ease-in-out 5 alternate}
+.battle-arena.blush-mode .niku-sprite:after{content:'😊';position:absolute;font-size:1.3rem;transform:translate(18px,-4px)}
+.big-hands{position:absolute;left:50%;top:54%;transform:translate(-50%,-50%) scale(.2);font-size:clamp(3rem,12vw,6rem);opacity:0;pointer-events:none;z-index:5;text-shadow:0 0 20px #ff8ac5}
+.big-hands.play{animation:bigHands 1.8s ease-out forwards}
+.kiss-burst{position:absolute;left:50%;top:48%;font-size:2.4rem;opacity:0;z-index:6;pointer-events:none}.kiss-burst.play{animation:kissBurst 1.7s ease-out forwards}
+.battle-ended{margin:12px auto;padding:14px;border:2px dashed #f472b6;border-radius:16px;background:#fff0f7;color:#a21caf;font-weight:1000;animation:softPop .6s both}
+@keyframes hpCritical{to{filter:brightness(1.2);transform:scaleY(1.15)}}
+@keyframes focusSashPop{from{opacity:0;transform:scale(.8) rotate(-2deg)}to{opacity:1;transform:scale(1) rotate(0)}}
+@keyframes heartEyes{0%,100%{transform:rotate(0) scale(1)}30%{transform:rotate(-8deg) scale(1.2)}60%{transform:rotate(8deg) scale(1.15)}}
+@keyframes holdHandsNiku{0%,100%{transform:translateX(0) rotate(0)}50%{transform:translateX(-13px) rotate(-8deg)}}
+@keyframes bigHands{0%{opacity:0;transform:translate(-50%,-50%) scale(.2)}20%{opacity:1;transform:translate(-50%,-50%) scale(1.2)}65%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.5)}}
+@keyframes kissBurst{0%{opacity:0;transform:translate(-50%,-50%) scale(.2)}20%{opacity:1;transform:translate(-50%,-50%) scale(1.5)}70%{opacity:1;transform:translate(-50%,-70%) scale(1.2)}100%{opacity:0;transform:translate(-50%,-110%) scale(1.8)}}
+@keyframes blushShake{0%{transform:translateX(-3px) rotate(-5deg)}100%{transform:translateX(3px) rotate(5deg)}}
+@media(max-width:560px){.battle-hud,.move-choices{grid-template-columns:1fr}.battle-arena{height:280px}.move-btn{padding:12px}}
+
 @media(max-width:560px){header{font-size:.62rem;padding:14px}.search{flex-direction:column}.search .btn{padding:15px}.statusgrid{grid-template-columns:1fr}.buttons{min-height:100px}.panel{padding:20px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* Extra polish layers — all existing wording/content stays untouched */
+#matrixRain{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;opacity:0;transition:opacity .8s ease;mix-blend-mode:screen}
+body.hacker-mode #matrixRain{opacity:.42}
+body.hacker-mode:after{background:linear-gradient(130deg,#020a04e8,#03150dbd 55%,#020904ea)!important}
+body.hacker-mode .terminal{box-shadow:0 0 28px #55ff8822,inset 0 0 24px #55ff8808}
+body.hacker-mode .terminal:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent,#55ff8808,transparent);transform:translateX(-100%);animation:terminalSweep 4s ease-in-out infinite}
+@keyframes terminalSweep{50%,100%{transform:translateX(100%)}}
+#loveAtmosphere{position:fixed;inset:0;pointer-events:none;z-index:125;overflow:hidden;opacity:0;transition:opacity .8s ease}
+body.love-mode #loveAtmosphere{opacity:1}
+body.love-mode:before{background-image:radial-gradient(circle at 15% 15%,#ff9ac933,transparent 35%),radial-gradient(circle at 85% 80%,#c4a1ff44,transparent 38%),url("https://i.pinimg.com/originals/76/cc/71/76cc71fb45866a23a21ba5124743da4e.gif");filter:saturate(1.2);transition:filter 1.2s}
+body.love-mode:after{background:linear-gradient(135deg,#32112b66,#3b245a44 55%,#32112b66)!important;transition:background 1s}
+.love-float{position:absolute;top:-12vh;left:var(--x);font-size:var(--size);opacity:0;filter:drop-shadow(0 4px 7px #f472b655);animation:loveRain var(--duration) linear var(--delay) infinite}
+@keyframes loveRain{0%{transform:translate3d(0,-12vh,0) rotate(-18deg) scale(.7);opacity:0}10%{opacity:.9}85%{opacity:.8}100%{transform:translate3d(var(--sway),115vh,0) rotate(330deg) scale(1.15);opacity:0}}
+body.love-mode .birthday-party{box-shadow:0 25px 100px #f472b666,0 0 55px #f9a8d433!important;animation:partyCard 5s ease-in-out infinite alternate,panelEnter .65s cubic-bezier(.16,1,.3,1) both}
+@keyframes partyCard{from{filter:hue-rotate(-8deg)}to{filter:hue-rotate(12deg)}}
+body.love-mode .party-lights span{animation-duration:1.35s}
+body.love-mode .cake-emoji{animation-duration:1.7s}
+body.love-mode .birthday-stickers span{animation-duration:1.5s}
+body.love-mode .birthday-party h2{text-shadow:0 0 24px #f9a8d477,0 4px 0 #fff!important}
+body.love-mode .btn{transition:transform .25s cubic-bezier(.2,.8,.2,1),filter .25s,box-shadow .25s}
+@media(prefers-reduced-motion:reduce){#matrixRain,#loveAtmosphere{display:none}.love-float{animation:none}}
+
+/* Hidden Easter egg and post-birthday battle intro */
+.secret-wink{display:block;position:relative;z-index:4;border:0;background:transparent;font:inherit;font-size:3rem;cursor:pointer;border-radius:50%;padding:2px 10px;margin:0 auto 8px;transition:filter .18s}
+.secret-wink:hover{filter:drop-shadow(0 0 8px #ff8ac5)}
+#stillHacked .secret-wink{margin-left:auto;margin-right:auto}
+
+.easter-egg-hint{margin:0 auto 12px!important;color:#050505!important;font-size:.9rem;font-weight:800;opacity:1;text-shadow:none}
+.post-birthday-scene{position:relative;max-width:760px;margin:24px auto;padding:28px 20px;text-align:center;border:2px solid #f4b4dc;border-radius:26px;background:radial-gradient(circle at top,#fff 0,#ffeaf5 48%,#eee7ff 100%);color:#793c80;overflow:hidden;box-shadow:0 16px 50px #c084fc30;animation:softPop .7s both}
+.post-birthday-scene h2{font-size:clamp(1.3rem,4vw,2rem);color:#b83280}.post-birthday-scene p{font-weight:700}
+.post-birthday-stars{font-size:2rem;letter-spacing:.5rem;animation:stickerDance 1.4s infinite}
+.post-scene-sprites{display:flex;align-items:center;justify-content:center;gap:clamp(22px,8vw,80px);font-size:clamp(3rem,9vw,5.5rem);margin:20px auto}
+.post-scene-sprites span{animation:stickerDance .8s infinite}.post-scene-sprites span:last-child{animation-delay:.3s}.post-scene-sprites b{font-size:1.2rem;color:#ed6ba8}
+.secret-found-intro{position:relative;text-align:center;overflow:hidden;padding:28px 16px;border-radius:24px;background:linear-gradient(135deg,#fff0f8,#f0e7ff,#fff7dc);border:2px solid #f4b4dc;animation:softPop .7s both}
+.secret-found-intro h2{color:#b83280;font-size:clamp(1.35rem,4vw,2rem);animation:titleGlow 1.2s infinite alternate}
+.secret-found-intro p{font-weight:700;color:#77436e}.secret-heart-shower{font-size:clamp(1.5rem,5vw,2.4rem);letter-spacing:.25rem;animation:heartFloat 1.4s infinite alternate}
+.secret-heart-particle{position:fixed;top:-40px;z-index:240;pointer-events:none;font-size:clamp(1.1rem,3vw,2rem);animation:secretHeartFall linear forwards}
+@keyframes secretHeartFall{to{transform:translate3d(var(--drift,20px),110vh,0) rotate(420deg);opacity:.1}}
+@keyframes heartFloat{to{transform:translateY(-8px) scale(1.08)}}
+@media(prefers-reduced-motion:reduce){.post-scene-sprites span,.post-birthday-stars,.secret-heart-shower{animation:none!important}}
+
+
+/* Dynamic green → yellow → red health bars */
+.health-fill{background:linear-gradient(90deg,#38c96b,#7be495)}
+.health-fill.hp-mid{background:linear-gradient(90deg,#facc15,#f59e0b)}
+.health-fill.hp-low{background:linear-gradient(90deg,#fb7185,#dc2626)}
+.health-fill.critical{background:linear-gradient(90deg,#ff4d7d,#c02679);animation:hpCritical .45s infinite alternate}
+
+
+/* Easter egg trigger on the post-birthday bonus scene */
+.scene-secret-wink{font-size:2.5rem!important;margin:0 auto 2px!important;color:inherit}
+.scene-easter-hint{color:#783b83!important;font-size:.92rem!important;font-weight:900!important;text-shadow:0 1px 0 #fff!important;opacity:1!important;margin:0 auto 10px!important}
+
+
+/* Draining Kiss projectile travels from Niku toward Saran */
+.draining-kiss-projectile{position:absolute;left:22%;top:54%;z-index:12;display:flex;align-items:center;gap:4px;opacity:0;pointer-events:none;font-size:clamp(1.3rem,4vw,2.5rem);filter:drop-shadow(0 0 8px #ff76c8)}
+.draining-kiss-projectile.play{animation:drainingKissTravel 1.55s cubic-bezier(.2,.7,.2,1) forwards}
+.draining-kiss-projectile span:nth-child(2){font-size:.8em;animation:projectileHeart 0.35s infinite alternate}
+.draining-kiss-projectile span:nth-child(3){font-size:.65em;animation:projectileHeart 0.45s infinite alternate-reverse}
+@keyframes drainingKissTravel{0%{opacity:0;left:22%;top:56%;transform:scale(.35) rotate(-18deg)}12%{opacity:1}55%{opacity:1;transform:scale(1.2) rotate(12deg)}82%{opacity:1;transform:scale(1) rotate(-6deg)}100%{opacity:0;left:76%;top:50%;transform:scale(.75) rotate(12deg)}}
+@keyframes projectileHeart{to{transform:translateY(-8px) rotate(12deg) scale(1.25)}}
+.saran-hit-flash{animation:saranHitFlash .65s ease-out 1}
+@keyframes saranHitFlash{0%{filter:drop-shadow(0 0 0 transparent);transform:scale(1)}35%{filter:drop-shadow(0 0 22px #ff65b9);transform:scale(1.14)}100%{filter:drop-shadow(0 0 0 transparent);transform:scale(1)}}
+
+
+/* Reliable arena positioning for the Draining Kiss flight */
+.battle-arena{position:relative;overflow:hidden}
+.draining-kiss-projectile{position:absolute;left:22%;top:52%;z-index:30;opacity:0;will-change:left,top,transform,opacity}
+.draining-kiss-projectile.play{animation:drainingKissTravel 1.7s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes drainingKissTravel{
+  0%{opacity:0;left:22%;top:57%;transform:translate(-50%,-50%) scale(.3) rotate(-18deg)}
+  10%{opacity:1}
+  35%{opacity:1;left:40%;top:40%;transform:translate(-50%,-50%) scale(1.2) rotate(10deg)}
+  65%{opacity:1;left:58%;top:56%;transform:translate(-50%,-50%) scale(1.05) rotate(-8deg)}
+  88%{opacity:1;left:76%;top:48%;transform:translate(-50%,-50%) scale(.9) rotate(8deg)}
+  100%{opacity:0;left:79%;top:48%;transform:translate(-50%,-50%) scale(.65) rotate(12deg)}
+}
+\n
+/* Secret Hall of Fame: video portal + animated cosmic memory constellation */
+.hall-trigger{display:flex!important;align-items:center;justify-content:center;gap:8px;margin:12px auto 0!important;background:linear-gradient(110deg,#39205c,#20153e)!important;border:1px solid #e9a8ff99!important;color:#ffe4fa!important;border-radius:999px!important;padding:11px 18px!important;font:700 .76rem 'Lexend',sans-serif!important;letter-spacing:.07em;cursor:pointer;opacity:1;box-shadow:0 5px 22px #c084fc2b,inset 0 1px #ffffff22;transition:transform .25s,box-shadow .25s,border-color .25s;max-width:100%}
+.hall-trigger:hover{opacity:1;transform:translateY(-2px);border-color:#f5d0fe!important;box-shadow:0 0 28px #e879f966}
+.hall-overlay{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px;background:#05030b;opacity:1;transition:opacity .8s ease}
+.hall-overlay.hidden{display:none!important}.hall-overlay.fade-away{opacity:0;pointer-events:none}
+.hall-card{width:min(440px,100%);padding:26px;border:1px solid #f0abfc55;border-radius:24px;background:linear-gradient(145deg,#211332f2,#101026f5);box-shadow:0 0 65px #c084fc20;text-align:center;color:#fff;position:relative;overflow:hidden}
+.hall-card:before{content:'✦  ·  ✧  ·  ✦';display:block;color:#f5d0fe;letter-spacing:.6em;margin-bottom:14px;animation:hallTwinkle 2s ease-in-out infinite alternate}
+.hall-card h2{font-size:clamp(1.35rem,5vw,2rem);margin:0 0 8px}.hall-card p{color:#ded2ee;line-height:1.65;font-size:.9rem}
+.hall-input{width:100%;padding:13px 15px;border-radius:12px;border:1px solid #e9d5ff55;background:#0b0717;color:white;font:inherit;outline:none;margin:8px 0 12px;text-align:center}
+.hall-error{min-height:1.2em;color:#fda4af;font-size:.78rem;margin:0 0 8px!important}
+.hall-video-wrap{position:fixed!important;inset:0!important;width:100vw;height:100dvh;background:#000;display:flex;align-items:center;justify-content:center;z-index:2147483000!important;overflow:hidden}
+.hall-video-wrap.hidden{display:none!important}.hall-video{display:block;width:100vw;height:100%;max-width:none;max-height:none;object-fit:contain;background:#000}
+.hall-video-fallback{position:absolute;bottom:24px;left:0;right:0;text-align:center;color:#f5d0fe;font-size:.8rem;padding:12px}
+.cosmic-world{position:fixed!important;inset:0!important;width:100vw;height:100dvh;z-index:2147482000!important;overflow:hidden;background:radial-gradient(ellipse at 50% 105%,#3c1b66 0%,#171238 38%,#08091f 75%,#03040e 100%);color:#fff;opacity:0;transition:opacity 1.8s ease;font-family:'Lexend',sans-serif}
+.cosmic-world.visible{opacity:1}.cosmic-world.hidden{display:none!important}
+.cosmic-world:before,.cosmic-world:after{content:'';position:absolute;inset:-30%;pointer-events:none;background-image:radial-gradient(2px 2px at 12% 18%,#fff 45%,transparent 65%),radial-gradient(1px 1px at 77% 24%,#fbcfe8 45%,transparent 65%),radial-gradient(2px 2px at 61% 71%,#ddd6fe 45%,transparent 65%),radial-gradient(1px 1px at 33% 82%,#fff 45%,transparent 65%),radial-gradient(1px 1px at 91% 62%,#fff 45%,transparent 65%),radial-gradient(2px 2px at 42% 37%,#f0abfc 45%,transparent 65%);background-size:310px 260px;animation:starDrift 55s linear infinite;opacity:.85}
+.cosmic-world:after{background-size:190px 210px;animation-duration:75s;animation-direction:reverse;opacity:.42;filter:blur(.3px)}
+@keyframes starDrift{to{transform:translate3d(70px,45px,0) rotate(4deg)}}
+@keyframes hallTwinkle{to{opacity:.4;transform:scale(.98)}}
+.cosmic-header{position:absolute;z-index:2;top:clamp(18px,4vh,38px);left:16px;right:16px;text-align:center;pointer-events:none}
+.cosmic-kicker{font-size:.65rem;letter-spacing:.28em;color:#e9d5ff;text-transform:uppercase}.cosmic-title{font-size:clamp(1.8rem,6vw,3.5rem);margin:10px 0 7px;line-height:1.08;text-shadow:0 0 32px #e879f9aa}.cosmic-subtitle{font-size:.82rem;color:#ddd6fe;margin:0}
+.memory-constellation{position:absolute;z-index:2;left:0;right:0;top:clamp(180px,27vh,245px);bottom:clamp(76px,12vh,100px);width:100%;max-width:none;margin:0;display:flex;align-items:center;gap:clamp(18px,3vw,38px);padding:16px clamp(22px,6vw,84px) 26px;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:clamp(22px,6vw,84px);scrollbar-width:thin;scrollbar-color:#d8b4fe88 #130b2a55;-webkit-overflow-scrolling:touch}
+.memory-star{position:relative!important;left:auto!important;top:auto!important;flex:0 0 clamp(145px,19vw,205px);width:clamp(145px,19vw,205px);height:clamp(170px,25vh,220px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;border:1px solid #e9d5ff22;background:linear-gradient(160deg,#ffffff0b,#c084fc0a);border-radius:24px;color:white;cursor:pointer;transform:none;padding:14px 10px;min-width:0;scroll-snap-align:center;animation:starFloat var(--float,3.5s) ease-in-out infinite alternate;filter:drop-shadow(0 0 14px #e879f933);transition:border-color .25s,background .25s,box-shadow .25s}
+.memory-star .star-core{display:grid;place-items:center;width:clamp(54px,8vw,78px);aspect-ratio:1;border-radius:50%;font-size:clamp(1.7rem,4vw,2.6rem);background:radial-gradient(circle at 35% 25%,#fff 0%,#f5d0fe 9%,#d8b4fe 24%,#8b5cf6 46%,#4c1d95 70%,#21103f 100%);box-shadow:0 0 0 1px #f5d0fe77,0 0 22px #c084fcaa,0 0 48px #a855f755;transition:transform .25s,box-shadow .25s}
+.memory-star:hover,.memory-star:focus-visible{border-color:#f5d0fe88;background:linear-gradient(160deg,#ffffff16,#c084fc18);box-shadow:0 0 34px #c084fc22;outline:none}.memory-star:hover .star-core,.memory-star:focus-visible .star-core{transform:scale(1.12) rotate(8deg);box-shadow:0 0 0 3px #f5d0feaa,0 0 35px #f0abfc}
+.memory-star .star-label{font-size:clamp(.64rem,1.8vw,.78rem);font-weight:700;text-shadow:0 2px 8px #000;max-width:145px;line-height:1.35;letter-spacing:.04em}
+.memory-star.final-star{border-color:#fef3c755;background:linear-gradient(160deg,#fef3c710,#c084fc12)}.memory-star.final-star .star-core{background:radial-gradient(circle at 35% 25%,#fff 0%,#fef3c7 13%,#f9a8d4 35%,#c084fc 65%,#581c87 100%);box-shadow:0 0 0 2px #fef3c799,0 0 30px #f9a8d4,0 0 65px #c084fcaa;animation:finalGlow 1.8s ease-in-out infinite alternate}
+@keyframes starFloat{from{translate:0 -6px}to{translate:0 8px}}
+@keyframes finalGlow{to{filter:brightness(1.3);transform:scale(1.08)}}
+.memory-progress{position:absolute;z-index:3;bottom:17px;left:0;right:0;text-align:center;color:#e9d5ff;font-size:.7rem;letter-spacing:.08em;text-shadow:0 2px 8px #000}
+.memory-modal{position:absolute;z-index:5;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;background:#05030bd9;backdrop-filter:blur(8px);animation:rise .35s}
+.memory-modal.hidden{display:none!important}.memory-card{position:relative;width:min(540px,100%);max-height:82vh;overflow:auto;padding:clamp(22px,5vw,34px);border:1px solid #f0abfc66;border-radius:26px;text-align:center;background:linear-gradient(145deg,#2b1745f7,#11102bf7);box-shadow:0 0 75px #c084fc33}
+.memory-emoji{font-size:3rem;filter:drop-shadow(0 0 16px #e879f9)}.memory-card h3{font-size:clamp(1.25rem,5vw,2rem);margin:10px 0;color:#f5d0fe}.memory-card p{font-size:.95rem;line-height:1.8;color:#f3e8ff;white-space:pre-line}.memory-close{margin-top:10px}
+.cosmic-float{position:absolute;z-index:1;pointer-events:none;animation:floatUp 13s linear infinite;opacity:.8}
+@keyframes floatUp{0%{transform:translateY(110vh) rotate(0deg);opacity:0}12%{opacity:.8}88%{opacity:.75}100%{transform:translateY(-15vh) rotate(35deg);opacity:0}}
+@media(max-width:600px){.cosmic-header{top:18px}.cosmic-kicker{font-size:.56rem;letter-spacing:.16em}.cosmic-title{font-size:clamp(1.65rem,8vw,2.45rem);max-width:340px;margin:8px auto}.cosmic-subtitle{font-size:.72rem;max-width:320px;margin:0 auto}.memory-constellation{top:205px;bottom:70px;gap:14px;padding:12px 18px 20px;scroll-padding-inline:18px}.memory-star{flex-basis:145px;width:145px;height:172px;min-width:0}.memory-star .star-core{width:58px}.memory-star .star-label{max-width:125px}.memory-progress{font-size:.62rem;bottom:22px}.hall-card{padding:22px 18px}}
+
+/* Final polish: a constellation of drifting stars (not cards) and a premium secret button. */
+.hall-trigger{
+  position:relative!important;display:inline-flex!important;align-items:center;justify-content:center;
+  min-height:44px;margin:12px auto 0!important;padding:12px 22px!important;gap:9px;
+  border:1px solid #ffd5f4!important;border-radius:999px!important;
+  background:linear-gradient(120deg,#ff68b4 0%,#b44cff 48%,#6b5cff 100%)!important;
+  color:#fff!important;font:800 .78rem 'Lexend',sans-serif!important;letter-spacing:.09em;
+  text-transform:uppercase;text-shadow:0 1px 5px #52105f88;
+  box-shadow:0 8px 24px #c026d355,0 0 0 3px #f0abfc12,inset 0 1px #ffffff80;
+  cursor:pointer;isolation:isolate;overflow:hidden;transition:transform .22s ease,box-shadow .22s ease,filter .22s ease;
+}
+.hall-trigger:before{content:'';position:absolute;inset:-80% auto -80% -35%;width:28%;transform:rotate(25deg);background:linear-gradient(90deg,transparent,#ffffff99,transparent);transition:left .55s ease;z-index:-1}
+.hall-trigger:hover{transform:translateY(-3px) scale(1.025);filter:saturate(1.18);box-shadow:0 12px 32px #c026d377,0 0 0 4px #f0abfc22,inset 0 1px #ffffffa8}
+.hall-trigger:hover:before{left:125%}.hall-trigger:active{transform:translateY(0) scale(.98)}
+.hall-trigger:focus-visible{outline:3px solid #fff;outline-offset:4px}
+/* The cosmic world is an open landscape: free-floating glowing stars, no card row. */
+.memory-constellation{position:absolute!important;inset:0!important;top:0!important;bottom:0!important;left:0!important;right:0!important;width:100%!important;max-width:none!important;margin:0!important;display:block!important;overflow:hidden!important;padding:0!important;scroll-snap-type:none!important;scrollbar-width:none!important;}
+.memory-constellation::-webkit-scrollbar{display:none}
+.memory-star{position:absolute!important;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  width:auto!important;height:auto!important;min-width:0!important;flex:none!important;padding:8px!important;margin:0!important;
+  left:auto!important;top:auto!important;border:0!important;border-radius:50%!important;background:transparent!important;
+  box-shadow:none!important;scroll-snap-align:none!important;overflow:visible!important;color:#fff!important;
+  animation:memoryStarDrift var(--float,5s) ease-in-out infinite alternate!important;filter:drop-shadow(0 0 13px #d8b4fe99);transition:filter .25s ease,opacity .25s ease;z-index:2;
+}
+.memory-star:nth-child(1){left:9%!important;top:31%!important;--float:4.4s}
+.memory-star:nth-child(2){left:25%!important;top:57%!important;--float:5.1s}
+.memory-star:nth-child(3){left:39%!important;top:27%!important;--float:4.7s}
+.memory-star:nth-child(4){left:54%!important;top:55%!important;--float:5.4s}
+.memory-star:nth-child(5){left:68%!important;top:30%!important;--float:4.2s}
+.memory-star:nth-child(6){left:80%!important;top:57%!important;--float:5.3s}
+.memory-star:nth-child(7){left:90%!important;top:28%!important;--float:3.8s}
+.memory-star .star-core{display:grid!important;place-items:center;width:clamp(44px,6vw,68px)!important;height:clamp(44px,6vw,68px)!important;aspect-ratio:1;border:1px solid #f5d0feaa;border-radius:50%;font-size:clamp(1.35rem,3.3vw,2.2rem)!important;
+  background:radial-gradient(circle at 35% 25%,#fff 0%,#f5d0fe 12%,#c4b5fd 29%,#8b5cf6 49%,#4c1d95 72%,#17102e 100%)!important;
+  box-shadow:0 0 0 5px #c4b5fd12,0 0 22px #c084fcbb,0 0 55px #a855f766!important;transition:transform .3s ease,box-shadow .3s ease;}
+.memory-star .star-label{display:block!important;max-width:150px!important;padding:4px 8px!important;border:1px solid #e9d5ff33;border-radius:999px!important;background:#10092288!important;backdrop-filter:blur(5px);font-size:clamp(.55rem,1.2vw,.7rem)!important;font-weight:700;letter-spacing:.08em;line-height:1.3;text-align:center;text-shadow:0 2px 8px #000;opacity:.78;transition:opacity .25s,transform .25s;}
+.memory-star:hover,.memory-star:focus-visible{filter:drop-shadow(0 0 22px #f0abfc);outline:none;z-index:4}
+.memory-star:hover .star-core,.memory-star:focus-visible .star-core{transform:scale(1.2);box-shadow:0 0 0 7px #f5d0fe18,0 0 32px #f0abfc,0 0 75px #c084fc!important}
+.memory-star:hover .star-label,.memory-star:focus-visible .star-label{opacity:1;transform:translateY(-2px)}
+.memory-star.final-star .star-core{background:radial-gradient(circle at 35% 25%,#fff 0%,#fef3c7 13%,#f9a8d4 35%,#c084fc 65%,#581c87 100%)!important;box-shadow:0 0 0 6px #fef3c722,0 0 34px #f9a8d4,0 0 75px #c084fc!important;animation:finalGlow 1.8s ease-in-out infinite alternate}
+@keyframes memoryStarDrift{0%{transform:translate3d(-5px,-8px,0) rotate(-4deg)}50%{transform:translate3d(8px,5px,0) rotate(3deg)}100%{transform:translate3d(-2px,12px,0) rotate(-2deg)}}
+@media(max-width:600px){
+ .cosmic-header{top:15px!important}.cosmic-title{font-size:clamp(1.5rem,7vw,2.25rem)!important}.cosmic-subtitle{font-size:.68rem!important;max-width:290px;margin:auto}
+ .memory-star:nth-child(1){left:7%!important;top:31%!important}.memory-star:nth-child(2){left:25%!important;top:49%!important}.memory-star:nth-child(3){left:45%!important;top:32%!important}.memory-star:nth-child(4){left:65%!important;top:50%!important}.memory-star:nth-child(5){left:81%!important;top:31%!important}.memory-star:nth-child(6){left:25%!important;top:70%!important}.memory-star:nth-child(7){left:68%!important;top:72%!important}
+ .memory-star .star-core{width:43px!important;height:43px!important;font-size:1.35rem!important}.memory-star .star-label{max-width:105px!important;font-size:.52rem!important;padding:3px 6px!important}
+}
+
+/* Permanent restart control stays above every scene, including the cosmic overlay. */
+.page-refresh{position:fixed;right:16px;bottom:16px;top:auto;z-index:2147483647;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;border:1px solid #f5d0fe99;background:linear-gradient(145deg,#f472b6,#9333ea);color:white;font-size:1.25rem;box-shadow:0 5px 22px #9333ea55,0 0 0 4px #ffffff12;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.page-refresh:hover{transform:rotate(-35deg) scale(1.08);box-shadow:0 0 28px #f0abfc99}.page-refresh:focus-visible{outline:3px solid white;outline-offset:3px}
+@media(max-width:600px){.page-refresh{right:12px;bottom:12px;top:auto;width:40px;height:40px}}
+
+
+/* HARD FIX: lift secret-scene overlays out of nested layout containers and pin them to the viewport. */
+#hallPasswordOverlay,
+#hallVideoWrap,
+#cosmicWorld{
+  position:fixed!important;
+  inset:0!important;
+  width:100vw!important;
+  height:100vh!important;
+  height:100dvh!important;
+  min-width:100vw!important;
+  min-height:100vh!important;
+  margin:0!important;
+  max-width:none!important;
+  max-height:none!important;
+  box-sizing:border-box!important;
+}
+#hallPasswordOverlay{z-index:2147482500!important}
+#hallVideoWrap{z-index:2147483000!important;display:flex;align-items:center;justify-content:center;overflow:hidden!important;background:#000!important;border-radius:0!important;padding:0!important}
+#hallIntroVideo{position:absolute!important;inset:0!important;display:block!important;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:cover!important;object-position:center center!important;background:#000!important;border:0!important;border-radius:0!important}
+#hallVideoFallback{z-index:2;background:linear-gradient(transparent,#05030bcc);padding:24px 12px max(24px,env(safe-area-inset-bottom))!important}
+#cosmicWorld{z-index:2147482000!important;border-radius:0!important;transform:none!important;contain:layout paint!important;overflow:hidden!important}
+#cosmicWorld .cosmic-header{position:absolute!important;left:0!important;right:0!important;width:100%!important;max-width:none!important}
+#memoryModal{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;border-radius:0!important}
+html.hall-fullscreen,body.hall-fullscreen{overflow:hidden!important;width:100%!important;height:100%!important}
+
 </style></head>
 <body>
+<button id="pageRefresh" class="page-refresh" type="button" aria-label="Refresh birthday website" title="Start over">↻</button>
+<canvas id="matrixRain" aria-hidden="true"></canvas><div id="loveAtmosphere" aria-hidden="true"></div>
 <header><div class="logo"><span class="pokeball"></span> POKÉDEX <span style="color:#ff9ba8">/ TRAINER SEARCH</span></div><div class="live">SYSTEM ONLINE</div></header>
 <main>
 <section class="hero"><div class="eyebrow">TRAINER DATABASE · LIVE SCAN</div><h1>Who's that <span style="color:#ffcf6c">Pokémon?</span></h1><p>Enter a Pokémon name and scan the entry to identify the trainer.</p></section>
@@ -120,7 +398,7 @@ body:before{will-change:transform}
 <div id="grandBirthday" class="birthday hidden birthday-party">
   <div class="party-lights" aria-hidden="true"><span>✨</span><span>💖</span><span>🎊</span><span>🌟</span><span>💕</span><span>🎉</span></div>
   <div class="party-kicker">A LITTLE SURPRISE JUST FOR YOU</div>
-  <div class="cake-wrap"><span class="cake-candle">🕯️</span><span class="cake-emoji">🎂</span></div>
+  <div class="cake-wrap"><span class="cake-candle">🕯️</span><span class="cake-emoji" id="interactiveCake">🎂</span></div><button class="btn stage-yes wish-button" id="wishBtn">MAKE A WISH ✨</button><p id="wishMessage" class="wish-message hidden">Wish made! May something wonderful find you this year. 🌠💗</p>
   <h2>HAPPY BIRTHDAY, SARAN!</h2>
   <p class="birthday-lead">Today is all about YOU! 🥳</p>
   <p>Wishing you lots of happiness, beautiful memories, fun adventures and all the little things that make you smile. Keep being the amazing person you are and make this year extra special. Hope all your wishes come truee!! ✨🎂 💗</p>
@@ -129,18 +407,208 @@ body:before{will-change:transform}
   <button class="btn red next-stage" data-next="thanksStage">NEXT →</button>
 </div>
 <div id="thanksStage" class="birthday hidden" style="background:linear-gradient(145deg,#fff4f8 0%,#f1efff 55%,#eafaff 100%);color:#28243b;border-color:#e3d8f8"><div style="font-size:2.5rem">🫶🏻💐</div><h2 style="color:#e25b87">Thank you for being with me 💞</h2><p style="color:#4b5060">BTW I'm not saying sorry for this prank 😝<br>Good luck with everything you do. Enjoy every moment of life, keep smiling, and may God bless you with happiness, strength, good health, and success in all your adventures.</p><div style="font-size:2rem">✨🌷🤍🌷✨</div><button class="btn stage-yes next-stage" data-next="stillHacked">NEXT →</button></div>
-<div id="stillHacked" class="birthday hidden" style="background:#031109;border-color:#55ff8870"><div style="font-size:3rem">😜</div><h2 style="color:#55ff88">YOU ARE STILL HACKED</h2><p style="color:#c9ffd5">The birthday vibes have permanent admin access.</p><button class="btn green next-stage" id="finishBtn">FINISH ✦</button></div>
+<div id="stillHacked" class="birthday hidden" style="background:#031109;border-color:#55ff8870">
+  <button id="secretWink" class="secret-wink" aria-label="Secret Easter egg">😜</button>
+  <p id="easterEggHint" class="easter-egg-hint hidden">Psst… there’s an Easter egg hidden here. Can you find it? ✨</p>
+  <h2 style="color:#55ff88">YOU ARE STILL HACKED</h2>
+  <p style="color:#c9ffd5">The birthday vibes have permanent admin access.</p>
+  <button class="btn green" id="finishBtn">FINISH ✦</button>
+</div>
+<div id="postBirthdayScene" class="post-birthday-scene hidden">
+  <button id="sceneSecretWink" class="secret-wink scene-secret-wink" aria-label="Open the hidden Easter egg">😜</button>
+  <p class="easter-egg-hint scene-easter-hint">Psst… there’s an Easter egg hidden here. Can you find it? ✨</p>
+  <div class="post-birthday-stars">✦ ✧ 💗 ✧ ✦</div>
+  <h2>POST-BIRTHDAY BONUS SCENE</h2>
+  <p>Wait… Niku has challenged Saran to one final Pokémon battle!</p>
+  <div class="post-scene-sprites"><span>🧢</span><b>VS</b><span>🐱</span></div>
+  <p class="post-scene-hint">A hidden surprise might be closer than you think… 💗</p>
+</div>
+
+<div id="pokeTransition" class="poke-transition hidden" aria-hidden="true" style="display:none">
+  <div class="transition-ball"><span></span></div>
+  <p>Opening a rare surprise…</p>
+</div>
+<div id="achievementToast" class="achievement-toast hidden">
+  <div class="achievement-icon">🏆</div><div><small>ACHIEVEMENT UNLOCKED</small><strong>SECRET TRAINER ACHIEVEMENT</strong><p>Reward: +999 friendship points</p></div>
+</div>
+<div id="secretEnding" class="secret-ending hidden">
+  <div id="secretFoundIntro" class="secret-found-intro">
+    <div class="secret-heart-shower" aria-hidden="true">💗 💖 💕 💘 💝 💗</div>
+    <h2>✨ YOU FOUND THE SECRET ENDING! ✨</h2>
+    <p>Okay, secret trainer… ready for the hidden post-birthday battle?</p>
+    <button id="startPostBirthday" class="btn stage-yes">START POST-BIRTHDAY SCENE 🌸</button>
+  </div>
+  <div id="battleScene" class="hidden">
+  <div class="secret-title">⚔️ FINAL BATTLE: NIKU VS SARAN ⚔️</div>
+  <div class="battle-arena">
+    <div class="battle-stars" aria-hidden="true">✦　✧　✦　✧　✦</div>
+    <div class="battle-side pokemon-niku">
+      <div class="battle-name">NIKU <span>♡ Lv. 16</span></div>
+      <div class="pokemon-sprite niku-sprite" aria-label="Cute Pokémon trainer sprite">🧢</div>
+      <div class="battle-pokemon">🐱</div>
+      <div class="battle-shadow"></div>
+    </div>
+    <div class="battle-vs">VS</div>
+    <div class="battle-side pokemon-saran">
+      <div class="battle-name">SARAN <span>♡ Lv. 19</span></div>
+      <div class="pokemon-sprite saran-sprite" aria-label="Cute Pokémon trainer sprite">🧑🏻</div>
+      <div class="battle-pokemon saran-mon">🐲</div>
+      <div class="battle-shadow"></div>
+    </div>
+    <div class="kiss-wave" aria-hidden="true"><span>💋</span><span>💖</span><span>💕</span><span>✨</span></div>
+    <div id="bigHands" class="big-hands" aria-hidden="true">🫶🏻💗🫶🏻</div>
+    <div id="kissBurst" class="kiss-burst" aria-hidden="true">💋💗✨</div>
+    <div id="drainingKissProjectile" class="draining-kiss-projectile" aria-hidden="true"><span>💋</span><span>💗</span><span>💕</span><span>💖</span></div>
+  </div>
+  <div class="battle-hud">
+    <div class="health-card" id="nikuHealthCard">
+      <div class="health-top"><strong>NIKU</strong><span>Lv. 16</span></div>
+      <div class="health-track" role="progressbar" aria-label="Niku health" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><div id="nikuHealthFill" class="health-fill"></div></div>
+      <div class="health-numbers"><span>HP</span><strong id="nikuHP">100 / 100</strong></div>
+    </div>
+    <div class="health-card saran-health">
+      <div class="health-top"><strong>SARAN</strong><span>Trainer</span></div>
+      <div class="health-track" role="progressbar" aria-label="Saran health" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><div class="health-fill saran-fill"></div></div>
+      <div class="health-numbers"><span>HP</span><strong id="saranHP">100 / 100</strong></div>
+    </div>
+  </div>
+  <div id="focusSashNotice" class="focus-sash hidden">🛡️ SARAN used FOCUS SASH! Saran held on with 1 HP!</div>
+  <div class="battle-dialogue">
+    <p id="battleText">Niku appeared! Niku is Lv. 16. Saran, choose your move!</p>
+    <p id="battleSubtext" class="battle-subtext">Pick one of Saran's two Fairy-style moves. 💗</p>
+  </div>
+  <div id="moveChoices" class="move-choices">
+    <button class="move-btn" id="holdHandsMove"><span class="move-emoji">🤝💗</span><span><strong>HOLD HANDS</strong><small>Fairy type · Hand-holding charm</small></span></button>
+    <button class="move-btn" id="attractMove"><span class="move-emoji">💘✨</span><span><strong>ATTRACT</strong><small>Fairy type · Heart-eyes attack</small></span></button>
+  </div>
+  <div id="battleAgainWrap" class="hidden"><button class="btn stage-yes" id="battleAgain">BATTLE AGAIN ✨</button><button class="hall-trigger" id="hallOfFameOpen">✦ a tiny secret… hall of fame? ✦</button></div>
+  <div id="secretMessage" class="hidden"><p class="secret-title">SECRET FRIENDSHIP BONUS 💖</p><p>You found the rarest Pokémon of all: a real friend.</p><button class="btn stage-yes" id="closeSecret">AWWW 💗</button></div>
+  </div>
+</div>
 <div id="fadeOut" class="hidden" style="position:fixed;inset:0;z-index:100;background:#000;opacity:0;transition:opacity 2s;pointer-events:none"></div>
-<footer><span>POKÉDEX SYSTEM // TRAINER LOOKUP</span><span>SECURE SESSION // ACTIVE</span></footer>
+<footer><span>POKÉDEX SYSTEM // TRAINER LOOKUP</span><span>SECURE SESSION // ACTIVE</span>
+<div id="hallPasswordOverlay" class="hall-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="hallPasswordTitle">
+  <div class="hall-card">
+    <h2 id="hallPasswordTitle">🌙 A SECRET UNIVERSE?</h2>
+    <p>Some memories are hidden beyond the stars.<br>Enter the secret password to continue…</p>
+    <form id="hallPasswordForm">
+      <input id="hallPasswordInput" class="hall-input" type="password" autocomplete="off" placeholder="secret password" aria-label="Secret password" />
+      <p id="hallPasswordError" class="hall-error" aria-live="polite"></p>
+      <button class="btn stage-yes" type="submit">UNLOCK THE SECRET ✨</button>
+      <button class="btn muted" type="button" id="hallPasswordCancel" style="margin-left:6px">NOT YET</button>
+    </form>
+  </div>
+</div>
+<div id="hallVideoWrap" class="hall-video-wrap hidden" aria-label="Hall of Fame intro video">
+  <video id="hallIntroVideo" class="hall-video" playsinline preload="auto">
+    <source src="https://raw.githubusercontent.com/AnujSharma2008/Dex/main/Video%20Project%201.mp4" type="video/mp4">
+  </video>
+  <div id="hallVideoFallback" class="hall-video-fallback hidden">Video didn't load? <button id="hallSkipVideo" class="btn stage-yes">CONTINUE TO THE COSMOS ✨</button></div>
+</div>
+<div id="cosmicWorld" class="cosmic-world hidden" aria-label="Saran's cosmic Hall of Fame">
+  <div class="cosmic-header"><div class="cosmic-kicker">a tiny universe made just for you</div><h1 class="cosmic-title">HALL OF FAME<br><span style="color:#f9a8d4">(SARAN'S MIND??)</span></h1><p class="cosmic-subtitle">seven chapters of absolute lore ✨ scroll sideways and tap a star to explore</p></div>
+  <div class="memory-constellation" id="memoryConstellation">
+    <button class="memory-star" style="left:14%;top:18%;--float:3.2s" data-memory="0" aria-label="Open The Beginning memory"><span class="star-core">🌟</span><span class="star-label">01 · THE BEGINNING</span></button>
+    <button class="memory-star" style="left:76%;top:15%;--float:4s" data-memory="1" aria-label="Open The 11-Day War memory"><span class="star-core">⚡</span><span class="star-label">02 · THE 11-DAY WAR</span></button>
+    <button class="memory-star" style="left:48%;top:36%;--float:3.6s" data-memory="2" aria-label="Open The Reunion memory"><span class="star-core">🫂</span><span class="star-label">03 · THE REUNION</span></button>
+    <button class="memory-star" style="left:17%;top:59%;--float:4.3s" data-memory="3" aria-label="Open The Wifey Incident memory"><span class="star-core">💀</span><span class="star-label">04 · THE WIFEY INCIDENT</span></button>
+    <button class="memory-star" style="left:78%;top:57%;--float:3.4s" data-memory="4" aria-label="Open Romance and Chaos memory"><span class="star-core">💗</span><span class="star-label">05 · ROMANCE & CHAOS</span></button>
+    <button class="memory-star" style="left:39%;top:78%;--float:4.1s" data-memory="5" aria-label="Open The JEE Arc memory"><span class="star-core">📚</span><span class="star-label">06 · THE JEE ARC</span></button>
+    <button class="memory-star final-star" style="left:83%;top:84%;--float:3.1s" data-memory="6" aria-label="Open the birthday finale"><span class="star-core">🎂</span><span class="star-label">07 · AND HERE WE ARE</span></button>
+  </div>
+  <div class="memory-progress" id="memoryProgress">MEMORIES DISCOVERED: 0 / 7 · follow the stars 💫</div>
+  <div id="memoryModal" class="memory-modal hidden" role="dialog" aria-modal="true" aria-labelledby="memoryTitle">
+    <div class="memory-card"><div id="memoryEmoji" class="memory-emoji">🌟</div><h3 id="memoryTitle">THE BEGINNING</h3><p id="memoryText"></p><button id="memoryClose" class="btn stage-yes memory-close">BACK TO THE STARS ✨</button></div>
+  </div>
+</div>
+
+</footer>
 </section></main>
 <script>
+
+// Animated green code rain only during the hacker reveal.
+(function(){
+  const canvas=document.getElementById('matrixRain');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  const glyphs='01アイウエオカキクケコサシスセソタチツテト{}[]<>/\\$#*+-=';
+  let width=0,height=0,columns=[],raf=0,last=0;
+  function resize(){
+    const dpr=Math.min(window.devicePixelRatio||1,2);
+    width=window.innerWidth;height=window.innerHeight;
+    canvas.width=Math.floor(width*dpr);canvas.height=Math.floor(height*dpr);
+    canvas.style.width=width+'px';canvas.style.height=height+'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    const count=Math.ceil(width/17);
+    columns=Array.from({length:count},()=>Math.random()*-height/16);
+  }
+  function draw(time){
+    raf=0;
+    if(!document.body.classList.contains('hacker-mode'))return;
+    if(time-last<38){raf=requestAnimationFrame(draw);return}
+    last=time;
+    ctx.fillStyle='rgba(2,8,4,0.12)';ctx.fillRect(0,0,width,height);
+    ctx.font='13px monospace';
+    for(let i=0;i<columns.length;i++){
+      const ch=glyphs[Math.floor(Math.random()*glyphs.length)];
+      const y=columns[i]*16;
+      ctx.fillStyle=Math.random()>.94?'#d6ffdf':(Math.random()>.6?'#55ff88':'#16994a');
+      ctx.fillText(ch,i*17,y);
+      if(y>height&&Math.random()>.975)columns[i]=Math.random()*-12;
+      else columns[i]+=.48+Math.random()*.65;
+    }
+    raf=requestAnimationFrame(draw);
+  }
+  function start(){if(!document.body.classList.contains('hacker-mode')){ctx.clearRect(0,0,width,height);return}if(!raf)raf=requestAnimationFrame(draw)}
+  window.addEventListener('resize',resize,{passive:true});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden){if(raf)cancelAnimationFrame(raf);raf=0}else start()});
+  resize();
+  window.setHackerRain=active=>{
+    document.body.classList.toggle('hacker-mode',!!active);
+    if(active){ctx.clearRect(0,0,width,height);start()}
+    else{if(raf)cancelAnimationFrame(raf);raf=0;ctx.clearRect(0,0,width,height)}
+  };
+})();
+
+// Birthday mode transforms the ambient layer into an endless, gentle shower of hearts and party symbols.
+(function(){
+  const layer=document.getElementById('loveAtmosphere');
+  if(!layer)return;
+  const symbols=['💗','💖','💕','💞','🩷','🤍','✨','🌸','🎀','🎉','🫧','💝'];
+  let timer=null;
+  function makeFloat(){
+    if(!document.body.classList.contains('love-mode'))return;
+    const el=document.createElement('span');
+    el.className='love-float';
+    el.textContent=symbols[Math.floor(Math.random()*symbols.length)];
+    el.style.setProperty('--x',Math.random()*100+'%');
+    el.style.setProperty('--size',(14+Math.random()*25)+'px');
+    el.style.setProperty('--duration',(7+Math.random()*9)+'s');
+    el.style.setProperty('--delay',(Math.random()*-7)+'s');
+    el.style.setProperty('--sway',((Math.random()-.5)*180)+'px');
+    layer.appendChild(el);
+    window.setTimeout(()=>el.remove(),18000);
+  }
+  window.setLoveMode=active=>{
+    document.body.classList.toggle('love-mode',!!active);
+    if(timer){clearInterval(timer);timer=null}
+    if(active){
+      layer.innerHTML='';
+      for(let i=0;i<28;i++)makeFloat();
+      timer=setInterval(makeFloat,360);
+    }else{layer.innerHTML=''}
+  };
+})();
+
+// Enable code rain for the scan/hacker phase and switch to hearts for the birthday reveal.
+
 const input=document.getElementById('nameInput'), scanBtn=document.getElementById('scanBtn');
 const scanTerminal=document.getElementById('scanTerminal'), scanLog=document.getElementById('scanLog'), scanMeter=document.getElementById('scanMeter');
 const hacked=document.getElementById('hacked'), hackLog=document.getElementById('hackLog'), trust=document.getElementById('trust'), birthday=document.getElementById('birthday');
 let running=false;
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
-scanBtn.addEventListener('click',async()=>{if(running)return;if(!input.value.trim()){input.focus();return}running=true;scanTerminal.classList.remove('hidden');hacked.classList.add('hidden');birthday.classList.add('hidden');trust.classList.add('hidden');scanBtn.disabled=true;
-const lines=['> Initializing Pokédex interface…','> Loading trainer database…','> Calibrating visual scanner…','> Scanning face pattern…','> Cross-checking trainer identity…','> Unexpected terminal response detected…'];
+scanBtn.addEventListener('click',async()=>{if(running)return;if(!input.value.trim()){input.focus();return}window.primeBirthdayAudio?.();running=true;window.setLoveMode?.(false);window.setHackerRain?.(true);scanTerminal.classList.remove('hidden');hacked.classList.add('hidden');birthday.classList.add('hidden');trust.classList.add('hidden');scanBtn.disabled=true;
+const lines=['> Initializing Pokédex interface…','> Loading trainer database…','> Calibrating visual scanner…','> Scanning face pattern…','> Cross-checking trainer identity…','> Unexpected terminal response detected…','> PIKACHU.exe HAS STOPPED RESPONDING','> TRAINER DETECTED: TOO MUCH DRIP','> SECURITY BREACH: BIRTHDAY ENERGY OVERLOAD'];
 for(let i=0;i<lines.length;i++){scanLog.textContent=lines.slice(0,i+1).join('\\n');scanMeter.style.width=((i+1)/lines.length*100)+'%';await wait(550)}
 await wait(650);scanTerminal.classList.add('hidden');hacked.classList.remove('hidden');
 const hackLines=['> ACCESS OVERRIDE ACCEPTED','> WARNING: YOU ARE HACKED.','> Collecting public demo profile…','> Location status: profile location displayed.','> Establishing encrypted-looking channel…','> Session override complete.'];
@@ -157,12 +625,347 @@ const noBtn=document.getElementById('noBtn');
 function runAwayFor(btn){const parent=btn.parentElement.getBoundingClientRect();let dx=(Math.random()-.5)*Math.min(240,parent.width*.72),dy=(Math.random()-.5)*110;btn.style.transform=`translate(${dx}px, ${dy}px)`;}
 function bindDodge(btn){btn.addEventListener('pointerenter',()=>runAwayFor(btn));btn.addEventListener('pointermove',()=>runAwayFor(btn));btn.addEventListener('pointerdown',e=>{e.preventDefault();e.stopImmediatePropagation();runAwayFor(btn)});btn.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();runAwayFor(btn);return false;});btn.addEventListener('touchstart',e=>{e.preventDefault();e.stopImmediatePropagation();runAwayFor(btn)},{passive:false});}
 bindDodge(noBtn);document.querySelectorAll('.dodge').forEach(bindDodge);
-function showOnly(id){['whiteStage','waterJoke','howStage','luckyStage','grandBirthday','thanksStage','stillHacked'].forEach(x=>document.getElementById(x).classList.add('hidden'));document.getElementById(id).classList.remove('hidden');document.getElementById(id).scrollIntoView({behavior:'smooth',block:'center'});}
+function showOnly(id){
+  ['whiteStage','waterJoke','howStage','luckyStage','grandBirthday','thanksStage','stillHacked'].forEach(x=>document.getElementById(x).classList.add('hidden'));
+  const reveal=()=>{document.getElementById(id).classList.remove('hidden');const party=['grandBirthday','thanksStage'].includes(id);window.setHackerRain?.(id==='stillHacked');window.setLoveMode?.(party);document.getElementById(id).scrollIntoView({behavior:'smooth',block:'center'});};
+  if(id==='grandBirthday'){
+     // Skip the Poké Ball overlay; reveal the birthday screen directly with a light confetti burst.
+     reveal();window.playBirthdayMusic?.();confettiBurst(45);
+     const toast=document.getElementById('achievementToast');
+     if(toast){toast.classList.remove('hidden');setTimeout(()=>toast.classList.add('hidden'),2400);}
+   } else reveal();
+}
 document.getElementById('yesBtn').addEventListener('click',()=>showOnly('whiteStage'));
-document.querySelectorAll('[data-next]').forEach(btn=>btn.addEventListener('click',()=>{showOnly(btn.dataset.next);if(btn.dataset.next==='grandBirthday')confettiBurst(150);}));
+document.querySelectorAll('[data-next]').forEach(btn=>btn.addEventListener('click',()=>{showOnly(btn.dataset.next);if(btn.dataset.next==='grandBirthday')confettiBurst(55);}));
 document.getElementById('waterDone').addEventListener('click',()=>showOnly('howStage'));
-document.getElementById('finishBtn')?.addEventListener('click',()=>{const f=document.getElementById('fadeOut');f.classList.remove('hidden');requestAnimationFrame(()=>f.style.opacity='1');});
-function confettiBurst(count=120){const bits=['💖','💕','💗','🎉','🎊','✨','🎈','🌸','🩷','🎁','⭐','🥳'];for(let i=0;i<count;i++){const e=document.createElement('span');e.className='party-fall';e.textContent=bits[Math.floor(Math.random()*bits.length)];e.style.left=Math.random()*100+'vw';e.style.setProperty('--drift',((Math.random()-.5)*220)+'px');e.style.animationDuration=(3.4+Math.random()*4.2)+'s';e.style.animationDelay=Math.random()*1.1+'s';e.style.fontSize=(15+Math.random()*22)+'px';document.body.appendChild(e);setTimeout(()=>e.remove(),9000)}}
-document.querySelector('[data-next="grandBirthday"]').addEventListener('click',()=>{confettiBurst(150);});
+document.getElementById('finishBtn')?.addEventListener('click',()=>{
+  window.setHackerRain?.(false);window.setLoveMode?.(false);
+  const f=document.getElementById('fadeOut');
+  f.classList.remove('hidden');f.style.opacity='0';
+  requestAnimationFrame(()=>f.style.opacity='1');
+  setTimeout(()=>{
+    document.getElementById('stillHacked').classList.add('hidden');
+    document.getElementById('postBirthdayScene').classList.remove('hidden');
+    f.style.opacity='0';setTimeout(()=>f.classList.add('hidden'),2100);
+    document.getElementById('postBirthdayScene').scrollIntoView({behavior:'smooth',block:'center'});
+  },900);
+});
+(() => {
+ const wink=document.getElementById('secretWink'), secret=document.getElementById('secretEnding');
+ if(!wink||!secret)return;
+ wink.addEventListener('click',()=>{
+   secret.classList.remove('hidden');
+   document.getElementById('secretFoundIntro').classList.remove('hidden');
+   document.getElementById('battleScene').classList.add('hidden');
+   heartShower(28);
+   secret.scrollIntoView({behavior:'smooth',block:'center'});
+ });
+ document.getElementById('sceneSecretWink')?.addEventListener('click',()=>wink.click());
+
+})();
+function heartShower(count=80){
+ const bits=['💗','💖','💕','💘','💝','🌸','✨'];
+ for(let i=0;i<Math.min(count,32);i++){const e=document.createElement('span');e.className='secret-heart-particle';e.textContent=bits[Math.floor(Math.random()*bits.length)];e.style.left=Math.random()*100+'vw';e.style.setProperty('--drift',((Math.random()-.5)*200)+'px');e.style.animationDuration=(2.2+Math.random()*2)+'s';e.style.animationDelay=(Math.random()*.7)+'s';document.body.appendChild(e);setTimeout(()=>e.remove(),5200);}
+}
+function playBattleSound(){
+ try{const Ctx=window.AudioContext||window.webkitAudioContext;if(!Ctx)return;const ctx=new Ctx(),now=ctx.currentTime;
+ [523.25,659.25,783.99,1046.5].forEach((freq,i)=>{const osc=ctx.createOscillator(),gain=ctx.createGain();osc.type='triangle';osc.frequency.value=freq;gain.gain.setValueAtTime(.0001,now+i*.12);gain.gain.exponentialRampToValueAtTime(.12,now+i*.12+.025);gain.gain.exponentialRampToValueAtTime(.0001,now+i*.12+.22);osc.connect(gain);gain.connect(ctx.destination);osc.start(now+i*.12);osc.stop(now+i*.12+.24);});
+ setTimeout(()=>ctx.close(),1300);}catch(e){}
+}
+let battleTimers = [];
+function clearBattleTimers(){ battleTimers.forEach(clearTimeout); battleTimers=[]; }
+function beginBattleScene(){
+  clearBattleTimers();
+  // Reset all health, sprites, and move/effect state before every battle.
+  if (typeof window.resetBattleState === 'function') window.resetBattleState();
+  window.playBattleMusic?.();
+  document.getElementById('postBirthdayScene')?.classList.add('hidden');
+  document.getElementById('secretFoundIntro')?.classList.add('hidden');
+  document.getElementById('battleScene')?.classList.remove('hidden');
+  document.getElementById('secretEnding')?.classList.remove('hidden');
+
+  const arena=document.querySelector('.battle-arena');
+  const text=document.getElementById('battleText');
+  const sub=document.getElementById('battleSubtext');
+  const choices=document.getElementById('moveChoices');
+  const sash=document.getElementById('focusSashNotice');
+  const projectile=document.getElementById('drainingKissProjectile');
+  const burst=document.getElementById('kissBurst');
+  const saranSprite=document.querySelector('.saran-mon');
+  const saranFill=document.querySelector('.saran-fill');
+  const saranTrack=saranFill?.parentElement;
+  const saranHP=document.getElementById('saranHP');
+
+  choices.classList.add('hidden');
+  sash.classList.add('hidden');
+  if(projectile){projectile.classList.remove('play');projectile.style.opacity='0';}
+  if(burst)burst.classList.remove('play');
+  arena.classList.remove('battle-flash','blush-mode','attract-mode','holdhands-mode');
+
+  text.textContent='The battle begins! Niku is Lv. 16…';
+  sub.textContent='Saran gets ready for Niku’s opening move.';
+
+  // Phase 1: show the move text and animate the kiss travelling across the arena.
+  battleTimers.push(setTimeout(()=>{
+    text.textContent='Niku used DRAINING KISS! 💋';
+    sub.textContent='A kiss and a trail of hearts fly from Niku toward Saran!';
+    arena.classList.remove('battle-flash'); void arena.offsetWidth; arena.classList.add('battle-flash');
+    if(projectile){
+      projectile.classList.remove('play');
+      projectile.style.opacity='';
+      void projectile.offsetWidth;
+      projectile.classList.add('play');
+    }
+    if(burst){burst.classList.remove('play');void burst.offsetWidth;burst.classList.add('play');}
+  },500));
+
+  // Phase 2: after the attack reaches Saran, Focus Sash saves Saran at 1 HP.
+  battleTimers.push(setTimeout(()=>{
+    if(saranFill){saranFill.style.width='1%';saranFill.classList.remove('hp-mid');saranFill.classList.add('hp-low');}
+    if(saranTrack)saranTrack.setAttribute('aria-valuenow','1');
+    if(saranHP)saranHP.textContent='1 / 100';
+    if(saranSprite){saranSprite.classList.remove('saran-hit-flash');void saranSprite.offsetWidth;saranSprite.classList.add('saran-hit-flash');}
+    sash.classList.remove('hidden');
+    text.textContent='Niku used Draining Kiss! 💋';
+    sub.textContent='Saran used Focus Sash and survived with 1 HP! 🛡️';
+  },2250));
+
+  // Phase 3: only now allow Saran to choose a move.
+  battleTimers.push(setTimeout(()=>{
+    text.textContent='Saran survived with 1 HP!';
+    sub.textContent='Choose Saran’s super-effective move.';
+    choices.classList.remove('hidden');
+  },3150));
+}
+document.getElementById('startPostBirthday')?.addEventListener('click',()=>{
+  document.getElementById('secretFoundIntro')?.classList.add('hidden');
+  document.getElementById('battleScene')?.classList.remove('hidden');
+  document.getElementById('secretEnding')?.classList.remove('hidden');
+  beginBattleScene();
+});
+
+let easterEggUnlocked = false;
+function confettiBurst(count=45){const bits=['💖','💕','💗','🎉','🎊','✨','🎈','🌸','🩷','🎁','⭐','🥳'];for(let i=0;i<Math.min(count,55);i++){const e=document.createElement('span');e.className='party-fall';e.textContent=bits[Math.floor(Math.random()*bits.length)];e.style.left=Math.random()*100+'vw';e.style.setProperty('--drift',((Math.random()-.5)*220)+'px');e.style.animationDuration=(3.4+Math.random()*4.2)+'s';e.style.animationDelay=Math.random()*1.1+'s';e.style.fontSize=(15+Math.random()*22)+'px';document.body.appendChild(e);setTimeout(()=>e.remove(),9000)}}
+document.querySelector('[data-next="grandBirthday"]').addEventListener('click',()=>{window.setHackerRain?.(false);window.setLoveMode?.(true);confettiBurst(55);});
 
 </script></body></html>
+<script>
+document.getElementById('wishBtn')?.addEventListener('click',()=>{
+ const msg=document.getElementById('wishMessage');msg.classList.remove('hidden');
+ const symbols=['✨','💖','🌟','💕','🌸','⭐'];
+ for(let i=0;i<34;i++){const e=document.createElement('span');e.className='wish-spark';e.textContent=symbols[Math.floor(Math.random()*symbols.length)];e.style.left=(35+Math.random()*30)+'vw';e.style.top=(55+Math.random()*25)+'vh';e.style.setProperty('--x',((Math.random()-.5)*260)+'px');e.style.fontSize=(15+Math.random()*18)+'px';document.body.appendChild(e);setTimeout(()=>e.remove(),2000)}
+});
+(() => {
+ const arena=document.querySelector('.battle-arena');
+ const text=document.getElementById('battleText');
+ const sub=document.getElementById('battleSubtext');
+ const hpFill=document.getElementById('nikuHealthFill');
+ const hpTrack=hpFill?.parentElement;
+ const hpLabel=document.getElementById('nikuHP');
+ const sash=document.getElementById('focusSashNotice');
+ const choices=document.getElementById('moveChoices');
+ const againWrap=document.getElementById('battleAgainWrap');
+ let battleFinished=false;
+ function resetBattle(){
+   battleFinished=false;
+   hpFill.style.width='100%';hpFill.className='health-fill';
+   hpTrack?.setAttribute('aria-valuenow','100');hpLabel.textContent='100 / 100';
+   const saranFill=document.querySelector('.saran-fill'),saranTrack=saranFill?.parentElement,saranHP=document.getElementById('saranHP');
+   if(saranFill){saranFill.style.width='100%';saranFill.className='health-fill saran-fill';}
+   saranTrack?.setAttribute('aria-valuenow','100');if(saranHP)saranHP.textContent='100 / 100';
+   sash.classList.add('hidden');choices.classList.add('hidden');againWrap.classList.add('hidden');
+   document.getElementById('battleEnded')?.remove();
+   arena.classList.remove('attract-mode','holdhands-mode','blush-mode','battle-flash');
+   const nikuSprite=document.querySelector('.niku-sprite');
+   if(nikuSprite)nikuSprite.textContent='🧢';
+   const nikuCat=document.querySelector('.battle-pokemon:not(.saran-mon)');
+   if(nikuCat)nikuCat.textContent='🐱';
+   const saranMon=document.querySelector('.saran-mon');
+   if(saranMon)saranMon.textContent='🐲';
+   const burst=document.getElementById('kissBurst');if(burst)burst.classList.remove('play');
+   const hands=document.getElementById('bigHands');if(hands)hands.classList.remove('play');
+   text.textContent='Niku appeared! Niku is Lv. 16. Saran, choose your move!';
+   sub.textContent="Pick one of Saran's two Fairy-style moves. 💗";
+   document.querySelector('.niku-sprite').textContent='🧢';
+   document.querySelector('.saran-mon').textContent='🐲';
+ }
+ window.resetBattleState = resetBattle;
+ function useMove(move){
+   if(battleFinished)return;
+   battleFinished=true;
+   choices.classList.add('hidden');
+   // Saran stays at 1 HP after Focus Sash. Saran's selected move defeats Niku.
+   text.textContent=move==='hold'?'Saran used HOLD HANDS! 🫶🏻':'Saran used ATTRACT! 💘';
+   sub.textContent=move==='hold'?'Fairy-type move — super effective! Niku was caught in a giant cuddle! 💗':'Fairy-type move — super effective! Niku cannot look away! 💕';
+   arena.classList.remove('battle-flash');void arena.offsetWidth;arena.classList.add('battle-flash');
+   if(move==='hold'){
+     arena.classList.add('holdhands-mode');
+     const hands=document.getElementById('bigHands');if(hands){hands.classList.remove('play');void hands.offsetWidth;hands.classList.add('play');}
+   }else{
+     arena.classList.add('attract-mode');
+     const saranMon=document.querySelector('.saran-mon');if(saranMon)saranMon.textContent='🐲😍';
+   }
+   setTimeout(()=>{
+     hpFill.style.width='0%';hpFill.classList.remove('critical','hp-mid','hp-low');
+     hpTrack?.setAttribute('aria-valuenow','0');hpLabel.textContent='0 / 100';
+     arena.classList.add('blush-mode');
+     const proj=document.getElementById('drainingKissProjectile');if(proj)proj.classList.remove('play');
+     const trainer=document.querySelector('.niku-sprite');if(trainer)trainer.textContent='🧢😊';
+     const nikuMon=document.querySelector('.battle-pokemon:not(.saran-mon)');if(nikuMon)nikuMon.textContent='😳🐱';
+     if(move==='attract'){
+       const burst=document.getElementById('kissBurst');if(burst){burst.classList.remove('play');void burst.offsetWidth;burst.classList.add('play');}
+     }
+     text.textContent=move==='hold'?'Saran used HOLD HANDS — it was super effective!':'Saran used ATTRACT — it was super effective!';
+     sub.textContent='Niku lost all HP and blushed furiously. The battle ended! 💗';
+     document.getElementById('battleEnded')?.remove();
+     const ended=document.createElement('div');ended.id='battleEnded';ended.className='battle-ended';ended.textContent='🏁 BATTLE ENDED · NIKU IS TOO BLUSHY TO CONTINUE! 🩷';
+     document.querySelector('.battle-dialogue')?.after(ended);
+     againWrap.classList.remove('hidden');
+     for(let i=0;i<24;i++){const e=document.createElement('span');e.className='wish-spark';e.textContent=['💗','💕','💖','✨','🌸','💋'][Math.floor(Math.random()*6)];e.style.left=(35+Math.random()*30)+'vw';e.style.top=(38+Math.random()*40)+'vh';e.style.setProperty('--x',((Math.random()-.5)*260)+'px');document.body.appendChild(e);setTimeout(()=>e.remove(),2100)}
+   },2200);
+ }
+ document.getElementById('holdHandsMove')?.addEventListener('click',()=>useMove('hold'));
+ document.getElementById('attractMove')?.addEventListener('click',()=>useMove('attract'));
+ document.getElementById('battleAgain')?.addEventListener('click',()=>beginBattleScene());
+})();
+document.getElementById('closeSecret')?.addEventListener('click',()=>document.getElementById('secretMessage').classList.add('hidden'));
+</script>
+
+<script>
+/* External music tracks for the birthday reveal and Pokémon battle. */
+(() => {
+  const birthdayURL = 'https://cdn.discordapp.com/attachments/1503003970996801641/1563117657581162566/the_mountain-happy-birthday-508020.mp3?ex=6adc7642&is=6adb24c2&hm=06d91fd3394b97d46c3408ea650febd933e5f627a2638c8403373e1e0068089a';
+  const battleURL = 'https://cdn.discordapp.com/attachments/1503003970996801641/1563118191411208192/pokemon_colo_battle.mp3?ex=6adc76c2&is=6adb2542&hm=783e63a21c47fe8551fb4b0df7df8940a7219423085d51192208911445ff2e6b';
+  const birthdayAudio = new Audio(birthdayURL);
+  const battleAudio = new Audio(battleURL);
+  birthdayAudio.loop = true;
+  battleAudio.loop = true;
+  birthdayAudio.preload = 'auto';
+  battleAudio.preload = 'auto';
+  birthdayAudio.volume = 0.65;
+  battleAudio.volume = 0.60;
+  let active = '';
+
+  function stopAll() {
+    for (const audio of [birthdayAudio, battleAudio]) {
+      audio.pause();
+      try { audio.currentTime = 0; } catch (_) {}
+    }
+    active = '';
+  }
+  async function playTrack(name) {
+    const audio = name === 'birthday' ? birthdayAudio : battleAudio;
+    const other = name === 'birthday' ? battleAudio : birthdayAudio;
+    other.pause();
+    try { other.currentTime = 0; } catch (_) {}
+    if (active === name && !audio.paused) return;
+    active = name;
+    try {
+      audio.currentTime = 0;
+      await audio.play();
+    } catch (err) {
+      // Browsers may block playback until a user gesture; the next scene click retries.
+      console.warn('Music playback was blocked or the audio URL is unavailable:', err);
+    }
+  }
+  window.primeBirthdayAudio = () => {
+    // Called from the Scan button's click gesture to unlock browser audio playback.
+    for (const audio of [birthdayAudio, battleAudio]) {
+      const promise = audio.play();
+      if (promise && typeof promise.then === 'function') {
+        promise.then(() => { audio.pause(); try { audio.currentTime = 0; } catch (_) {} }).catch(() => {});
+      } else { audio.pause(); }
+    }
+  };
+  window.playBirthdayMusic = () => playTrack('birthday');
+  window.playBattleMusic = () => playTrack('battle');
+  window.stopBirthdayMusic = stopAll;
+  window.addEventListener('pagehide', stopAll);
+})();
+</script>
+
+
+<script>
+/* Password-protected Hall of Fame: video prologue, black transition, then a star-based cosmic memory world. */
+(() => {
+  document.getElementById('pageRefresh')?.addEventListener('click',()=>window.location.reload());
+  // Move overlays directly under <body> so ancestor layout/overflow cannot constrain fullscreen scenes.
+  ['hallPasswordOverlay','hallVideoWrap','cosmicWorld'].forEach(id=>{const el=document.getElementById(id);if(el&&el.parentElement!==document.body)document.body.appendChild(el);});
+  const openBtn = document.getElementById('hallOfFameOpen');
+  const passwordOverlay = document.getElementById('hallPasswordOverlay');
+  const passwordForm = document.getElementById('hallPasswordForm');
+  const passwordInput = document.getElementById('hallPasswordInput');
+  const passwordError = document.getElementById('hallPasswordError');
+  const videoWrap = document.getElementById('hallVideoWrap');
+  const video = document.getElementById('hallIntroVideo');
+  const fallback = document.getElementById('hallVideoFallback');
+  const cosmic = document.getElementById('cosmicWorld');
+  const memoryModal = document.getElementById('memoryModal');
+  const memories = [
+    {emoji:'🎮✨',title:'01 — THE BEGINNING',text:'We met on PS, and my first move was to prank you 😭. Somehow, I guessed your favourite Pokémon, and then came the bets on Pokémon battles and chess. The lore began before either of us knew it.'},
+    {emoji:'⚡💀',title:'02 — THE 11-DAY WAR',text:'I called you a loser and said something hurtful about your father. You blocked me on Discord and disappeared for 11 whole days. Our first friendship crisis arc was NOT playing around.'},
+    {emoji:'🫂🌟',title:'03 — THE GREAT REUNION',text:'After 11 days, we found our way back to each other. The peace treaty was signed, the lore continued, and apparently the Discord block was not the end of our story.'},
+    {emoji:'💀👑',title:'04 — THE WIFEY INCIDENT',text:'Then you came up with the stupidest idea ever: apparently, I was your wifey who had abandoned you with the children… OUR DISCORD SERVER 😭. What started as a joke got serious, and somehow we fell in love. EXCUSE ME, WHAT WAS THIS PLOTLINE?!'},
+    {emoji:'💗😭',title:'05 — ROMANCE & CHAOS',text:'Then came the fun texts, the intimate conversations, the little fights, and you calling me a CHEATER and all that nonsense 😭💀. Peace was apparently never an option with us.'},
+    {emoji:'📚🫡',title:'06 — THE JEE ARC',text:'Then I decided it was time to get you studying for JEE 😭. We started studying together, doing our work, messing around, and having fun along the way. From Discord chaos to academic pressure. Character development, I guess?'},
+    {emoji:'🎂💖',title:'07 — AND HERE WE ARE',text:'After all the pranks, the blocks, the reunions, the stupid arguments, the love, and the JEE study sessions… here we are, celebrating YOUR birthday. 🥹💗\n\nHappy Birthday, Saran. Look at all the lore we collected along the way. And we are still here. WOOOOOOO!! 🥳🎉'}
+  ];
+  const seen = new Set();
+  function showPassword(){ passwordOverlay.classList.remove('hidden'); passwordError.textContent=''; passwordInput.value=''; setTimeout(()=>passwordInput.focus(),80); }
+  function closePassword(){ passwordOverlay.classList.add('hidden'); }
+  function enterCosmos(){
+    document.documentElement.classList.add('hall-fullscreen');document.body.classList.add('hall-fullscreen');
+    video.pause(); videoWrap.classList.add('hidden');
+    cosmic.classList.remove('hidden');
+    requestAnimationFrame(()=>cosmic.classList.add('visible'));
+    for(let i=0;i<18;i++){
+      const s=document.createElement('span');s.className='cosmic-float';s.textContent=['✨','💖','🌸','⭐','🫧','💫'][Math.floor(Math.random()*6)];
+      s.style.left=Math.random()*100+'%';s.style.animationDelay=(Math.random()*12)+'s';s.style.animationDuration=(10+Math.random()*12)+'s';s.style.fontSize=(12+Math.random()*22)+'px';cosmic.appendChild(s);
+    }
+  }
+  function startVideo(){
+    closePassword();
+    document.getElementById('battleScene')?.classList.add('hidden');
+    document.getElementById('postBirthdayScene')?.classList.add('hidden');
+    document.getElementById('secretEnding')?.classList.add('hidden');
+    window.stopBirthdayMusic?.();
+    videoWrap.classList.remove('hidden');fallback.classList.add('hidden');
+    video.currentTime=0;video.style.opacity='1';
+    const promise=video.play();
+    if(promise && typeof promise.catch==='function') promise.catch(()=>fallback.classList.remove('hidden'));
+    // If the remote video URL fails to load, offer a direct path to the animated cosmic scene.
+    window.setTimeout(()=>{if(videoWrap.classList.contains('hidden'))return;if(video.readyState===0||video.error)fallback.classList.remove('hidden');},3500);
+  }
+  openBtn?.addEventListener('click',showPassword);
+  document.getElementById('hallPasswordCancel')?.addEventListener('click',closePassword);
+  passwordForm?.addEventListener('submit',e=>{
+    e.preventDefault();
+    if(passwordInput.value==='areyouforreal?'){startVideo();}
+    else{passwordError.textContent='Not quite 👀 try the secret password again.';passwordInput.select();}
+  });
+  video.addEventListener('ended',()=>{
+    // Leave the video wrapper visible as a black frame, then fade that frame away into the cosmos.
+    videoWrap.style.background='#000';videoWrap.style.opacity='1';videoWrap.style.transition='opacity 1.7s ease';
+    video.style.opacity='0';video.style.transition='opacity .35s ease';
+    setTimeout(()=>requestAnimationFrame(()=>videoWrap.style.opacity='0'),450);
+    setTimeout(()=>{videoWrap.classList.add('hidden');videoWrap.style.opacity='1';enterCosmos();},2200);
+  });
+  video.addEventListener('error',()=>fallback.classList.remove('hidden'));
+  document.getElementById('hallSkipVideo')?.addEventListener('click',()=>{videoWrap.classList.add('hidden');enterCosmos();});
+  document.querySelectorAll('.memory-star').forEach(btn=>btn.addEventListener('click',()=>{
+    const i=Number(btn.dataset.memory),m=memories[i];if(!m)return;
+    document.getElementById('memoryEmoji').textContent=m.emoji;
+    document.getElementById('memoryTitle').textContent=m.title;
+    document.getElementById('memoryText').textContent=m.text;
+    memoryModal.classList.remove('hidden');seen.add(i);
+    document.getElementById('memoryProgress').textContent=`MEMORIES DISCOVERED: ${seen.size} / 7 · ${seen.size===7?'you found every chapter 💗':'keep following the stars 💫'}`;
+    if(i===6){
+      document.getElementById('memoryText').textContent=m.text+'\n\nENJOY THE REST OF YOUR DAY WOOO!! 🎉🥳💗';
+      if(seen.size===7) setTimeout(()=>{const title=document.getElementById('memoryTitle');title.textContent='🏆 HALL OF FAME COMPLETE!';},500);
+    }
+  }));
+  document.getElementById('memoryClose')?.addEventListener('click',()=>memoryModal.classList.add('hidden'));
+  memoryModal?.addEventListener('click',e=>{if(e.target===memoryModal)memoryModal.classList.add('hidden')});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){closePassword();memoryModal?.classList.add('hidden')}});
+})();
+</script>
