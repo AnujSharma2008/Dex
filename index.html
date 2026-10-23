@@ -361,6 +361,206 @@ body.love-mode .btn{transition:transform .25s cubic-bezier(.2,.8,.2,1),filter .2
 #memoryModal{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;border-radius:0!important}
 html.hall-fullscreen,body.hall-fullscreen{overflow:hidden!important;width:100%!important;height:100%!important}
 
+
+/* Hall of Fame final layout polish: breathing room, safe edges, and completion celebration. */
+#cosmicWorld{z-index:2147483500!important;padding:0!important;box-sizing:border-box!important;min-height:100vh;min-height:100dvh;isolation:isolate}
+#cosmicWorld .cosmic-header{top:clamp(22px,5vh,52px)!important;left:clamp(18px,4vw,64px)!important;right:clamp(18px,4vw,64px)!important;padding:0 10px!important;box-sizing:border-box!important}
+#cosmicWorld .cosmic-title{margin:12px auto 10px!important;max-width:1000px;letter-spacing:-.035em}
+#cosmicWorld .cosmic-subtitle{max-width:680px;margin:0 auto!important;line-height:1.6;padding:0 8px}
+#cosmicWorld .memory-star{max-width:calc(100vw - 28px)!important;z-index:3!important;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+#cosmicWorld .memory-star .star-label{max-width:min(160px,34vw)!important;text-align:center;line-height:1.4;white-space:normal;overflow-wrap:anywhere;padding:6px 10px!important;box-sizing:border-box!important}
+#cosmicWorld .memory-progress{bottom:max(22px,env(safe-area-inset-bottom))!important;padding:0 18px!important;box-sizing:border-box;line-height:1.5;letter-spacing:.045em}
+#hallVideoWrap{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;height:100dvh!important;z-index:2147483000!important;background:#000!important}
+#hallIntroVideo{width:100%!important;height:100%!important;object-fit:cover!important}
+#cosmicCompleteBanner{position:absolute;z-index:20;left:50%;top:50%;width:min(560px,calc(100vw - 36px));transform:translate(-50%,-42%) scale(.92);padding:clamp(24px,5vw,42px) clamp(20px,5vw,38px);box-sizing:border-box;border:1px solid #f5d0feaa;border-radius:28px;text-align:center;color:#fff;background:linear-gradient(145deg,#271044f5,#100b2df5);box-shadow:0 0 0 5px #e879f91a,0 0 70px #d946ef66;opacity:0;pointer-events:none;transition:opacity .5s ease,transform .5s cubic-bezier(.2,.8,.2,1);backdrop-filter:blur(18px)}
+#cosmicCompleteBanner.visible{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto}
+#cosmicCompleteBanner .complete-kicker{font-size:.7rem;letter-spacing:.2em;color:#f0abfc;text-transform:uppercase}
+#cosmicCompleteBanner h2{font-size:clamp(1.6rem,6vw,2.5rem);line-height:1.15;margin:12px 0;color:#fff;text-shadow:0 0 26px #e879f9aa}
+#cosmicCompleteBanner p{font-size:clamp(.9rem,2.8vw,1.05rem);line-height:1.7;color:#f3e8ff;margin:0}
+#cosmicCompleteBanner button{margin-top:22px;border:1px solid #fff8;border-radius:999px;padding:12px 22px;background:linear-gradient(100deg,#ec4899,#8b5cf6);color:white;font:800 .8rem 'Lexend',sans-serif;letter-spacing:.06em;cursor:pointer;box-shadow:0 8px 25px #c026d355}
+@media(max-width:600px){#cosmicWorld .cosmic-header{top:clamp(16px,3vh,28px)!important}#cosmicWorld .cosmic-title{font-size:clamp(1.6rem,8vw,2.45rem)!important}#cosmicWorld .memory-star .star-label{font-size:.62rem!important}#cosmicWorld .memory-progress{font-size:.62rem!important}}
+
+
+/* FINAL CLEAN COSMIC THEME OVERRIDE — replaces conflicting earlier star/card rules. */
+#cosmicWorld{
+  position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;height:100dvh!important;
+  min-height:100dvh!important;max-width:none!important;margin:0!important;padding:0!important;box-sizing:border-box!important;
+  overflow:hidden!important;isolation:isolate!important;contain:none!important;border-radius:0!important;transform:none!important;
+  background:radial-gradient(ellipse at 50% 110%,#44216c 0%,#21143f 35%,#0c0b24 72%,#04050f 100%)!important;
+  color:#fff!important;opacity:0;transition:opacity .9s ease!important;
+}
+#cosmicWorld.visible{opacity:1!important}
+#cosmicWorld.hidden{display:none!important}
+#cosmicWorld .cosmic-header{
+  position:absolute!important;z-index:5!important;top:0!important;left:0!important;right:0!important;width:100%!important;
+  max-width:none!important;margin:0!important;padding:clamp(24px,5vh,54px) clamp(18px,5vw,72px) 16px!important;
+  box-sizing:border-box!important;text-align:center!important;
+}
+#cosmicWorld .cosmic-kicker{font-size:clamp(.58rem,1.4vw,.75rem)!important;letter-spacing:.22em!important;line-height:1.5!important;color:#e9d5ff!important}
+#cosmicWorld .cosmic-title{font-size:clamp(1.8rem,5.3vw,3.65rem)!important;line-height:1.07!important;letter-spacing:-.035em!important;margin:12px auto 10px!important;max-width:1000px!important;text-wrap:balance!important}
+#cosmicWorld .cosmic-subtitle{font-size:clamp(.72rem,1.7vw,.9rem)!important;line-height:1.65!important;max-width:700px!important;margin:0 auto!important;padding:0 8px!important;color:#e4d9fa!important}
+#cosmicWorld .memory-constellation{
+  position:absolute!important;z-index:2!important;inset:0!important;top:0!important;left:0!important;right:0!important;bottom:0!important;
+  width:100%!important;height:100%!important;max-width:none!important;margin:0!important;padding:0!important;box-sizing:border-box!important;
+  display:block!important;overflow:hidden!important;scroll-snap-type:none!important;scrollbar-width:none!important;background:transparent!important;
+}
+#cosmicWorld .memory-star{
+  position:absolute!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:8px!important;
+  width:clamp(78px,10vw,120px)!important;height:auto!important;min-width:0!important;max-width:calc(100vw - 24px)!important;flex:none!important;
+  padding:8px 4px!important;margin:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;
+  color:#fff!important;overflow:visible!important;cursor:pointer!important;touch-action:manipulation!important;-webkit-tap-highlight-color:transparent!important;
+  transform:translate(-50%,-50%)!important;animation:cosmicStarFloat var(--float,4.5s) ease-in-out infinite!important;
+  filter:drop-shadow(0 0 12px #c084fc88)!important;transition:filter .25s ease!important;z-index:3!important;
+}
+#cosmicWorld .memory-star:nth-child(1){left:15%!important;top:43%!important;--float:4.4s}
+#cosmicWorld .memory-star:nth-child(2){left:29%!important;top:68%!important;--float:5.1s}
+#cosmicWorld .memory-star:nth-child(3){left:42%!important;top:40%!important;--float:4.7s}
+#cosmicWorld .memory-star:nth-child(4){left:55%!important;top:66%!important;--float:5.4s}
+#cosmicWorld .memory-star:nth-child(5){left:68%!important;top:42%!important;--float:4.2s}
+#cosmicWorld .memory-star:nth-child(6){left:80%!important;top:66%!important;--float:5.3s}
+#cosmicWorld .memory-star:nth-child(7){left:90%!important;top:41%!important;--float:3.8s}
+#cosmicWorld .memory-star .star-core{
+  display:grid!important;place-items:center!important;width:clamp(48px,6.2vw,72px)!important;height:clamp(48px,6.2vw,72px)!important;aspect-ratio:1!important;
+  box-sizing:border-box!important;border:1px solid #f5d0feaa!important;border-radius:50%!important;font-size:clamp(1.4rem,3.2vw,2.2rem)!important;
+  background:radial-gradient(circle at 35% 25%,#fff 0%,#f5d0fe 12%,#c4b5fd 29%,#8b5cf6 49%,#4c1d95 72%,#17102e 100%)!important;
+  box-shadow:0 0 0 5px #c4b5fd12,0 0 22px #c084fcbb,0 0 48px #a855f766!important;transition:transform .28s ease,box-shadow .28s ease!important;
+}
+#cosmicWorld .memory-star .star-label{
+  display:block!important;width:max-content!important;max-width:min(150px,34vw)!important;box-sizing:border-box!important;padding:5px 9px!important;
+  border:1px solid #e9d5ff35!important;border-radius:999px!important;background:#10092299!important;backdrop-filter:blur(8px)!important;
+  color:#f7edff!important;font-size:clamp(.56rem,1.1vw,.72rem)!important;font-weight:800!important;letter-spacing:.065em!important;
+  line-height:1.4!important;text-align:center!important;text-shadow:0 2px 8px #000!important;white-space:normal!important;overflow-wrap:anywhere!important;
+}
+#cosmicWorld .memory-star:hover,#cosmicWorld .memory-star:focus-visible{filter:drop-shadow(0 0 22px #f0abfc)!important;outline:2px solid #f5d0fe!important;outline-offset:4px!important;z-index:8!important}
+#cosmicWorld .memory-star:hover .star-core,#cosmicWorld .memory-star:focus-visible .star-core{transform:scale(1.13)!important;box-shadow:0 0 0 6px #f5d0fe20,0 0 34px #f0abfc,0 0 70px #c084fc!important}
+#cosmicWorld .memory-star.final-star .star-core{background:radial-gradient(circle at 35% 25%,#fff 0%,#fef3c7 13%,#f9a8d4 35%,#c084fc 65%,#581c87 100%)!important;box-shadow:0 0 0 6px #fef3c722,0 0 34px #f9a8d4,0 0 75px #c084fc!important;animation:cosmicFinalPulse 1.8s ease-in-out infinite alternate!important}
+#cosmicWorld .memory-progress{position:absolute!important;z-index:6!important;left:0!important;right:0!important;bottom:max(18px,env(safe-area-inset-bottom))!important;padding:10px 18px!important;box-sizing:border-box!important;text-align:center!important;color:#f1e5ff!important;font-size:clamp(.62rem,1.4vw,.78rem)!important;letter-spacing:.055em!important;line-height:1.6!important;text-shadow:0 2px 12px #000!important}
+#cosmicWorld .cosmic-float{z-index:1!important;pointer-events:none!important;will-change:transform,opacity!important}
+#cosmicWorld #memoryModal{position:absolute!important;z-index:15!important;inset:0!important;width:100%!important;height:100%!important;box-sizing:border-box!important;padding:clamp(16px,4vw,36px)!important;display:flex;align-items:center;justify-content:center;background:#05030bd9!important;backdrop-filter:blur(10px)!important}
+#cosmicWorld #memoryModal.hidden{display:none!important}
+#cosmicWorld .memory-card{width:min(540px,100%)!important;max-height:min(78dvh,760px)!important;overflow:auto!important;box-sizing:border-box!important;padding:clamp(22px,5vw,38px)!important;border:1px solid #f0abfc66!important;border-radius:26px!important;background:linear-gradient(145deg,#2b1745f7,#11102bf7)!important;box-shadow:0 0 75px #c084fc44!important}
+#cosmicWorld #cosmicCompleteBanner{z-index:20!important}
+@keyframes cosmicStarFloat{0%,100%{margin-top:0;filter:drop-shadow(0 0 10px #c084fc77)}50%{margin-top:-12px;filter:drop-shadow(0 0 19px #f0abfcbb)}}
+@keyframes cosmicFinalPulse{from{filter:brightness(1);transform:scale(1)}to{filter:brightness(1.22);transform:scale(1.07)}}
+@media(max-width:700px){
+ #cosmicWorld .cosmic-header{padding:clamp(18px,3vh,28px) 16px 12px!important}
+ #cosmicWorld .cosmic-title{font-size:clamp(1.55rem,7.8vw,2.45rem)!important;margin:9px auto!important}
+ #cosmicWorld .cosmic-subtitle{max-width:340px!important;font-size:.7rem!important}
+ #cosmicWorld .memory-star{width:76px!important;gap:6px!important;padding:6px 2px!important}
+ #cosmicWorld .memory-star .star-core{width:44px!important;height:44px!important;font-size:1.3rem!important}
+ #cosmicWorld .memory-star .star-label{max-width:100px!important;font-size:.52rem!important;padding:4px 6px!important;letter-spacing:.025em!important}
+ #cosmicWorld .memory-star:nth-child(1){left:13%!important;top:40%!important}
+ #cosmicWorld .memory-star:nth-child(2){left:35%!important;top:59%!important}
+ #cosmicWorld .memory-star:nth-child(3){left:58%!important;top:39%!important}
+ #cosmicWorld .memory-star:nth-child(4){left:82%!important;top:58%!important}
+ #cosmicWorld .memory-star:nth-child(5){left:16%!important;top:74%!important}
+ #cosmicWorld .memory-star:nth-child(6){left:51%!important;top:76%!important}
+ #cosmicWorld .memory-star:nth-child(7){left:85%!important;top:78%!important}
+ #cosmicWorld .memory-progress{bottom:max(10px,env(safe-area-inset-bottom))!important;padding:8px 12px!important;font-size:.6rem!important}
+}
+@media(prefers-reduced-motion:reduce){#cosmicWorld .memory-star,#cosmicWorld .memory-star.final-star .star-core,#cosmicWorld .cosmic-float{animation:none!important;transition:none!important}}
+
+
+/* Final Hall of Fame spacing fix: keep every star and label inside the usable viewport. */
+#cosmicWorld .cosmic-header{padding:clamp(18px,3.5vh,34px) clamp(18px,4vw,54px) 12px!important}
+#cosmicWorld .memory-star{z-index:4!important}
+#cosmicWorld .memory-star:nth-child(1){left:13%!important;top:43%!important}
+#cosmicWorld .memory-star:nth-child(2){left:29%!important;top:64%!important}
+#cosmicWorld .memory-star:nth-child(3){left:42%!important;top:42%!important}
+#cosmicWorld .memory-star:nth-child(4){left:55%!important;top:64%!important}
+#cosmicWorld .memory-star:nth-child(5){left:68%!important;top:42%!important}
+#cosmicWorld .memory-star:nth-child(6){left:79%!important;top:64%!important}
+#cosmicWorld .memory-star:nth-child(7){left:89%!important;top:43%!important}
+#cosmicWorld .memory-progress{bottom:max(14px,env(safe-area-inset-bottom))!important;padding:8px 16px!important}
+#cosmicWorld #cosmicCompleteBanner{display:none!important}
+#cosmicWorld #cosmicCompleteBanner.visible{display:block!important}
+@media(max-width:700px){
+ #cosmicWorld .cosmic-header{padding:18px 14px 8px!important}
+ #cosmicWorld .cosmic-kicker{letter-spacing:.12em!important}
+ #cosmicWorld .cosmic-title{font-size:clamp(1.45rem,7vw,2.1rem)!important;line-height:1.08!important;margin:8px auto!important}
+ #cosmicWorld .cosmic-subtitle{font-size:.68rem!important;line-height:1.45!important}
+ #cosmicWorld .memory-star{width:72px!important;gap:5px!important}
+ #cosmicWorld .memory-star .star-core{width:42px!important;height:42px!important;font-size:1.25rem!important}
+ #cosmicWorld .memory-star .star-label{max-width:94px!important;font-size:.49rem!important;line-height:1.3!important;padding:4px 5px!important}
+ #cosmicWorld .memory-star:nth-child(1){left:15%!important;top:38%!important}
+ #cosmicWorld .memory-star:nth-child(2){left:39%!important;top:53%!important}
+ #cosmicWorld .memory-star:nth-child(3){left:64%!important;top:38%!important}
+ #cosmicWorld .memory-star:nth-child(4){left:85%!important;top:53%!important}
+ #cosmicWorld .memory-star:nth-child(5){left:17%!important;top:69%!important}
+ #cosmicWorld .memory-star:nth-child(6){left:50%!important;top:69%!important}
+ #cosmicWorld .memory-star:nth-child(7){left:82%!important;top:69%!important}
+ #cosmicWorld .memory-progress{bottom:max(8px,env(safe-area-inset-bottom))!important;font-size:.57rem!important;padding:6px 10px!important}
+ #cosmicWorld .memory-card{max-height:72dvh!important;padding:22px 18px!important}
+}
+
+/* Meteor-to-Earth birthday finale */
+#wishPromptOverlay,#meteorFinale{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;z-index:2147483000!important;display:flex;align-items:center;justify-content:center;padding:22px;background:#03030b;}
+#wishPromptOverlay.hidden,#meteorFinale.hidden{display:none!important}
+.wish-prompt-card{width:min(460px,94vw);padding:clamp(22px,5vw,36px);border:1px solid #f9a8d466;border-radius:26px;background:linear-gradient(145deg,#24123e,#11152e);box-shadow:0 0 55px #d946ef33;text-align:center;color:#fff}
+.wish-prompt-card h2{margin:0 0 10px;font-size:clamp(1.5rem,5vw,2.1rem)}.wish-prompt-card p{color:#e9d5ff;line-height:1.6}
+#wishPromptInput{width:100%;margin:12px 0 16px;padding:14px 16px;border-radius:13px;border:1px solid #f0abfc88;background:#0c0a20;color:#fff;font:inherit;outline:none}
+#meteorFinale{overflow:hidden;background:radial-gradient(ellipse at 50% 85%,#25124a 0%,#08071a 52%,#010107 100%);flex-direction:column;color:white;text-align:center;isolation:isolate}
+.meteor-alert{position:absolute;top:10%;left:50%;transform:translateX(-50%);width:min(600px,90vw);padding:16px;border:1px solid #fb7185;border-radius:18px;background:#3b0718dd;box-shadow:0 0 35px #fb718555;font-weight:900;letter-spacing:.08em;animation:alertPulse 1s ease-in-out infinite alternate}
+@keyframes alertPulse{to{box-shadow:0 0 50px #fb7185aa;transform:translateX(-50%) scale(1.025)}}
+.meteor-stage{position:absolute;inset:0;overflow:hidden;pointer-events:none}.meteor-rock{position:absolute;top:-15%;left:72%;font-size:clamp(40px,8vw,86px);filter:drop-shadow(0 0 18px #ff9f43);animation:meteorFall 3s cubic-bezier(.35,.05,.8,.45) forwards;transform:rotate(-25deg)}
+.meteor-trail{position:absolute;top:2%;left:69%;width:7px;height:28vh;background:linear-gradient(#fff7ad,#fb923c,transparent);filter:blur(3px);transform:rotate(32deg);transform-origin:top;animation:meteorFall 3s cubic-bezier(.35,.05,.8,.45) forwards}
+@keyframes meteorFall{0%{top:-18%;left:75%;opacity:0;transform:translate(0,0) rotate(-25deg)}10%{opacity:1}80%{opacity:1}100%{top:70%;left:25%;opacity:0;transform:translate(-15vw,15vh) rotate(20deg)}}
+.meteor-impact{position:absolute;bottom:9%;left:25%;width:10px;height:10px;border-radius:50%;background:#fff5c2;box-shadow:0 0 0 0 #f97316aa;opacity:0;animation:impactFlash .8s 2.6s ease-out forwards}
+@keyframes impactFlash{0%{opacity:1;box-shadow:0 0 0 0 #f97316aa}100%{opacity:0;box-shadow:0 0 0 150px #f9731622}}
+.meteor-caption{position:relative;z-index:2;margin-top:24vh;font-size:clamp(1.6rem,5vw,3.3rem);font-weight:900;text-shadow:0 0 25px #fb7185;animation:rise .7s ease both}
+.earth-scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;opacity:0;visibility:hidden;transition:opacity 1s ease; background:radial-gradient(ellipse at 50% 80%,#172554 0%,#08071a 60%,#010107 100%)}
+.earth-scene.visible{opacity:1;visibility:visible}.earth-orb{width:clamp(150px,27vw,250px);aspect-ratio:1;border-radius:50%;position:relative;background:radial-gradient(circle at 30% 25%,#a5f3fc,#38bdf8 28%,#2563eb 53%,#172554 76%);box-shadow:inset -22px -18px 35px #020617aa,0 0 50px #38bdf866;animation:earthBob 4s ease-in-out infinite}
+.earth-land{position:absolute;inset:0;border-radius:50%;background:radial-gradient(ellipse at 36% 38%,#4ade80 0 8%,transparent 9%),radial-gradient(ellipse at 65% 57%,#22c55e 0 12%,transparent 13%),radial-gradient(ellipse at 47% 68%,#86efac 0 7%,transparent 8%);opacity:.9}
+.earth-eyes{position:absolute;top:37%;left:0;right:0;display:flex;justify-content:center;gap:28px}.earth-eyes span{width:19px;height:27px;border-radius:50%;background:white;position:relative;box-shadow:0 0 10px #fff}.earth-eyes span:after{content:'';position:absolute;width:8px;height:12px;border-radius:50%;background:#111827;left:6px;top:8px}.earth-mouth{position:absolute;top:54%;left:calc(50% - 8px);width:16px;height:10px;border-bottom:3px solid #172554;border-radius:50%}
+@keyframes earthBob{50%{transform:translateY(-12px) rotate(3deg)}}.earth-bubble{width:min(560px,90vw);padding:20px 22px;border-radius:22px;background:#ffffffef;color:#24113e;font-weight:750;line-height:1.65;box-shadow:0 12px 40px #0006;position:relative}.earth-bubble:before{content:'';position:absolute;top:-10px;left:50%;border-width:0 12px 12px;border-style:solid;border-color:transparent transparent #ffffffef;transform:translateX(-50%)}
+#meteorContinue{position:relative;z-index:4}.meteor-stars{position:absolute;inset:0;background-image:radial-gradient(#fff 1px,transparent 1.5px),radial-gradient(#c4b5fd 1px,transparent 1.5px);background-size:53px 53px,91px 91px;background-position:0 0,23px 37px;opacity:.42;animation:starDrift 30s linear infinite}
+@keyframes starDrift{to{background-position:200px 300px,-180px 250px}}
+
+
+/* REALISTIC EARTH UPGRADE: satellite-style land, clouds, atmosphere and India marker */
+.earth-orb{
+  width:clamp(190px,34vw,310px)!important;
+  background-color:#06152f!important;
+  background-image:
+    radial-gradient(circle at 31% 24%,#ffffff22 0%,transparent 28%),
+    linear-gradient(105deg,#00102c00 35%,#00091dbb 100%),
+    url('https://raw.githubusercontent.com/turban/webgl-earth/master/images/2_no_clouds_4k.jpg')!important;
+  background-size:cover,cover,auto 100%!important;
+  background-position:center,center,71% 50%!important;
+  box-shadow:inset -28px -20px 34px #020617b8,inset 8px 4px 22px #8be9ff55,0 0 0 2px #7dd3fc33,0 0 44px #38bdf866!important;
+  overflow:hidden;
+}
+.earth-land{
+  inset:0!important;
+  border-radius:50%!important;
+  opacity:.58!important;
+  background-image:
+    radial-gradient(ellipse at 50% 27%,#ffffffb0 0 1%,transparent 20%),
+    repeating-linear-gradient(165deg,transparent 0 17px,#dbeafe18 18px 19px,transparent 20px 31px),
+    url('https://raw.githubusercontent.com/turban/webgl-earth/master/images/fair_clouds_4k.png')!important;
+  background-size:cover,cover,auto 100%!important;
+  background-position:center,center,71% 50%!important;
+  mix-blend-mode:screen!important;
+  pointer-events:none;
+}
+.earth-orb::before{
+  content:'';position:absolute;inset:-2px;border-radius:50%;z-index:2;pointer-events:none;
+  background:radial-gradient(ellipse at 32% 22%,#ffffff3b 0%,transparent 27%),radial-gradient(ellipse at 78% 75%,#020617a8 0%,transparent 55%);
+  box-shadow:inset 0 0 0 1px #93c5fd88,inset -22px -8px 30px #02061788;
+}
+.earth-orb::after{
+  content:'INDIA ✦';position:absolute;z-index:3;left:57%;top:47%;
+  color:#fff7c2;font:900 clamp(9px,1.3vw,12px)/1 system-ui,sans-serif;letter-spacing:.08em;
+  text-shadow:0 0 5px #f97316,0 0 12px #fbbf24,0 1px 3px #000;
+  padding:5px 7px;border:1px solid #fde68a99;border-radius:999px;
+  background:#7c2d1280;box-shadow:0 0 14px #fb923666;
+}
+.earth-eyes,.earth-mouth{z-index:4}
+.earth-eyes{top:35%!important;gap:25px!important}
+.earth-eyes span{width:17px!important;height:24px!important;box-shadow:0 0 10px #fff,0 0 18px #7dd3fc!important}
+.earth-mouth{top:53%!important;border-bottom-color:#e0f2fe!important}
+@media(max-width:600px){.earth-orb{width:clamp(190px,57vw,260px)!important}.earth-bubble{font-size:14px;padding:16px!important}}
+
 </style></head>
 <body>
 <button id="pageRefresh" class="page-refresh" type="button" aria-label="Refresh birthday website" title="Start over">↻</button>
@@ -517,9 +717,19 @@ html.hall-fullscreen,body.hall-fullscreen{overflow:hidden!important;width:100%!i
     <button class="memory-star final-star" style="left:83%;top:84%;--float:3.1s" data-memory="6" aria-label="Open the birthday finale"><span class="star-core">🎂</span><span class="star-label">07 · AND HERE WE ARE</span></button>
   </div>
   <div class="memory-progress" id="memoryProgress">MEMORIES DISCOVERED: 0 / 7 · follow the stars 💫</div>
+  <div id="cosmicCompleteBanner" role="status" aria-live="polite"><div class="complete-kicker">all chapters unlocked ✨</div><h2>YOU DISCOVERED EVERYTHING! 🌌</h2><p>You found all seven memories in Saran's universe. Hall of Fame complete! 💗</p><button id="completeBannerClose" type="button">BACK TO THE UNIVERSE ✨</button></div>
   <div id="memoryModal" class="memory-modal hidden" role="dialog" aria-modal="true" aria-labelledby="memoryTitle">
     <div class="memory-card"><div id="memoryEmoji" class="memory-emoji">🌟</div><h3 id="memoryTitle">THE BEGINNING</h3><p id="memoryText"></p><button id="memoryClose" class="btn stage-yes memory-close">BACK TO THE STARS ✨</button></div>
   </div>
+</div>
+<div id="wishPromptOverlay" class="hidden" role="dialog" aria-modal="true" aria-labelledby="wishPromptTitle">
+ <div class="wish-prompt-card"><div style="font-size:2.5rem">🌠💗</div><h2 id="wishPromptTitle">MAKE A WISH, SARAN!</h2><p>Close your eyes, think of something you truly wish for, and type it here. Your wish stays right here in this birthday universe. ✨</p><form id="wishPromptForm"><input id="wishPromptInput" maxlength="180" placeholder="My birthday wish is…" aria-label="Your birthday wish" required><button class="btn stage-yes" type="submit">MAKE MY WISH ✨</button></form></div>
+</div>
+<div id="meteorFinale" class="hidden" aria-live="polite">
+ <div class="meteor-stars"></div><div class="meteor-alert" id="meteorAlert">⚠️ COSMIC ALERT: METEOR INCOMING ⚠️</div>
+ <div class="meteor-stage" id="meteorStage"><div class="meteor-trail"></div><div class="meteor-rock">☄️</div><div class="meteor-impact"></div></div>
+ <div class="meteor-caption" id="meteorCaption">WAIT… IS THIS THE END?! 😭</div>
+ <div class="earth-scene" id="earthScene"><div class="earth-orb"><div class="earth-land"></div><div class="earth-eyes"><span></span><span></span></div><div class="earth-mouth"></div></div><div class="earth-bubble" id="earthBubble">“WHAT WAS THAT?! …IT’S A SHOOTING STAR! 🌠 I HOPE SARAN’S WISH COMES TRUE. 💗”</div><button id="meteorContinue" class="btn stage-yes">AWWW 🥹💗</button></div>
 </div>
 
 </footer>
@@ -750,10 +960,17 @@ document.querySelector('[data-next="grandBirthday"]').addEventListener('click',(
 
 </script></body></html>
 <script>
+let saransWish = '';
 document.getElementById('wishBtn')?.addEventListener('click',()=>{
- const msg=document.getElementById('wishMessage');msg.classList.remove('hidden');
+ const overlay=document.getElementById('wishPromptOverlay'); overlay?.classList.remove('hidden');
+ setTimeout(()=>document.getElementById('wishPromptInput')?.focus(),80);
+});
+document.getElementById('wishPromptForm')?.addEventListener('submit',e=>{
+ e.preventDefault(); saransWish=document.getElementById('wishPromptInput')?.value.trim()||'';
+ document.getElementById('wishPromptOverlay')?.classList.add('hidden');
+ const msg=document.getElementById('wishMessage'); if(msg){msg.textContent='Wish made! May something wonderful find you this year. 🌠💗';msg.classList.remove('hidden');}
  const symbols=['✨','💖','🌟','💕','🌸','⭐'];
- for(let i=0;i<34;i++){const e=document.createElement('span');e.className='wish-spark';e.textContent=symbols[Math.floor(Math.random()*symbols.length)];e.style.left=(35+Math.random()*30)+'vw';e.style.top=(55+Math.random()*25)+'vh';e.style.setProperty('--x',((Math.random()-.5)*260)+'px');e.style.fontSize=(15+Math.random()*18)+'px';document.body.appendChild(e);setTimeout(()=>e.remove(),2000)}
+ for(let i=0;i<34;i++){const el=document.createElement('span');el.className='wish-spark';el.textContent=symbols[Math.floor(Math.random()*symbols.length)];el.style.left=(35+Math.random()*30)+'vw';el.style.top=(55+Math.random()*25)+'vh';el.style.setProperty('--x',((Math.random()-.5)*260)+'px');el.style.fontSize=(15+Math.random()*18)+'px';document.body.appendChild(el);setTimeout(()=>el.remove(),2000)}
 });
 (() => {
  const arena=document.querySelector('.battle-arena');
@@ -890,7 +1107,7 @@ document.getElementById('closeSecret')?.addEventListener('click',()=>document.ge
 (() => {
   document.getElementById('pageRefresh')?.addEventListener('click',()=>window.location.reload());
   // Move overlays directly under <body> so ancestor layout/overflow cannot constrain fullscreen scenes.
-  ['hallPasswordOverlay','hallVideoWrap','cosmicWorld'].forEach(id=>{const el=document.getElementById(id);if(el&&el.parentElement!==document.body)document.body.appendChild(el);});
+  ['hallPasswordOverlay','hallVideoWrap','cosmicWorld','wishPromptOverlay','meteorFinale'].forEach(id=>{const el=document.getElementById(id);if(el&&el.parentElement!==document.body)document.body.appendChild(el);});
   const openBtn = document.getElementById('hallOfFameOpen');
   const passwordOverlay = document.getElementById('hallPasswordOverlay');
   const passwordForm = document.getElementById('hallPasswordForm');
@@ -911,61 +1128,278 @@ document.getElementById('closeSecret')?.addEventListener('click',()=>document.ge
     {emoji:'🎂💖',title:'07 — AND HERE WE ARE',text:'After all the pranks, the blocks, the reunions, the stupid arguments, the love, and the JEE study sessions… here we are, celebrating YOUR birthday. 🥹💗\n\nHappy Birthday, Saran. Look at all the lore we collected along the way. And we are still here. WOOOOOOO!! 🥳🎉'}
   ];
   const seen = new Set();
+  let completionPending = false;
+  const completeBanner = document.getElementById('cosmicCompleteBanner');
+  function showCompletionBanner(){
+    // Fail-safe: once every star is discovered, the meteor finale is the completion
+    // screen. Do not depend on the old completion banner or its visibility state.
+    if(seen.size !== memories.length) return;
+    window.setTimeout(() => {
+      if(seen.size === memories.length) startMeteorFinale();
+    }, 250);
+  }
+  let finaleStarted=false;
+  function startMeteorFinale(){
+    if(finaleStarted)return; finaleStarted=true;
+    const finale=document.getElementById('meteorFinale');
+    const alert=document.getElementById('meteorAlert');
+    const caption=document.getElementById('meteorCaption');
+    const stage=document.getElementById('meteorStage');
+    const earth=document.getElementById('earthScene');
+    if(!finale)return;
+    completeBanner?.classList.remove('visible');
+    // Keep the finale as a true body-level fullscreen overlay, above every other scene.
+    if(finale.parentElement!==document.body) document.body.appendChild(finale);
+    finale.classList.add('hidden');
+    void finale.offsetWidth;
+    finale.classList.remove('hidden');
+    // Force the overlay above all page layers and ensure the browser paints it.
+    finale.style.cssText += ';position:fixed;inset:0;width:100vw;height:100vh;display:flex;visibility:visible;opacity:1;z-index:2147483647;';
+    alert.style.display=''; alert.style.opacity='1';
+    caption.style.display=''; caption.style.opacity='1';
+    stage.style.display=''; stage.style.opacity='1';
+    earth.classList.remove('visible');
+    setTimeout(()=>{caption.textContent='WAIT… MAYBE IT’S THE END?! 😭';},950);
+    setTimeout(()=>{alert.style.opacity='0';caption.style.opacity='0';stage.style.opacity='0';},3100);
+    setTimeout(()=>{alert.style.display='none';caption.style.display='none';stage.style.display='none';earth.classList.add('visible');},3900);
+    const wishLine=saransWish ? `I HOPE YOUR WISH — “${saransWish}” — COMES TRUE. 💗` : `I HOPE SARAN’S WISH COMES TRUE. 💗`;
+    const bubble=document.getElementById('earthBubble'); if(bubble)bubble.textContent=`“WHAT WAS THAT?! …IT’S A SHOOTING STAR! 🌠 ${wishLine}”`;
+  }
   function showPassword(){ passwordOverlay.classList.remove('hidden'); passwordError.textContent=''; passwordInput.value=''; setTimeout(()=>passwordInput.focus(),80); }
   function closePassword(){ passwordOverlay.classList.add('hidden'); }
   function enterCosmos(){
     document.documentElement.classList.add('hall-fullscreen');document.body.classList.add('hall-fullscreen');
-    video.pause(); videoWrap.classList.add('hidden');
+    video.pause();
     cosmic.classList.remove('hidden');
     requestAnimationFrame(()=>cosmic.classList.add('visible'));
+    cosmic.querySelectorAll('.cosmic-float').forEach(n=>n.remove());
     for(let i=0;i<18;i++){
       const s=document.createElement('span');s.className='cosmic-float';s.textContent=['✨','💖','🌸','⭐','🫧','💫'][Math.floor(Math.random()*6)];
       s.style.left=Math.random()*100+'%';s.style.animationDelay=(Math.random()*12)+'s';s.style.animationDuration=(10+Math.random()*12)+'s';s.style.fontSize=(12+Math.random()*22)+'px';cosmic.appendChild(s);
     }
   }
+  let videoFallbackTimer = 0;
+  let cosmosStarted = false;
   function startVideo(){
     closePassword();
+    cosmosStarted = false;
+    document.documentElement.classList.add('hall-fullscreen');
+    document.body.classList.add('hall-fullscreen');
     document.getElementById('battleScene')?.classList.add('hidden');
     document.getElementById('postBirthdayScene')?.classList.add('hidden');
     document.getElementById('secretEnding')?.classList.add('hidden');
     window.stopBirthdayMusic?.();
-    videoWrap.classList.remove('hidden');fallback.classList.add('hidden');
-    video.currentTime=0;video.style.opacity='1';
+    fallback.classList.add('hidden');
+    videoWrap.classList.remove('hidden');
+    videoWrap.style.display='flex'; videoWrap.style.opacity='1'; video.style.opacity='1';
+    try { video.pause(); video.currentTime=0; video.load(); } catch(err) {}
+    const goToCosmos = () => {
+      if (cosmosStarted) return;
+      cosmosStarted = true;
+      window.clearTimeout(videoFallbackTimer);
+      enterCosmos();
+      videoWrap.style.transition='opacity .45s ease';
+      videoWrap.style.opacity='0';
+      window.setTimeout(()=>{videoWrap.classList.add('hidden');videoWrap.style.display='';videoWrap.style.opacity='1';videoWrap.style.transition='';},480);
+    };
+    window.__hallGoToCosmos = goToCosmos;
     const promise=video.play();
-    if(promise && typeof promise.catch==='function') promise.catch(()=>fallback.classList.remove('hidden'));
-    // If the remote video URL fails to load, offer a direct path to the animated cosmic scene.
-    window.setTimeout(()=>{if(videoWrap.classList.contains('hidden'))return;if(video.readyState===0||video.error)fallback.classList.remove('hidden');},3500);
+    if(promise && typeof promise.catch==='function') promise.catch(()=>{fallback.classList.remove('hidden');});
+    // Some hosted MP4 links fail or stall. Never leave the user on a blank video screen.
+    videoFallbackTimer = window.setTimeout(()=>{
+      if(cosmosStarted || videoWrap.classList.contains('hidden')) return;
+      if(video.error || video.readyState===0 || video.paused) { fallback.classList.remove('hidden'); goToCosmos(); }
+    },5000);
   }
   openBtn?.addEventListener('click',showPassword);
   document.getElementById('hallPasswordCancel')?.addEventListener('click',closePassword);
   passwordForm?.addEventListener('submit',e=>{
     e.preventDefault();
-    if(passwordInput.value==='areyouforreal?'){startVideo();}
+    if(passwordInput.value.trim().toLowerCase()==='areyouforreal?'){startVideo();}
     else{passwordError.textContent='Not quite 👀 try the secret password again.';passwordInput.select();}
   });
   video.addEventListener('ended',()=>{
-    // Leave the video wrapper visible as a black frame, then fade that frame away into the cosmos.
-    videoWrap.style.background='#000';videoWrap.style.opacity='1';videoWrap.style.transition='opacity 1.7s ease';
-    video.style.opacity='0';video.style.transition='opacity .35s ease';
-    setTimeout(()=>requestAnimationFrame(()=>videoWrap.style.opacity='0'),450);
-    setTimeout(()=>{videoWrap.classList.add('hidden');videoWrap.style.opacity='1';enterCosmos();},2200);
+    if(window.__hallGoToCosmos) window.__hallGoToCosmos();
+    else { enterCosmos(); videoWrap.classList.add('hidden'); }
   });
-  video.addEventListener('error',()=>fallback.classList.remove('hidden'));
-  document.getElementById('hallSkipVideo')?.addEventListener('click',()=>{videoWrap.classList.add('hidden');enterCosmos();});
+  video.addEventListener('error',()=>{fallback.classList.remove('hidden');if(window.__hallGoToCosmos)window.__hallGoToCosmos();});
+  document.getElementById('hallSkipVideo')?.addEventListener('click',()=>{if(window.__hallGoToCosmos)window.__hallGoToCosmos();else{enterCosmos();videoWrap.classList.add('hidden');}});
   document.querySelectorAll('.memory-star').forEach(btn=>btn.addEventListener('click',()=>{
     const i=Number(btn.dataset.memory),m=memories[i];if(!m)return;
     document.getElementById('memoryEmoji').textContent=m.emoji;
     document.getElementById('memoryTitle').textContent=m.title;
     document.getElementById('memoryText').textContent=m.text;
+    // Only one overlay at a time: hide completion banner before opening any memory.
+    completeBanner?.classList.remove('visible');
     memoryModal.classList.remove('hidden');seen.add(i);
-    document.getElementById('memoryProgress').textContent=`MEMORIES DISCOVERED: ${seen.size} / 7 · ${seen.size===7?'you found every chapter 💗':'keep following the stars 💫'}`;
-    if(i===6){
-      document.getElementById('memoryText').textContent=m.text+'\n\nENJOY THE REST OF YOUR DAY WOOO!! 🎉🥳💗';
-      if(seen.size===7) setTimeout(()=>{const title=document.getElementById('memoryTitle');title.textContent='🏆 HALL OF FAME COMPLETE!';},500);
+    document.getElementById('memoryProgress').textContent=`MEMORIES DISCOVERED: ${seen.size} / 7 · ${seen.size===7?'ALL CHAPTERS UNLOCKED! 💗':'keep following the stars 💫'}`;
+    if(i===6){document.getElementById('memoryText').textContent=m.text+'\n\nENJOY THE REST OF YOUR DAY WOOO!! 🎉🥳💗';}
+    if(seen.size===7){
+      completionPending = true;
+      document.querySelectorAll('.memory-star').forEach(star=>star.classList.add('memory-found'));
     }
   }));
-  document.getElementById('memoryClose')?.addEventListener('click',()=>memoryModal.classList.add('hidden'));
-  memoryModal?.addEventListener('click',e=>{if(e.target===memoryModal)memoryModal.classList.add('hidden')});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'){closePassword();memoryModal?.classList.add('hidden')}});
+  function closeMemory(){
+    memoryModal.classList.add('hidden');
+    if(seen.size === memories.length){
+      completionPending = false;
+      // Start directly from the close action; this avoids any timing dependency
+      // on the modal's CSS transition or the completion-banner state.
+      showCompletionBanner();
+    }
+  }
+  document.getElementById('memoryClose')?.addEventListener('click',closeMemory);
+  document.getElementById('completeBannerClose')?.addEventListener('click',()=>completeBanner?.classList.remove('visible'));
+  document.getElementById('meteorContinue')?.addEventListener('click',()=>{document.getElementById('meteorFinale')?.classList.add('hidden');});
+  memoryModal?.addEventListener('click',e=>{if(e.target===memoryModal)closeMemory()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){closePassword();if(memoryModal&&!memoryModal.classList.contains('hidden'))closeMemory();else memoryModal?.classList.add('hidden')}});
+})();
+</script>
+
+<!-- HARD FAIL-SAFE PATCH: force finale after the seventh memory closes; gate NEXT on a real wish. -->
+<style>
+#meteorFinale.force-finale{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;min-height:100dvh!important;z-index:2147483647!important;display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}
+#meteorFinale.force-finale .meteor-alert,#meteorFinale.force-finale .meteor-stage{display:block!important;visibility:visible!important}
+#meteorFinale.force-finale .earth-scene{display:flex!important}
+#thanksStage [data-next="thanksStage"]:disabled{opacity:.45!important;filter:grayscale(1);cursor:not-allowed!important;pointer-events:none!important}
+#wishPromptForm button:disabled{opacity:.4;filter:grayscale(1);cursor:not-allowed}
+</style>
+<script>
+(function(){
+  const $=id=>document.getElementById(id);
+  const wishInput=$('wishPromptInput');
+  const wishForm=$('wishPromptForm');
+  const wishOverlay=$('wishPromptOverlay');
+  const wishButton=$('wishBtn');
+  const nextButton=document.querySelector('#grandBirthday [data-next="thanksStage"]');
+  const submitButton=wishForm?.querySelector('button[type="submit"]');
+  let wishSaved=!!(wishInput?.value.trim());
+  if(nextButton){nextButton.disabled=!wishSaved;nextButton.setAttribute('aria-disabled',String(!wishSaved));}
+  if(submitButton)submitButton.disabled=true;
+  if(wishInput){
+    const validate=()=>{const valid=wishInput.value.trim().length>0;if(submitButton)submitButton.disabled=!valid;wishInput.setCustomValidity(valid?'':'Please write your wish first 💗');};
+    wishInput.addEventListener('input',validate);validate();
+  }
+  wishButton?.addEventListener('click',()=>{
+    if(wishOverlay){wishOverlay.classList.remove('hidden');wishOverlay.style.display='flex';wishOverlay.style.zIndex='2147483646';}
+    setTimeout(()=>wishInput?.focus(),80);
+  });
+  wishForm?.addEventListener('submit',e=>{
+    const value=wishInput?.value.trim()||'';
+    if(!value){e.preventDefault();e.stopImmediatePropagation();if(wishInput){wishInput.setCustomValidity('Please write your wish first 💗');wishInput.reportValidity();wishInput.focus();}return;}
+    wishSaved=true;
+    if(nextButton){nextButton.disabled=false;nextButton.setAttribute('aria-disabled','false');}
+    window.saransWish=value;
+    // Update the original script's lexical value indirectly through the displayed ending copy.
+    const bubble=$('earthBubble');if(bubble)bubble.textContent=`“WHAT WAS THAT?! …IT’S A SHOOTING STAR! 🌠 I HOPE YOUR WISH — “${value}” — COMES TRUE. 💗”`;
+  },true);
+  nextButton?.addEventListener('click',e=>{if(!wishSaved){e.preventDefault();e.stopImmediatePropagation();wishOverlay?.classList.remove('hidden');wishInput?.focus();}},true);
+
+  let forceSequenceStarted=false;
+  function forceMeteorSequence(){
+    if(forceSequenceStarted)return;
+    const progress=$('memoryProgress')?.textContent||'';
+    const modal=$('memoryModal');
+    if(!/7\s*\/\s*7/.test(progress))return;
+    forceSequenceStarted=true;
+    modal?.classList.add('hidden');
+    const cosmos=$('cosmicWorld');if(cosmos)cosmos.style.visibility='hidden';
+    const finale=$('meteorFinale');if(!finale)return;
+    if(finale.parentElement!==document.body)document.body.appendChild(finale);
+    finale.classList.remove('hidden');finale.classList.add('force-finale');
+    finale.style.cssText='position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;min-height:100dvh!important;z-index:2147483647!important;display:flex!important;visibility:visible!important;opacity:1!important;background:#03030b!important;';
+    const alert=$('meteorAlert'),stage=$('meteorStage'),caption=$('meteorCaption'),earth=$('earthScene');
+    if(alert){alert.style.cssText='display:block!important;visibility:visible!important;opacity:1!important;';alert.textContent='⚠️ COSMIC ALERT: METEOR INCOMING ⚠️';}
+    if(stage){stage.style.cssText='display:block!important;visibility:visible!important;opacity:1!important;';}
+    if(caption){caption.style.cssText='display:block!important;visibility:visible!important;opacity:1!important;';caption.textContent='WAIT… MAYBE IT’S THE END?! 😭';}
+    if(earth){earth.classList.remove('visible');earth.style.cssText='position:absolute;inset:0;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:18px;opacity:0;visibility:hidden;transition:opacity 1s ease;background:radial-gradient(ellipse at 50% 80%,#172554 0%,#08071a 60%,#010107 100%);';}
+    const wish=wishInput?.value.trim()||'';const bubble=$('earthBubble');if(bubble)bubble.textContent=wish?`“WHAT WAS THAT?! …IT’S A SHOOTING STAR! 🌠 I HOPE YOUR WISH — “${wish}” — COMES TRUE. 💗”`:'“WHAT WAS THAT?! …IT’S A SHOOTING STAR! 🌠 I HOPE SARAN’S WISH COMES TRUE. 💗”';
+    // Restart the meteor animation even if an earlier attempt partially ran.
+    const rock=finale.querySelector('.meteor-rock');if(rock){rock.style.animation='none';void rock.offsetWidth;rock.style.animation='';}
+    setTimeout(()=>{if(caption)caption.textContent='WAIT… MAYBE IT’S THE END?! 😭';},900);
+    setTimeout(()=>{if(alert)alert.style.opacity='0';if(caption)caption.style.opacity='0';if(stage)stage.style.opacity='0';},3000);
+    setTimeout(()=>{if(alert)alert.style.display='none';if(caption)caption.style.display='none';if(stage)stage.style.display='none';if(earth){earth.style.opacity='1';earth.style.visibility='visible';earth.classList.add('visible');}},3800);
+  }
+  // Capture the close click at document level so the finale doesn't depend on the original handler.
+  document.addEventListener('click',e=>{
+    if(e.target?.closest?.('#memoryClose')){
+      const progress=$('memoryProgress')?.textContent||'';
+      if(/7\s*\/\s*7/.test(progress))setTimeout(forceMeteorSequence,80);
+    }
+  },true);
+  // Also handle Escape/backdrop close paths for the final memory.
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&/7\s*\/\s*7/.test($('memoryProgress')?.textContent||''))setTimeout(forceMeteorSequence,100);});
+})();
+</script>
+
+<!-- FINAL SOOTHING FALLING-TEXT ENDING -->
+<style>
+#softTextEnding{position:fixed;inset:0;z-index:2147483647;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:24px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity 1.1s ease,visibility 1.1s ease;color:#fff;text-align:center;font-family:inherit;background:#17132c url('https://64.media.tumblr.com/1ffe10fef9003d04afad69ac86e6ddbd/88ffab23dcef37b6-fc/s400x600/f32bc3572a46226f6e230ac25bf6101870153255.gif') center center/cover no-repeat}
+#softTextEnding.active{opacity:1;visibility:visible;pointer-events:auto}
+#softTextEnding:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,9,31,.25),rgba(15,12,37,.48));backdrop-filter:blur(1px)}
+#softTextEnding .soft-glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 50%,rgba(255,199,231,.16),transparent 58%)}
+#softTextEnding .falling-letters{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+#softTextEnding .falling-letter{position:absolute;top:-12vh;left:var(--left);font-size:var(--size);color:var(--color);opacity:0;text-shadow:0 0 14px rgba(255,221,244,.8);animation:softLetterFall var(--duration) cubic-bezier(.22,.65,.28,1) var(--delay) forwards;will-change:transform,opacity}
+@keyframes softLetterFall{0%{transform:translate3d(0,-8vh,0) rotate(-16deg) scale(.7);opacity:0}12%{opacity:.95}72%{transform:translate3d(var(--sway),72vh,0) rotate(10deg) scale(1.08);opacity:.95}83%{transform:translate3d(var(--sway),66vh,0) rotate(-5deg) scale(.96)}91%{transform:translate3d(var(--sway),70vh,0) rotate(3deg) scale(1.02)}100%{transform:translate3d(var(--sway),68vh,0) rotate(0) scale(1);opacity:.75}}
+#softTextEnding .soft-message{position:relative;z-index:2;max-width:780px;width:min(100%,780px);padding:clamp(25px,5vw,48px) clamp(20px,5vw,46px);border:1px solid rgba(255,255,255,.5);border-radius:30px;background:rgba(35,26,61,.46);box-shadow:0 20px 80px rgba(5,3,25,.25),inset 0 0 35px rgba(255,255,255,.08);backdrop-filter:blur(10px);animation:softMessageFloat 5s ease-in-out infinite}
+#softTextEnding .soft-kicker{font-size:clamp(.8rem,2vw,1rem);letter-spacing:.2em;text-transform:uppercase;color:#ffe0f1;margin:0 0 16px}
+#softTextEnding h2{font-size:clamp(2rem,6vw,4.2rem);line-height:1.1;margin:0 0 20px;color:#fff3fb;text-shadow:0 0 25px rgba(255,162,218,.6);animation:softTitleBounce 2.8s ease-in-out infinite}
+#softTextEnding p{font-size:clamp(1.02rem,2.5vw,1.35rem);line-height:1.75;color:#fff8fd;margin:0 auto 12px}
+#softTextEnding .soft-signoff{margin-top:20px;font-size:clamp(1rem,2.5vw,1.2rem);font-weight:800;color:#ffe0a8;letter-spacing:.04em}
+#softTextEnding .soft-finish{margin-top:26px;border:1px solid rgba(255,255,255,.65);border-radius:999px;padding:13px 27px;color:#fff;background:linear-gradient(110deg,#a86bdc,#e879ad);font-size:1rem;font-weight:800;box-shadow:0 8px 30px rgba(218,120,204,.35);cursor:pointer;transition:transform .2s ease}
+#softTextEnding .soft-finish:hover{transform:translateY(-3px) scale(1.04)}
+@keyframes softTitleBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes softMessageFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@media(prefers-reduced-motion:reduce){#softTextEnding *,#softTextEnding *:before{animation:none!important;transition:none!important}}
+@media(max-height:650px){#softTextEnding .soft-message{padding:18px 22px}#softTextEnding h2{font-size:clamp(1.7rem,5vh,2.8rem)}#softTextEnding p{line-height:1.45}}
+</style>
+<script>
+(function(){
+ const oldEnding=document.getElementById('eeveeBlessingEnd');
+ if(oldEnding)oldEnding.remove();
+ function makeSoftEnding(){
+   let root=document.getElementById('softTextEnding');
+   if(root)return root;
+   root=document.createElement('section');
+   root.id='softTextEnding';
+   root.setAttribute('aria-label','Soothing birthday blessing');
+   root.innerHTML='<div class="soft-glow"></div><div class="falling-letters" aria-hidden="true"></div><div class="soft-message"><div class="soft-kicker">a little wish for you ✨</div><h2>May God Bless You, Saran 💗</h2><p>May your days be gentle, your heart stay happy, and your life be filled with love, peace, good health, and beautiful surprises.</p><p>May the things you quietly wish for find their way to you, and may you always have a reason to smile. You deserve so much happiness. 🌷</p><div class="soft-signoff">HAPPY BIRTHDAY, SARAN 🎂✨</div><button class="soft-finish" type="button">THE END · GAME SAVED ♡</button></div>';
+   document.body.appendChild(root);
+   const rain=root.querySelector('.falling-letters');
+   const chars=['✦','♡','✧','·','⋆','♥','✨','S','A','R','A','N'];
+   for(let i=0;i<42;i++){
+     const span=document.createElement('span');
+     span.className='falling-letter';
+     span.textContent=chars[Math.floor(Math.random()*chars.length)];
+     span.style.setProperty('--left',(Math.random()*100)+'%');
+     span.style.setProperty('--size',(12+Math.random()*22)+'px');
+     span.style.setProperty('--color',['#fff2fb','#ffd8ed','#e9dcff','#fff0c7'][i%4]);
+     span.style.setProperty('--duration',(4.5+Math.random()*5)+'s');
+     span.style.setProperty('--delay',(Math.random()*2.8)+'s');
+     span.style.setProperty('--sway',((Math.random()-.5)*100)+'px');
+     rain.appendChild(span);
+   }
+   root.querySelector('.soft-finish').addEventListener('click',()=>{
+     const msg=root.querySelector('.soft-message');
+     msg.innerHTML='<div class="soft-kicker">✨ saved forever ✨</div><h2>Game Saved ♡</h2><p>One more year, a million new memories, and so many good things waiting for you.</p><div class="soft-signoff">HAVE THE LOVELIEST BIRTHDAY 💗</div>';
+   });
+   return root;
+ }
+ function showSoftEnding(){
+   const meteor=document.getElementById('meteorFinale');
+   if(meteor)meteor.classList.add('hidden');
+   const old=document.getElementById('eeveeBlessingEnd');
+   if(old)old.classList.remove('active');
+   const root=makeSoftEnding();
+   root.classList.remove('active');
+   void root.offsetWidth;
+   root.classList.add('active');
+ }
+ // The Earth scene's AWWW button should lead directly to this text-only finale.
+ document.addEventListener('click',function(e){
+   if(e.target && (e.target.id==='meteorContinue'||e.target.closest('#meteorContinue'))){
+     e.preventDefault();e.stopImmediatePropagation();showSoftEnding();
+   }
+ },true);
 })();
 </script>
