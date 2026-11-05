@@ -1063,6 +1063,38 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--lilac);outline-offs
   width:0!important;
   height:0!important;
 }
+ /* Study Nook iframe scrollbar */
+html {
+    scrollbar-width: thin !important;
+    scrollbar-color: #9568d8 #111019 !important;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+    width: 7px !important;
+    height: 7px !important;
+}
+
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+*::-webkit-scrollbar-track {
+    background: #111019 !important;
+}
+
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #c69bea, #7952b5) !important;
+    border-radius: 20px !important;
+    border: 1px solid #111019 !important;
+}
+
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover,
+*::-webkit-scrollbar-thumb:hover {
+    background: #d5b3ff !important;
+}
 </style></head>
 <body><main class="shell">
 <nav class="subjectbar" aria-label="Study sections">
