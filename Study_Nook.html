@@ -1063,38 +1063,6 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--lilac);outline-offs
   width:0!important;
   height:0!important;
 }
- /* Study Nook iframe scrollbar */
-html {
-    scrollbar-width: thin !important;
-    scrollbar-color: #9568d8 #111019 !important;
-}
-
-html::-webkit-scrollbar,
-body::-webkit-scrollbar,
-*::-webkit-scrollbar {
-    width: 7px !important;
-    height: 7px !important;
-}
-
-html::-webkit-scrollbar-track,
-body::-webkit-scrollbar-track,
-*::-webkit-scrollbar-track {
-    background: #111019 !important;
-}
-
-html::-webkit-scrollbar-thumb,
-body::-webkit-scrollbar-thumb,
-*::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #c69bea, #7952b5) !important;
-    border-radius: 20px !important;
-    border: 1px solid #111019 !important;
-}
-
-html::-webkit-scrollbar-thumb:hover,
-body::-webkit-scrollbar-thumb:hover,
-*::-webkit-scrollbar-thumb:hover {
-    background: #d5b3ff !important;
-}
 </style></head>
 <body><main class="shell">
 <nav class="subjectbar" aria-label="Study sections">
@@ -1268,7 +1236,7 @@ function chapterExtras(name){
 }
 const grid=document.getElementById("chapterGrid"),search=document.getElementById("search");
 
-function resourceStatusForChapter(resourceName){
+function resourceStatusForChapter(resourceName,subject="physics"){
  const aliases={
   "solids or elasticity":"solids",
   "fluids":"fluid mechanics",
@@ -1280,17 +1248,18 @@ function resourceStatusForChapter(resourceName){
   .replace(/&/g," ").replace(/\band\b/g," ")
   .replace(/[^a-z0-9]/g,"").replace(/s$/,"");
  let target=aliases[String(resourceName||"").toLowerCase()]||resourceName;
- let idx=syllabusData.physics.findIndex(row=>normalize(row[0])===normalize(target));
+ const rows=syllabusData[subject]||[];
+ let idx=rows.findIndex(row=>normalize(row[0])===normalize(target));
  if(idx<0){
   const targetNorm=normalize(target);
-  idx=syllabusData.physics.findIndex(row=>{
+  idx=rows.findIndex(row=>{
    const n=normalize(row[0]);
    return n===targetNorm||n.includes(targetNorm)||targetNorm.includes(n);
   });
  }
  if(idx<0)return {tier:0,className:"",label:"",index:-1};
- const theoryDone=statusValue("physics",idx,"theory")==="Done";
- const pyqsDone=statusValue("physics",idx,"pyqs")==="Done";
+ const theoryDone=statusValue(subject,idx,"theory")==="Done";
+ const pyqsDone=statusValue(subject,idx,"pyqs")==="Done";
  if(theoryDone&&pyqsDone)return {tier:2,className:"resource-both-done",label:"Theory + PYQs done",index:idx};
  if(theoryDone)return {tier:1,className:"resource-theory-done",label:"Theory done",index:idx};
  if(pyqsDone)return {tier:1,className:"resource-pyqs-done",label:"PYQs done",index:idx};
@@ -1808,7 +1777,10 @@ function renderBlankSubjectLibrary(subject){
  const grid=document.getElementById("blankChapterGrid");
  const search=document.getElementById("blankSearch");
  const query=(search?.value||"").trim().toLowerCase();
- const filtered=data.map(([name],i)=>({name,i})).filter(x=>!query||x.name.toLowerCase().includes(query));
+ const openNames=new Set([...grid.querySelectorAll(".chapter.open .chaptertitle")].map(el=>el.childNodes[0]?.textContent?.trim()).filter(Boolean));
+ const ordered=data.map(([name],i)=>({name,i,status:resourceStatusForChapter(name,subject)}))
+  .sort((a,b)=>a.status.tier-b.status.tier||a.i-b.i);
+ const filtered=ordered.filter(x=>!query||x.name.toLowerCase().includes(query));
  document.getElementById("blankTitle").textContent=`${label} · Chapter Library`;
  document.getElementById("blankSubtitle").textContent="Chapter-wise resource blocks, ready for your links.";
  document.getElementById("blankCount").textContent=`${filtered.length} of ${data.length} chapters`;
@@ -1826,14 +1798,17 @@ function renderBlankSubjectLibrary(subject){
   document.getElementById("chemistryExtraGrid").innerHTML=chemistryExtraResources.map(card).join("");
   document.querySelectorAll("[data-chem-open]").forEach(btn=>btn.addEventListener("click",()=>openGroup(btn.dataset.chemOpen)));
  }
- grid.innerHTML=filtered.map(({name,i})=>`<article class="chapter">
-  <button class="chapterhead" type="button" aria-expanded="false">
+ grid.innerHTML=filtered.map(({name,i,status})=>{
+  const stateBadge=status.label?`<span class="resource-status-label">${status.tier===2?'<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8 3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>':'<span class="resource-status-dot"></span>'}${status.label}</span>`:"";
+  return `<article class="chapter ${status.className}" data-resource-tier="${status.tier}">
+  <button class="chapterhead" type="button" aria-expanded="${openNames.has(name)?"true":"false"}">
    <span class="num">${String(i+1).padStart(2,"0")}</span>
-   <span class="chaptertitle">${esc(name)}<div class="chaptermeta">Resource block · ready to add links</div></span>
+   <span class="chaptertitle">${esc(name)}<div class="chaptermeta">${status.label?"Resource block · tap to explore ":"Resource block · ready to add links"}${stateBadge}</div></span>
    <span class="chev" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path d="m6.5 9 5.5 5.5L17.5 9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
   </button>
   <div class="resources">${subject==="chemistry" ? [...(chemistryMindMapResources[name]||[]).map(([label,url])=>`<div class="resrow"><div><div class="resname">${esc(label)}</div><div class="restype">Mind Map Revision</div></div><a class="openlink" href="${url}" target="_blank" rel="noopener noreferrer">Open ↗</a></div>`),...(verifiedChemistryResources[name]||[]).map(([label,url])=>`<div class="resrow"><div><div class="resname">${esc(label)}</div><div class="restype">ChemShiksha / JEEfinity · PYQs</div></div><a class="openlink" href="${url}" target="_blank" rel="noopener noreferrer">Open ↗</a></div>`)].join("") || `<div class="blank-resource-box">No resource available</div>` : [...(mathsSameer2026JanuaryResources[name]||[]).map(([label,url])=>`<div class="resrow"><div><div class="resname">${esc(label)}</div><div class="restype">Sameer Sir · January 2026</div></div><a class="openlink" href="${url}" target="_blank" rel="noopener noreferrer">Open ↗</a></div>`),...(mathsSameer2026AprilResources[name]||[]).map(([label,url])=>`<div class="resrow"><div><div class="resname">${esc(label)}</div><div class="restype">Sameer Sir · April 2026 · MathonGo WAR Room</div></div><a class="openlink" href="${url}" target="_blank" rel="noopener noreferrer">Open ↗</a></div>`),...(mathsSameer2025Resources[name]||[]).map(([label,url])=>`<div class="resrow"><div><div class="resname">${esc(label)}</div><div class="restype">Sameer Sir · 2025</div></div><a class="openlink" href="${url}" target="_blank" rel="noopener noreferrer">Open ↗</a></div>`),...(mathsRevisionResources[name]||[]).map(([label,url])=>`<div class="resrow"><div><div class="resname">${esc(label)}</div><div class="restype">Chapterwise JEE Main PYQs · 2022–2024</div></div><a class="openlink" href="${url}" target="_blank" rel="noopener noreferrer">Open ↗</a></div>`)].join("") || `<div class="blank-resource-box">No resource added</div>`}</div>
- </article>`).join("")||`<div class="empty">No matching chapter found. Try another keyword.</div>`;
+ </article>`;
+ }).join("")||`<div class="empty">No matching chapter found. Try another keyword.</div>`;
  grid.querySelectorAll(".chapterhead").forEach(btn=>btn.addEventListener("click",()=>{
   const card=btn.closest(".chapter");card.classList.toggle("open");
   btn.setAttribute("aria-expanded",card.classList.contains("open"));
