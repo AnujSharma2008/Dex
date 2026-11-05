@@ -1063,6 +1063,29 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--lilac);outline-offs
   width:0!important;
   height:0!important;
 }
+
+/* Mock tracker v74: editable history + point-by-point chart comparisons */
+.history-actions{display:flex;align-items:center;justify-content:center;gap:5px}
+.history-actions .mock-edit,.history-actions .mock-delete{width:29px;height:29px;display:inline-grid;place-items:center;border:1px solid #51445f;border-radius:9px;background:#211e2b;color:#cbb8ee}
+.history-actions .mock-edit:hover{background:#332849;border-color:#9b83c5;transform:translateY(-1px)}
+.mock-chart-wrap{position:relative;overflow:visible!important}
+.mock-chart-wrap svg{overflow:visible}
+.mock-chart-hit{cursor:crosshair}
+.mock-chart-tooltip{position:absolute;z-index:20;width:232px;max-width:calc(100% - 16px);padding:11px 12px;border:1px solid #665477;border-radius:12px;background:linear-gradient(145deg,#211b2b,#151722);box-shadow:0 12px 32px #0009;color:#f2eafa;pointer-events:none;font:500 10px 'Lexend',sans-serif}
+.mock-chart-tooltip[hidden]{display:none!important}
+.mock-tip-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:5px}
+.mock-tip-head b{font-size:11px;color:#f3d7ee;line-height:1.35}
+.mock-tip-head small{color:#a99bb5;white-space:nowrap;font-size:9px}
+.mock-tip-compare{font-size:9px;color:#a99bb5;padding:5px 0 7px;border-bottom:1px solid #ffffff16;margin-bottom:4px}
+.mock-tip-compare b{color:#d9c5ef}
+.mock-tip-row{display:grid;grid-template-columns:1fr auto auto;gap:9px;align-items:center;padding:4px 0;border-bottom:1px solid #ffffff0b}
+.mock-tip-row:last-child{border-bottom:0}
+.mock-tip-row>span:first-child{color:#c8bfd2}
+.mock-tip-row>b{font-size:11px;font-variant-numeric:tabular-nums}
+.mock-delta{font-size:9px;font-weight:800;min-width:57px;text-align:right}
+.mock-delta.up{color:#8fe0b9}.mock-delta.down{color:#ff9eae}.mock-delta.neutral{color:#aaa0b5}
+@media(max-width:620px){.mock-chart-tooltip{width:214px}.history-actions .mock-edit,.history-actions .mock-delete{width:27px;height:27px}}
+
 </style></head>
 <body><main class="shell">
 <nav class="subjectbar" aria-label="Study sections">
@@ -1128,7 +1151,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--lilac);outline-offs
     <button class="legend-chip maths on" data-series="maths"><i></i>Maths</button>
     <button class="legend-chip physics on" data-series="physics"><i></i>Physics</button>
    </div>
-   <div class="mock-chart-wrap"><svg id="mockChart" viewBox="0 0 900 390" role="img" aria-label="Mock test total marks and subject-wise performance chart"></svg></div>
+   <div class="mock-chart-wrap"><svg id="mockChart" viewBox="0 0 900 390" role="img" aria-label="Mock test total marks and subject-wise performance chart"></svg><div id="mockChartTooltip" class="mock-chart-tooltip" role="status" aria-live="polite" hidden></div></div>
    <div class="mock-chart-foot"><span>New scores appear here as soon as you save a test.</span><span id="mockChartCount">No tests yet</span></div>
   </section>
   <div class="mock-performance-tip"><span class="tip-icon"><svg viewBox="0 0 24 24"><path d="m12 3 2.3 5.7L20 11l-5.7 2.3L12 19l-2.3-5.7L4 11l5.7-2.3L12 3Z"/></svg></span><span><b>Small steps add up.</b><small>Focus on your trend, not just one test's score.</small></span></div>
@@ -1645,7 +1668,12 @@ function renderSyllabus(){
   control.querySelector(".status-menu").hidden=true;
   trigger.setAttribute("aria-expanded","false");
   reorderSyllabusRows(full,subject);
-  if(subject==="physics"&&(key==="theory"||key==="pyqs"))renderChapters();
+  // Keep each subject's resource library in sync with the same syllabus checklist.
+  // Physics uses its original renderer; Maths and Chemistry use the shared subject renderer.
+  if(key==="theory"||key==="pyqs"){
+   if(subject==="physics")renderChapters();
+   else if(subject==="maths"||subject==="chemistry")renderBlankSubjectLibrary(subject);
+  }
  }));
 
 
@@ -1857,7 +1885,8 @@ function readMockTests(){
 const savedMockView=readNookBackup()||{};
 let mockTests=readMockTests(),
  mockSeries={chemistry:true,maths:true,physics:true,...(savedMockView.mockSeries||{})},
- mockPercentMode=!!savedMockView.mockPercentMode;
+ mockPercentMode=!!savedMockView.mockPercentMode,
+ editingMockId=null;
 function saveMockTests(){
  try{
   const payload=JSON.stringify(mockTests);
@@ -1898,6 +1927,33 @@ function openMockForm(){
  const date=document.getElementById("mockDate");
  if(!date.value){const now=new Date();date.value=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(now.getDate()).padStart(2,"0")}`;}
  panel.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function setMockEditorMode(isEditing){
+ const heading=document.querySelector("#mockAddPanel .mock-add-intro h3");
+ const copy=document.querySelector("#mockAddPanel .mock-add-intro p");
+ const save=document.querySelector("#mockTestForm button[type='submit']");
+ if(heading)heading.textContent=isEditing?"Edit mock test":"Log your mock test";
+ if(copy)copy.textContent=isEditing?"Update the saved attempt. Your graph and history will refresh automatically.":"Enter the marks and question analysis. Your dashboard will update automatically.";
+ if(save)save.innerHTML=isEditing?"Update Mock Test":'<svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M10 3v14M3 10h14"/></svg>Save Mock Test';
+}
+function startEditMock(id){
+ const test=mockTests.find(t=>String(t.id)===String(id));if(!test)return;
+ editingMockId=String(test.id);
+ const values={
+  mockDate:test.date||"",mockSource:test.source||"",
+  markPhysics:test.physics,markChemistry:test.chemistry,markMaths:test.maths,
+  wrongPhysics:test.wrong?.[0]??0,wrongChemistry:test.wrong?.[1]??0,wrongMaths:test.wrong?.[2]??0,
+  skipPhysics:test.skip?.[0]??0,skipChemistry:test.skip?.[1]??0,skipMaths:test.skip?.[2]??0,
+  correctPhysics:test.correct?.[0]??0,correctChemistry:test.correct?.[1]??0,correctMaths:test.correct?.[2]??0
+ };
+ Object.entries(values).forEach(([id,value])=>{const field=document.getElementById(id);if(field)field.value=String(value);});
+ setMockEditorMode(true);updateMockTotal();setMockTab("add");
+ showMockNotice(`Editing "${test.source}". Save your changes to update this attempt.`);
+}
+function resetMockEditor(){
+ editingMockId=null;
+ const form=document.getElementById("mockTestForm");form?.reset();
+ setMockEditorMode(false);updateMockTotal();
 }
 function closeMockForm(){setMockTab("performance")}
 function mockFormatDate(date){
@@ -1961,7 +2017,7 @@ function renderMockChart(){
   const totalPoints=data.map((t,i)=>({x:x(i),y:y(mockPercentMode?t.total/3:t.total),value:t.total}));
   const totalLine=smoothPath(totalPoints);
   if(totalPoints.length>1){
-   out+=`<path d="${areaPath(totalLine,totalPoints)}" fill="url(#mockTotalFill)"/><path d="${totalLine}" fill="none" stroke="#c4b3ed" stroke-width="1.9" stroke-opacity=".9" stroke-linecap="round" stroke-linejoin="round"/>`;
+   out+=`<path d="${areaPath(totalLine,totalPoints)}" fill="url(#mockTotalFill)"/><path d="${totalLine}" fill="none" stroke="#c4b3ed" stroke-width="1.9" stroke-opacity=".9" stroke-linecap="round" stroke-linejoin="round"/><path class="mock-chart-hit-line" data-mock-line="1" d="${totalLine}" fill="none" stroke="transparent" stroke-width="18" pointer-events="stroke"/>`;
    const end=totalPoints[totalPoints.length-1];
    out+=`<circle cx="${end.x}" cy="${end.y}" r="7" fill="#c4b3ed" fill-opacity=".12"/><circle cx="${end.x}" cy="${end.y}" r="4.2" fill="#17161f" stroke="#d9ccfa" stroke-width="1.8"><title>Total: ${end.value}/300</title></circle>`;
   }
@@ -1971,18 +2027,59 @@ function renderMockChart(){
    const line=smoothPath(points);
    if(points.length>1){
     out+=`<path d="${areaPath(line,points)}" fill="${fill}"/>`;
-    out+=`<path d="${line}" fill="none" stroke="${color}" stroke-width="1.8" stroke-opacity=".92" stroke-linecap="round" stroke-linejoin="round"/>`;
+    out+=`<path d="${line}" fill="none" stroke="${color}" stroke-width="1.8" stroke-opacity=".92" stroke-linecap="round" stroke-linejoin="round"/><path class="mock-chart-hit-line" data-mock-line="1" d="${line}" fill="none" stroke="transparent" stroke-width="18" pointer-events="stroke"/>`;
    }
    points.forEach(p=>{
     out+=`<circle cx="${p.x}" cy="${p.y}" r="3.1" fill="#17161f" stroke="${color}" stroke-width="1.6"><title>${key[0].toUpperCase()+key.slice(1)}: ${p.value}${mockPercentMode?"%":""}</title></circle>`;
    });
   });
   data.forEach((t,i)=>{
-   const xx=x(i),label=t.source.length>17?t.source.slice(0,15)+"…":t.source;
-   out+=`<text x="${xx}" y="${H-25}" text-anchor="middle" fill="#948a9c" font-size="10" font-family="Lexend, sans-serif">${mockEscape(label)}</text>`;
+   const xx=x(i),label=t.source.length>16?t.source.slice(0,15)+"…":t.source;
+   const anchor=data.length===1?"middle":i===0?"start":i===data.length-1?"end":"middle";
+   const labelX=data.length>1&&i===0?xx:data.length>1&&i===data.length-1?xx:xx;
+   out+=`<text x="${labelX}" y="${H-25}" text-anchor="${anchor}" fill="#b0a5bb" font-size="10" font-weight="600" font-family="Lexend, sans-serif">${mockEscape(label)}</text>`;
+  });
+  // Transparent interaction targets make every plotted series easy to hover.
+  data.forEach((t,i)=>{
+   const xx=x(i);
+   const vals=[mockPercentMode?t.total/3:t.total,t.chemistry,t.maths,t.physics];
+   vals.forEach((value,seriesIndex)=>{
+    out+=`<circle class="mock-chart-hit" data-mock-point="${i}" cx="${xx}" cy="${y(value)}" r="11" fill="transparent" stroke="transparent" pointer-events="all"/>`;
+   });
   });
  }
  svg.innerHTML=out;
+ const tooltip=document.getElementById("mockChartTooltip");
+ const showPoint=(index,event)=>{
+  const current=data[index],previous=index>0?data[index-1]:null;
+  const delta=(value,prior)=>{if(prior===null||prior===undefined)return '<span class="mock-delta neutral">— first test</span>';const d=Number(value)-Number(prior);return `<span class="mock-delta ${d>0?"up":d<0?"down":"neutral"}">${d>0?"↑":d<0?"↓":"="} ${d>0?"+":""}${d}</span>`;};
+  const rows=[
+   ["Total",current.total,previous?.total],
+   ["Physics",current.physics,previous?.physics],
+   ["Chemistry",current.chemistry,previous?.chemistry],
+   ["Maths",current.maths,previous?.maths]
+  ];
+  tooltip.innerHTML=`<div class="mock-tip-head"><b>${mockEscape(current.source)}</b><small>${mockFormatDate(current.date)}</small></div><div class="mock-tip-compare">${previous?`Compared with <b>${mockEscape(previous.source)}</b>`:"Your first recorded mock — no previous comparison"}</div>${rows.map(([name,value,prior])=>`<div class="mock-tip-row"><span>${name}</span><b>${value}${mockPercentMode&&name!=="Total"?"%":""}${name==="Total"?" / 300":""}</b>${delta(value,prior)}</div>`).join("")}`;
+  tooltip.hidden=false;
+  const wrap=document.querySelector(".mock-chart-wrap"),bounds=wrap.getBoundingClientRect();
+  const px=event.clientX-bounds.left,py=event.clientY-bounds.top;
+  tooltip.style.left=`${Math.max(8,Math.min(px+14,bounds.width-242))}px`;
+  tooltip.style.top=`${Math.max(8,Math.min(py-12,bounds.height-174))}px`;
+ };
+ const nearestIndex=event=>{
+  const bounds=svg.getBoundingClientRect();
+  const viewX=(event.clientX-bounds.left)/Math.max(1,bounds.width)*W;
+  return Math.max(0,Math.min(data.length-1,Math.round((viewX-L)/Math.max(1,plotW)*(data.length-1))));
+ };
+ svg.querySelectorAll("[data-mock-point]").forEach(hit=>{
+  hit.addEventListener("pointerenter",event=>showPoint(Number(hit.dataset.mockPoint),event));
+  hit.addEventListener("pointermove",event=>showPoint(Number(hit.dataset.mockPoint),event));
+ });
+ svg.querySelectorAll("[data-mock-line]").forEach(hit=>{
+  hit.addEventListener("pointerenter",event=>showPoint(nearestIndex(event),event));
+  hit.addEventListener("pointermove",event=>showPoint(nearestIndex(event),event));
+ });
+ svg.addEventListener("pointerleave",()=>{if(tooltip)tooltip.hidden=true;});
  document.getElementById("mockChartCount").textContent=`${data.length} ${data.length===1?"test":"tests"} shown`;
 }
 
@@ -2007,8 +2104,9 @@ function renderMockHistory(){
   <td>${mockTriplet(t.wrong,"wrong-triplet")}</td>
   <td>${mockTriplet(t.skip,"skip-triplet")}</td>
   <td>${mockTriplet(t.correct,"correct-triplet")}</td>
-  <td class="history-actions"><button class="mock-delete" type="button" data-delete-mock="${t.id}" aria-label="Delete ${mockEscape(t.source)}" title="Delete test"><svg viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 6h11M8 6V4.2h4V6m-6.5 0 .7 10h7.6l.7-10M8.5 9v4.5m3-4.5v4.5"/></svg></button></td>
+  <td class="history-actions"><button class="mock-edit" type="button" data-edit-mock="${t.id}" aria-label="Edit ${mockEscape(t.source)}" title="Edit test"><svg viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m12.8 3.2 4 4M4 16l1-4L13.8 3.2a1.4 1.4 0 0 1 2 0l1 1a1.4 1.4 0 0 1 0 2L8 15l-4 1Z"/></svg></button><button class="mock-delete" type="button" data-delete-mock="${t.id}" aria-label="Delete ${mockEscape(t.source)}" title="Delete test"><svg viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 6h11M8 6V4.2h4V6m-6.5 0 .7 10h7.6l.7-10M8.5 9v4.5m3-4.5v4.5"/></svg></button></td>
  </tr>`).join("");
+ tbody.querySelectorAll("[data-edit-mock]").forEach(btn=>btn.addEventListener("click",()=>startEditMock(btn.dataset.editMock)));
  tbody.querySelectorAll("[data-delete-mock]").forEach(btn=>btn.addEventListener("click",()=>{
   mockTests=mockTests.filter(t=>String(t.id)!==btn.dataset.deleteMock);saveMockTests();renderMockDashboard();
  }));
@@ -2031,7 +2129,7 @@ function bindMockTracker(){
  document.querySelectorAll("[data-mock-tab]").forEach(btn=>btn.addEventListener("click",()=>setMockTab(btn.dataset.mockTab)));
  document.getElementById("toggleMockForm")?.addEventListener("click",()=>setMockTab("add"));
  document.getElementById("closeMockForm")?.addEventListener("click",()=>setMockTab("performance"));
- document.getElementById("cancelMockForm")?.addEventListener("click",()=>{document.getElementById("mockTestForm").reset();updateMockTotal();});
+ document.getElementById("cancelMockForm")?.addEventListener("click",()=>{resetMockEditor();});
  ["markPhysics","markChemistry","markMaths"].forEach(id=>document.getElementById(id)?.addEventListener("input",updateMockTotal));
  const mockForm=document.getElementById("mockTestForm");
  const draftKey="studyNookMockDraftV1";
@@ -2078,21 +2176,24 @@ function bindMockTracker(){
   const wrong=[mockNum("wrongPhysics"),mockNum("wrongChemistry"),mockNum("wrongMaths")];
   const skip=[mockNum("skipPhysics"),mockNum("skipChemistry"),mockNum("skipMaths")];
   const correct=[mockNum("correctPhysics"),mockNum("correctChemistry"),mockNum("correctMaths")];
-  const entry={id:`${Date.now()}-${Math.random().toString(36).slice(2,8)}`,date,source,physics,chemistry,maths,total:physics+chemistry+maths,wrong,skip,correct,createdAt:Date.now()};
-  mockTests.push(entry);
+  const previousIndex=editingMockId===null?-1:mockTests.findIndex(t=>String(t.id)===String(editingMockId));
+  const previousEntry=previousIndex>=0?{...mockTests[previousIndex]}:null;
+  const entry={id:previousEntry?.id??`${Date.now()}-${Math.random().toString(36).slice(2,8)}`,date,source,physics,chemistry,maths,total:physics+chemistry+maths,wrong,skip,correct,createdAt:previousEntry?.createdAt??Date.now()};
+  if(previousIndex>=0)mockTests[previousIndex]=entry;else mockTests.push(entry);
   const saveButton=form.querySelector('button[type="submit"]');
   if(saveButton){saveButton.disabled=true;saveButton.textContent="Saving…";}
   const saved=saveMockTests();
   if(saveButton){saveButton.disabled=false;saveButton.innerHTML='<svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M10 3v14M3 10h14"/></svg>Save Mock Test';}
   if(!saved){
-   mockTests.pop();
+   if(previousIndex>=0)mockTests[previousIndex]=previousEntry;else mockTests.pop();
    showMockNotice("Could not save this test in this browser. Your form is still here—check browser storage permissions and try again.","error");
    return;
   }
-  form.reset();
+  const wasEditing=previousIndex>=0;
+  editingMockId=null;form.reset();setMockEditorMode(false);
   updateMockTotal();
   renderMockDashboard();
-  showMockNotice(`Saved "${source}" successfully. Your graph and test history have been updated.`);
+  showMockNotice(wasEditing?`Updated "${source}" successfully. Your graph and test history have been refreshed.`:`Saved "${source}" successfully. Your graph and test history have been updated.`);
   setMockTab("performance");
  });
 }
