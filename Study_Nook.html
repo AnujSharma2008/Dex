@@ -1024,6 +1024,45 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--lilac);outline-offs
 #groupModal .inorganic-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 #groupModal .inorganic-add-link,#groupModal .inorganic-edit-link{border:1px solid var(--line);background:#171a26;color:var(--text);border-radius:10px;padding:8px 12px;font-size:12px;font-weight:700;cursor:pointer}
 #groupModal .inorganic-add-link{background:var(--mint);color:#17201d;border-color:transparent}
+
+
+/* Study Nook · slim, soft scrollbar polish */
+:root{
+  scrollbar-color:rgba(157,128,190,.58) rgba(255,255,255,.035);
+  scrollbar-width:thin;
+}
+*{
+  scrollbar-width:thin;
+  scrollbar-color:rgba(157,128,190,.52) rgba(255,255,255,.025);
+}
+*::-webkit-scrollbar{
+  width:6px;
+  height:6px;
+}
+*::-webkit-scrollbar-track{
+  background:rgba(255,255,255,.025);
+  border-radius:999px;
+}
+*::-webkit-scrollbar-thumb{
+  background:linear-gradient(180deg,rgba(176,145,211,.72),rgba(112,87,148,.68));
+  border:1px solid rgba(18,16,25,.72);
+  border-radius:999px;
+}
+*::-webkit-scrollbar-thumb:hover{
+  background:linear-gradient(180deg,rgba(198,168,229,.9),rgba(139,108,178,.88));
+}
+*::-webkit-scrollbar-corner{
+  background:transparent;
+}
+/* Keep intentionally hidden syllabus scrollbar hidden. */
+.syllabus-grid-scroll{
+  scrollbar-width:none!important;
+}
+.syllabus-grid-scroll::-webkit-scrollbar{
+  display:none!important;
+  width:0!important;
+  height:0!important;
+}
 </style></head>
 <body><main class="shell">
 <nav class="subjectbar" aria-label="Study sections">
