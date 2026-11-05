@@ -1,0 +1,2096 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<title>Study Nook · Your study space</title>
+<style>
+:root{--bg:#090a0f;--panel:#11131c;--panel2:#171a26;--line:#292d3d;--text:#f3f0f7;--muted:#9698aa;--pink:#f0a9c8;--lilac:#bba9f5;--mint:#a8d8c4;--gold:#e9d6a5;--shadow:0 18px 55px #0007}
+*{box-sizing:border-box;font-family:'Lexend',sans-serif!important}*::before,*::after{font-family:'Lexend',sans-serif!important}body{margin:0;background:radial-gradient(ellipse at 15% -10%,#30213c 0,transparent 35%),radial-gradient(ellipse at 95% 5%,#1c3031 0,transparent 28%),var(--bg);color:var(--text);font-family:'Lexend',sans-serif!important;font-size:15px;line-height:1.55;min-height:100vh}
+button,input{font:inherit}button{cursor:pointer}.shell{max-width:1250px;margin:auto;padding:30px 22px 70px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:35px}.brand{display:flex;align-items:center;gap:12px}.logo{width:44px;height:44px;border-radius:15px;background:linear-gradient(135deg,#f0a9c8,#bba9f5);display:grid;place-items:center;color:#19121f;font-size:23px;box-shadow:0 7px 28px #c28ecb44}.brandname{font-weight:800;letter-spacing:.02em;font-size:18px}.brandname span{color:var(--pink)}.tagline{font-size:12px;color:var(--muted)}
+.topnote{color:var(--muted);font-size:12px;border:1px solid var(--line);border-radius:99px;padding:8px 13px;background:#ffffff05}
+.hero{display:grid;grid-template-columns:1.3fr .7fr;gap:22px;margin-bottom:25px}.welcome,.focus{background:linear-gradient(135deg,#171522,#111720);border:1px solid #393044;border-radius:25px;padding:28px;box-shadow:var(--shadow);position:relative;overflow:hidden}.welcome:after{content:none!important;display:none!important}.eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:10px;color:var(--pink);font-weight:800}.welcome h1{font-size:clamp(27px,4vw,42px);line-height:1.12;margin:12px 0 10px;max-width:620px}.welcome p{color:#b8b5c5;margin:0;max-width:600px}.focus{background:linear-gradient(145deg,#1b2027,#15151e);border-color:#2e3b38}.focus h3{margin:6px 0 8px;font-size:17px}.focus p{font-size:13px;color:var(--muted);margin:0 0 18px}.tinyrow{display:flex;gap:8px;flex-wrap:wrap}.pill{border:1px solid #3c414b;border-radius:99px;padding:6px 10px;font-size:11px;color:#d4d0dc;background:#ffffff06}
+.subjectbar{display:flex;align-items:center;gap:9px;margin:26px 0 18px;flex-wrap:wrap}.subject{border:1px solid var(--line);background:#11131b;color:#c7c4d1;padding:11px 17px;border-radius:13px;font-weight:700;transition:.2s}.subject.active{background:linear-gradient(135deg,#f0a9c8,#bba9f5);color:#1a1420;border-color:transparent;box-shadow:0 8px 25px #c18bc333}.subject small{font-weight:500;opacity:.7;margin-left:6px}
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:16px 0 20px}.searchwrap{position:relative;flex:1;max-width:520px}.searchwrap span{position:absolute;left:14px;top:10px;color:#999}.search{width:100%;background:#11131b;border:1px solid var(--line);border-radius:13px;padding:11px 14px 11px 40px;color:var(--text);outline:none}.search:focus{border-color:#bba9f5;box-shadow:0 0 0 3px #bba9f522}.filterbtn{background:#151722;border:1px solid var(--line);color:#d4d0dc;padding:10px 13px;border-radius:12px}.filterbtn.active{border-color:var(--pink);color:var(--pink);background:#f0a9c810}
+/* polished interactive controls */
+button,.openlink{transition:transform .2s ease,background .2s ease,border-color .2s ease,color .2s ease,box-shadow .2s ease}
+button:focus-visible,a:focus-visible{outline:2px solid var(--lilac);outline-offset:3px}
+.filterbtn{display:inline-flex;align-items:center;justify-content:center;gap:9px;position:relative;overflow:hidden}
+.filterbtn:hover{background:linear-gradient(110deg,#292338,#202633);border-color:#9b83c5;color:#f6eefa;transform:translateY(-2px);box-shadow:0 7px 22px #bba9f526}
+.filterbtn:active{transform:translateY(0) scale(.98);box-shadow:none}
+.filterbtn .button-icon{transition:transform .2s ease}
+.filterbtn:hover .button-icon{transform:translate(2px,-2px);color:var(--pink)}
+.subject:hover:not(.active){border-color:#7b668b;background:#1b1b29;color:#fff;transform:translateY(-2px);box-shadow:0 7px 20px #bba9f51a}
+.subject.active:hover{filter:brightness(1.06);transform:translateY(-2px);box-shadow:0 10px 27px #c18bc355}
+.chapterhead{cursor:pointer}
+.chapterhead:hover .chaptertitle{color:#f5c6dc}
+.chapterhead:hover .num{background:#f0a9c82a;box-shadow:0 0 0 4px #f0a9c80b}
+.chev{width:30px;height:30px;display:grid;place-items:center;flex:none;border:1px solid #333548;border-radius:10px;background:#ffffff05;color:#bba9f5;transition:transform .25s ease,background .2s ease,border-color .2s ease,color .2s ease}
+.chev svg{display:block;transition:transform .25s ease}
+.chapterhead:hover .chev{background:#bba9f51a;border-color:#8f7bc1;color:#e3d7ff}
+.chapter.open .chev{transform:rotate(180deg);background:#f0a9c815;border-color:#76536b;color:var(--pink)}
+.openlink{display:inline-flex;align-items:center;justify-content:center}
+.openlink:hover{filter:brightness(1.08);transform:translateY(-2px);box-shadow:0 6px 17px #a8d8c433}
+
+.sectionhead{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:28px 0 14px}.sectionhead h2{font-size:20px;margin:0}.sectionhead p{margin:3px 0 0;color:var(--muted);font-size:12px}.count{color:var(--muted);font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.chapter{border:1px solid var(--line);background:linear-gradient(145deg,#141621,#10121a);border-radius:17px;overflow:hidden;transition:.2s}.chapter:hover{border-color:#756184;transform:none;box-shadow:0 0 0 1px #bba9f512,0 8px 22px #0005}.chapterhead{width:100%;border:0;background:transparent;color:inherit;display:flex;align-items:center;gap:13px;padding:16px;text-align:left}.num{width:34px;height:34px;border-radius:11px;background:#f0a9c815;color:var(--pink);display:grid;place-items:center;font-size:12px;font-weight:800;flex:none}.chaptertitle{font-weight:700;flex:1}.chaptermeta{font-size:11px;color:var(--muted);margin-top:2px}.chev{color:#aaa2b8;transition:.2s}.chapter.open .chev{transform:rotate(180deg)}.resources{display:none;border-top:1px solid var(--line);padding:13px 15px 16px;background:#0c0e15}.chapter.open .resources{display:block}.resrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid #ffffff0c}.resrow:last-child{border-bottom:0}.resname{font-size:13px}.restype{font-size:10px;color:var(--muted);margin-top:2px}.openlink{color:#17121c;background:var(--mint);text-decoration:none;font-weight:800;font-size:11px;border-radius:9px;padding:7px 11px;white-space:nowrap}.openlink:hover{filter:brightness(1.1);transform:translateY(-1px)}.empty{grid-column:1/-1;text-align:center;padding:45px 15px;color:var(--muted);border:1px dashed var(--line);border-radius:18px}
+.resourcegrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.resourcecard{border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,#171a26,#11131b);padding:17px;position:relative;overflow:hidden}.resourcecard:before{content:"";position:absolute;width:90px;height:90px;border:1px solid #bba9f51c;border-radius:50%;right:-38px;top:-42px;box-shadow:0 0 0 12px #bba9f509,0 0 0 24px #bba9f506;pointer-events:none}.resourcecard h3{font-size:14px;margin:0 0 5px}.resourcecard p{font-size:11px;color:var(--muted);margin:0 0 13px}.resourcecard a{display:inline-block;color:var(--lilac);font-size:12px;text-decoration:none;font-weight:700}.resourcecard a:hover{text-decoration:underline}
+.blank{display:none;border:1px dashed #454052;border-radius:22px;padding:45px 25px;text-align:center;background:#11131a}.blank .flower{font-size:35px}.blank h2{margin:8px 0}.blank p{color:var(--muted);max-width:420px;margin:0 auto}.footer{text-align:center;color:#77788a;font-size:11px;margin-top:42px}.footer b{color:#c4a9d9}
+.hidden{display:none!important}
+@media(max-width:980px){.welcome{padding-right:245px}.hero-art{width:220px;opacity:.72}}\n@media(max-width:760px){.welcome{padding-right:190px}.hero-art{width:180px;opacity:.34}.hero{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.resourcegrid{grid-template-columns:1fr 1fr}.toolbar{align-items:stretch;flex-direction:column}.searchwrap{max-width:none}.topnote{display:none}.shell{padding:20px 14px 50px}}
+@media(max-width:460px){.resourcegrid{grid-template-columns:1fr}.subject{padding:10px 12px}.welcome,.focus{padding:21px}.welcome{padding-right:21px}.hero-art{width:145px;opacity:.16}}
+
+/* Study Nook dashboard layout */
+.hero{grid-template-columns:1.25fr .75fr;gap:22px}
+.welcome{min-height:260px;display:flex;flex-direction:column;justify-content:center;padding:32px;padding-right:285px}
+.welcome h1,.welcome p,.welcome .eyebrow{position:relative;z-index:1}.welcome h1{max-width:440px}.welcome p{max-width:470px}.hero-art{position:absolute;width:260px;height:auto;right:8px;bottom:0;opacity:.96;pointer-events:none;z-index:0}
+.focus{min-height:260px;padding:25px 27px;display:flex;flex-direction:column;justify-content:center}
+.focus .eyebrow{color:var(--pink)!important}
+.focus .targetline{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:2px 0 18px}
+.targetdate{font-size:23px;font-weight:800;line-height:1.2}
+.targetlabel{font-size:12px;color:#c9c3d4}
+.timer-note{font-size:11px;color:#f0c3dc;background:#f0a9c817;border:1px solid #f0a9c833;border-radius:99px;padding:7px 10px;white-space:nowrap}
+.countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.timeunit{background:linear-gradient(145deg,#282336,#1a1c29);border:1px solid #51445f;border-radius:15px;padding:12px 5px;text-align:center}
+.timeunit strong{display:block;font-size:clamp(20px,2.4vw,30px);line-height:1.2;color:#e8c8f4;font-weight:800;font-variant-numeric:tabular-nums}
+.timeunit span{font-size:10px;color:#c1b9cd}
+.timer-track{height:6px;border-radius:99px;background:#393347;margin-top:17px;overflow:hidden}
+.timer-track span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--lilac));border-radius:99px;transition:width .4s}
+.subjectbar{margin:22px 0 25px}
+.subject{display:flex;align-items:center;gap:10px;min-width:0}
+.subject .subject-icon{width:34px;height:34px;display:grid;place-items:center;color:#e9c8f2;font-size:20px}
+.subject .subject-copy{display:flex;flex-direction:column;align-items:flex-start;line-height:1.25}
+.subject .subject-copy strong{font-size:16px}
+.subject .subject-copy small{font-size:11px;margin:4px 0 0;opacity:.78}
+.subject.syllabus-tab{border-color:#654c67;background:linear-gradient(135deg,#241d2e,#1c1b29)}
+.subject.syllabus-tab.active{background:linear-gradient(135deg,#f0a9c8,#bba9f5)}
+.workspace{display:block;width:100%}
+.workspace-main{min-width:0;width:100%}
+.workspace-main .sectionhead:first-child{margin-top:0}
+.syllabus-card{border:1px solid #393044;border-radius:24px;background:linear-gradient(145deg,#171522,#11141d);padding:20px;box-shadow:var(--shadow);position:sticky;top:18px}
+.syllabus-title{display:flex;align-items:center;gap:12px;margin-bottom:15px}
+.syllabus-icon{width:42px;height:42px;border-radius:14px;background:#f0a9c81a;color:var(--pink);display:grid;place-items:center;flex:none}
+.syllabus-title h2{font-size:18px;margin:0}
+.syllabus-title p{font-size:11px;color:var(--muted);margin:3px 0 0}
+.syllabus-subject{border:1px solid #39364a;background:#171824;border-radius:15px;padding:12px;margin-top:10px}
+.syllabus-subject-head{display:flex;align-items:center;gap:9px;cursor:pointer}
+.syllabus-subject-head .sicon{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#bba9f51c;color:#d8c6fa;font-size:17px}
+.syllabus-subject-head .sname{font-size:13px;font-weight:700;flex:1}
+.syllabus-subject-head .sprogress{font-size:10px;color:var(--muted);white-space:nowrap}
+.syllabus-subject-head .sarrow{width:27px;height:27px;border:1px solid #454052;border-radius:50%;display:grid;place-items:center;color:#d6c3f0;transition:.2s}
+.syllabus-subject.expanded .sarrow{transform:rotate(90deg);background:#bba9f51a;border-color:#8e79b5}
+.progressline{height:6px;background:#393346;border-radius:99px;margin:9px 0 0 43px;overflow:hidden}
+.progressline span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--lilac));border-radius:99px}
+.progress-caption{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin:5px 0 0 43px}
+.syllabus-list{display:none;margin-top:12px;border-top:1px solid #ffffff10;padding-top:9px}
+.syllabus-subject.expanded .syllabus-list{display:block}
+.syllabus-row{display:grid;grid-template-columns:minmax(0,1fr) repeat(4,29px);align-items:center;gap:4px;padding:7px 0;border-bottom:1px solid #ffffff0a}
+.syllabus-row:last-child{border-bottom:0}
+.syllabus-chapter{font-size:10px;color:#e3dfeb;line-height:1.3}
+.syllabus-check{width:17px;height:17px;accent-color:#c6a9e9;cursor:pointer;justify-self:center}
+.check-head{display:grid;grid-template-columns:minmax(0,1fr) repeat(4,29px);gap:4px;padding:0 0 6px;border-bottom:1px solid #ffffff15;color:#a9a3b5;font-size:8px;text-align:center}
+.check-head span:first-child{text-align:left}
+.syllabus-footer{font-size:10px;color:var(--muted);margin-top:13px;line-height:1.5}
+.syllabus-footer b{color:#e6c4dc}
+#syllabusView{display:none}
+#syllabusView.visible{display:block}
+#physicsPanel.hidden{display:none!important}
+#blankPanel{display:none}
+.subject-empty{border:1px dashed #51445f;border-radius:22px;padding:40px 22px;text-align:center;background:#11131b}
+.subject-empty .empty-icon{font-size:30px;color:var(--pink)}
+.subject-empty h2{margin:9px 0 5px}
+.subject-empty p{max-width:430px;margin:0 auto;color:var(--muted);font-size:13px}
+@media(max-width:980px){.workspace{display:block}.hero{grid-template-columns:1fr 1fr}}
+@media(max-width:980px){.welcome{padding-right:245px}.hero-art{width:220px;opacity:.72}}\n@media(max-width:760px){.welcome{padding-right:190px}.hero-art{width:180px;opacity:.34}.hero{grid-template-columns:1fr}.welcome,.focus{min-height:unset}.subjectbar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.subject{justify-content:flex-start}.countdown{gap:6px}.timeunit{padding:10px 3px}.syllabus-card{padding:15px}}
+@media(max-width:420px){.countdown{grid-template-columns:repeat(2,1fr)}.timer-note{white-space:normal}.subject .subject-copy strong{font-size:14px}}
+
+
+/* Syllabus table — calm, compact, spreadsheet-inspired */
+.syllabus-view-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0 0 16px}
+.syllabus-view-head h2{margin:0;font-size:23px}
+.syllabus-view-head p{margin:4px 0 0;color:var(--muted);font-size:12px}
+.syllabus-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 16px}
+.syllabus-tab-btn{border:1px solid #343246;background:#151722;color:#d7d0e2;border-radius:12px;padding:10px 16px;font-weight:650;display:flex;align-items:center;gap:8px}
+.syllabus-tab-btn.active{background:linear-gradient(135deg,#f0a9c8,#bba9f5);border-color:transparent;color:#1b1520;box-shadow:0 7px 22px #bba9f533}
+.syllabus-tab-btn:hover{border-color:#bba9f5;transform:translateY(-2px)}
+.syllabus-table-wrap{overflow:auto;border:1px solid #39364a;border-radius:16px;background:#11131b;box-shadow:0 14px 40px #0005}
+.syllabus-table{border-collapse:separate;border-spacing:0;width:100%;min-width:820px;font-size:11px}
+.syllabus-table th{background:#20212c;color:#e7e2ed;font-weight:700;padding:10px 8px;border-right:1px solid #3d3b49;border-bottom:1px solid #494653;text-align:center;white-space:nowrap}
+.syllabus-table thead tr:first-child th{font-size:11px;letter-spacing:.02em}
+.syllabus-table th.chapter-col{text-align:center;font-size:13px}
+.syllabus-table td{padding:5px 7px;border-right:1px solid #353441;border-bottom:1px solid #353441;text-align:center;background:#171923}
+.syllabus-table tr:last-child td{border-bottom:0}
+.syllabus-table td:last-child,.syllabus-table th:last-child{border-right:0}
+.syllabus-table .serial{width:42px;font-weight:800;color:#24202a;background:#ddd5e8}
+.syllabus-table .expected{width:70px;font-weight:800;color:#24202a}.syllabus-table .total-ques{width:70px;font-weight:700;color:#e4dfeb;background:#20222d}
+.syllabus-table .chapter-name{text-align:left;min-width:205px;font-size:11px;font-weight:600;color:#171821}
+.weight-high{background:#eee2ae!important}
+.weight-mid{background:#b9e3bd!important}
+.weight-one{background:#b8cbe9!important}
+.weight-low{background:#e9b1b1!important}
+.syllabus-select{width:100%;min-width:92px;max-width:130px;border:1px solid #343847;border-radius:9px;padding:6px 20px 6px 8px;font:inherit;font-size:10px;font-weight:700;color:#dce0e8;background:#292d36;outline:none;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23c6c6d1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 6px center}
+.syllabus-select:focus{border-color:#c5a9ef;box-shadow:0 0 0 2px #bba9f533}
+.syllabus-select[data-value="Done"]{background-color:#176d4c;color:#effff7;border-color:#23845f}
+.syllabus-select[data-value="In Progress"]{background-color:#185b9b;color:#f1f7ff;border-color:#2879bf}
+.syllabus-select[data-value="Pending"]{background-color:#a51f27;color:#fff4f4;border-color:#c33b45}
+.syllabus-select[data-value="Not Started"]{background-color:#d8dce1;color:#525965;border-color:#c4c9d0}
+.syllabus-legend{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0 0;color:var(--muted);font-size:10px}
+.legend-item{display:flex;align-items:center;gap:5px}
+.legend-swatch{width:10px;height:10px;border-radius:3px}
+.syllabus-summary-strip{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 14px}
+.summary-chip{border:1px solid #39364a;border-radius:10px;background:#171923;padding:8px 11px;color:#c9c4d2;font-size:10px}
+.summary-chip b{color:#f2d2e4;margin-left:4px}
+#syllabusSidebar .syllabus-subject{cursor:pointer}
+#syllabusSidebar .progressline{margin-left:0}
+#syllabusSidebar .progress-caption{margin-left:0}
+#syllabusSidebar .syllabus-subject-head{gap:8px}
+@media(max-width:760px){.syllabus-view-head{align-items:flex-start;flex-direction:column}.syllabus-tabs{display:grid;grid-template-columns:repeat(3,1fr)}.syllabus-tab-btn{justify-content:center;padding:9px 6px;font-size:12px}}
+
+
+.topnav{display:none!important}
+.topnav-btn{border:1px solid transparent;background:transparent;color:#d9d2e4;padding:10px 15px;border-radius:99px;font-weight:650;font-size:12px;display:flex;align-items:center;gap:8px}
+.topnav-btn span{font-size:17px;color:#d8b8ed}
+.topnav-btn:hover,.topnav-btn.active{background:linear-gradient(135deg,#332940,#262335);border-color:#51415e;color:#fff;transform:translateY(-1px)}
+.topnav-btn:focus-visible{outline:2px solid var(--lilac);outline-offset:3px}
+@media(max-width:980px){.top{flex-wrap:wrap}.topnav{order:3;width:100%}}
+@media(max-width:520px){.topnav{justify-content:flex-start;overflow:auto;flex-wrap:nowrap}.topnav-btn{white-space:nowrap;padding:9px 12px}}
+
+
+/* Refined full-width syllabus layout */
+.syllabus-view-head{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:24px 0 14px}
+.syllabus-view-head h2{font-size:clamp(22px,3vw,30px);margin:0}
+.syllabus-view-head p{font-size:12px;color:#c9bfd9;margin:4px 0 0}
+.syllabus-tabs{display:flex;justify-content:flex-start;gap:8px;flex-wrap:wrap;margin:0 0 16px}
+.syllabus-tab-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:118px;border:1px solid #514263;background:linear-gradient(145deg,#211c30,#171725);color:#eee6f8;border-radius:18px;padding:12px 18px;font-weight:700;box-shadow:inset 0 1px #ffffff08;transition:.2s}
+.syllabus-tab-btn span{font-size:18px;color:#d8b4f4}
+.syllabus-tab-btn:hover{transform:translateY(-2px);border-color:#c08acb;box-shadow:0 8px 22px #b98ad52a}
+.syllabus-tab-btn.active{background:linear-gradient(110deg,#f1a9ce,#bca4f5);border-color:#f1b9e4;color:#171322;box-shadow:0 8px 24px #c48ad64a}
+.syllabus-tab-btn.active span{color:#21162a}
+.syllabus-column-head{display:grid;grid-template-columns:minmax(230px,1.7fr) repeat(4,minmax(130px,1fr));gap:12px;align-items:center;padding:0 14px 12px;margin:0 0 5px;color:#e8dff2;font-size:12px;font-weight:700}
+.syllabus-column-head span{display:flex;align-items:center;justify-content:center;gap:8px}
+.syllabus-column-head span:first-child{justify-content:flex-start;padding-left:55px}
+.syllabus-column-head svg{color:#e1b5ef}
+.syllabus-rows{display:flex;flex-direction:column;gap:0;position:relative;overflow:visible;isolation:isolate;border:1px solid #40354f;border-radius:17px;background:linear-gradient(145deg,#171725,#141521);box-shadow:inset 0 1px #ffffff08;margin-top:0;padding-top:10px}
+.syllabus-chapter-row{display:grid;grid-template-columns:42px minmax(190px,1.7fr) repeat(2,minmax(88px,.7fr)) repeat(var(--revision-count,1),minmax(88px,.7fr));gap:10px;align-items:center;padding:8px 12px;border:0;border-bottom:1px solid #343040;border-radius:0;background:transparent;box-shadow:none;transition:background .16s ease}
+.syllabus-chapter-row:last-child{border-bottom:0}
+.syllabus-chapter-row:hover{transform:none;background:#ffffff06;box-shadow:none}
+.syllabus-serial{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#d9b4ef,#b89be8);color:#25172e;display:grid;place-items:center;font-size:13px;font-weight:800;box-shadow:0 4px 13px #bca0e633}
+.syllabus-chapter-name{min-height:31px;border-radius:7px;padding:6px 9px;display:flex;align-items:center;color:#1a1b22;font-size:10px;font-weight:700;line-height:1.3;box-shadow:inset 0 1px #ffffff75}
+.syllabus-chapter-row{grid-template-columns:42px minmax(190px,1.7fr) repeat(2,minmax(88px,.7fr)) repeat(var(--revision-count,1),minmax(88px,.7fr))}
+.syllabus-column-head{grid-template-columns:42px minmax(190px,1.7fr) repeat(2,minmax(88px,.7fr)) repeat(var(--revision-count,1),minmax(88px,.7fr))}
+.syllabus-column-head span:first-child{grid-column:1/3;padding-left:8px}
+.status-pill{width:100%;min-height:34px;position:relative;display:flex;align-items:center;justify-content:center;gap:8px;padding:0 28px 0 28px;border-radius:999px;border:1px solid #79658a;background:linear-gradient(145deg,#30283b,#242132);color:#f6effa;box-shadow:inset 0 1px #ffffff12,0 3px 10px #0002;transition:transform .18s,box-shadow .18s,border-color .18s}
+.status-pill:hover{transform:none;filter:brightness(1.08);box-shadow:0 0 0 3px #c4a1e51a,inset 0 1px #ffffff20}
+.status-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);display:flex;align-items:center;justify-content:center;flex:none}.status-text{display:block;width:100%;text-align:center;font-size:10px;font-weight:700;line-height:1.2;white-space:nowrap}
+
+.status-chevron{position:absolute;right:12px;top:50%;transform:translateY(-50%);pointer-events:none;color:currentColor;opacity:.9}
+#syllabusSidebar{display:none!important}
+@media(max-width:1000px){
+ .syllabus-tabs{margin:0 0 16px;max-width:none;justify-content:flex-start}
+ .syllabus-column-head{display:none}
+ .syllabus-chapter-row{grid-template-columns:34px minmax(0,1fr);gap:7px;padding:9px 10px;border-bottom:1px solid #343040;border-radius:0;background:transparent}
+ .syllabus-serial{grid-row:1;grid-column:1}
+ .syllabus-chapter-name{grid-column:2}
+ .status-pill{grid-column:span 1;min-height:34px}
+ .syllabus-chapter-row{grid-template-columns:34px minmax(0,1fr) repeat(2,minmax(105px,1fr))}
+}
+@media(max-width:620px){
+ .syllabus-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+ .syllabus-tab-btn{min-width:0;padding:8px 6px;font-size:11px;border-radius:13px}
+ .syllabus-chapter-row{grid-template-columns:32px minmax(0,1fr);gap:7px;padding:8px;border-bottom:1px solid #343040;border-radius:0;background:transparent}
+ .syllabus-serial{width:32px;height:32px}
+ .syllabus-chapter-name{font-size:11px}
+ .status-pill{grid-column:span 1;font-size:10px}
+}
+
+
+
+@media(max-width:620px){.syllabus-view-head{align-items:flex-start}.save-syllabus-btn{padding:8px 10px}}
+
+
+/* Custom status menus */
+.status-control{position:relative;width:100%;min-width:0;z-index:1}
+.status-control.menu-open{z-index:30}
+.status-pill{width:100%;min-height:34px;position:relative;display:flex;align-items:center;justify-content:center;gap:8px;padding:0 27px 0 27px;border-radius:999px;border:1px solid #79658a;background:linear-gradient(145deg,#30283b,#242132);color:#f6effa;box-shadow:inset 0 1px #ffffff12,0 3px 10px #0002;transition:background .18s,border-color .18s,box-shadow .18s,filter .18s}
+.status-pill:focus-visible{outline:2px solid #d8b4f4;outline-offset:3px}
+.status-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);display:flex;align-items:center;justify-content:center}
+.status-text{display:block;width:100%;text-align:center;font-size:10px;font-weight:700;line-height:1.2;white-space:nowrap}
+.status-chevron{position:absolute;right:10px;top:50%;transform:translateY(-50%);pointer-events:none;transition:transform .18s}
+.menu-open .status-chevron{transform:translateY(-50%) rotate(180deg)}
+.status-done{background:linear-gradient(110deg,#176e4c,#10553c)!important;border-color:#43b982!important;color:#f1fff7!important}
+.status-in-progress{background:linear-gradient(110deg,#185e9d,#174577)!important;border-color:#5aa4e8!important;color:#f3f9ff!important}
+.status-pending{background:linear-gradient(110deg,#a86628,#78451d)!important;border-color:#e3ad68!important;color:#fff8ee!important}
+.status-not-started{background:linear-gradient(145deg,#30283b,#242132)!important;border-color:#766286!important;color:#f2eafa!important}
+.status-menu{position:absolute;left:50%;top:calc(100% + 7px);transform:translateX(-50%);width:max(100%,158px);max-width:220px;padding:6px;border:1px solid #5c4a70;border-radius:14px;background:linear-gradient(155deg,#211d2d,#151722);box-shadow:0 16px 35px #0009,0 0 0 1px #ffffff08;z-index:50;animation:menuIn .16s ease-out}
+.status-menu[hidden]{display:none}
+.status-option{width:100%;display:flex;align-items:center;gap:9px;padding:9px 10px;border:0;border-radius:9px;background:transparent;color:#e8e1ef;text-align:left;font:500 11px 'Lexend',sans-serif;transition:background .15s,color .15s}
+.status-option:hover,.status-option:focus-visible{background:#ffffff10;outline:none;color:#fff}
+.status-option.selected{background:linear-gradient(100deg,#bba9f526,#f0a9c815);color:#f1d9ff;box-shadow:inset 2px 0 #c9a9ef}
+.option-icon{width:18px;height:18px;display:grid;place-items:center;flex:none}
+.option-check{margin-left:auto;color:#bcebd0}
+.status-control[data-current="Done"] .status-pill{animation:statusPop .24s ease-out}
+.syllabus-chapter-row{animation:rowFade .35s ease both}
+.syllabus-chapter-row:nth-child(2n){animation-delay:.025s}
+.syllabus-tab-btn{transition:background .2s,border-color .2s,box-shadow .2s,color .2s}
+.syllabus-tab-btn.active{animation:tabGlow .35s ease-out}
+@keyframes menuIn{from{opacity:0;transform:translate(-50%,-5px) scale(.98)}to{opacity:1;transform:translate(-50%,0) scale(1)}}
+@keyframes rowFade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+@keyframes statusPop{0%{transform:scale(.97)}65%{transform:scale(1.025)}100%{transform:scale(1)}}
+@keyframes tabGlow{0%{box-shadow:0 0 0 0 #d5a5e500}50%{box-shadow:0 0 22px 2px #d5a5e555}100%{box-shadow:0 8px 24px #c48ad64a}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+
+
+/* Revision controls */
+.revision-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px}
+.revision-hint{font-size:10px;color:#aaa0b9}
+.add-revision-btn{display:inline-flex;align-items:center;gap:7px;border:1px solid #65527b;border-radius:11px;padding:8px 12px;background:linear-gradient(120deg,#30253b,#211e30);color:#ead8f5;font:600 10px 'Lexend',sans-serif;transition:background .18s,border-color .18s,box-shadow .18s}
+.add-revision-btn:hover:not(:disabled){border-color:#d2a6e7;box-shadow:0 0 16px #c59ae733;background:linear-gradient(120deg,#3a2b49,#28233a)}
+.add-revision-btn:disabled{opacity:.65;cursor:default}
+.revision-heading{display:flex!important;align-items:center;justify-content:center;gap:5px;white-space:nowrap}
+.remove-revision{width:19px;height:19px;display:inline-grid;place-items:center;border:1px solid #705d83;border-radius:50%;background:#34283e;color:#eac7f1;cursor:pointer;transition:background .15s,border-color .15s}
+.remove-revision:hover{background:#743d58;border-color:#e6a4c9}
+.syllabus-rows{overflow:visible;position:relative}
+.syllabus-chapter-row{position:relative;z-index:1;overflow:visible}
+.syllabus-chapter-row:has(.status-control.menu-open){z-index:120;background:#211d2d}
+.syllabus-rows:has(.status-control.menu-open){z-index:10}
+.status-control{z-index:1}
+.status-control.menu-open{z-index:100}
+.status-menu{z-index:999}
+.syllabus-chapter-row:has(.status-control.menu-open)~.syllabus-chapter-row{z-index:0}
+.syllabus-rows{isolation:isolate}
+@media(max-width:620px){.revision-toolbar{margin-bottom:10px}.add-revision-btn{padding:7px 9px}}
+
+
+/* Consistent subject tiles and clear table header alignment */
+.subjectbar{display:flex;align-items:stretch;gap:9px;flex-wrap:wrap}
+.subject{min-height:54px;display:flex;align-items:center;justify-content:flex-start;gap:10px}
+.subject .subject-icon{width:34px;height:34px;flex:0 0 34px;display:grid;place-items:center;color:#e8c5f2}
+.subject .subject-icon svg{display:block;width:25px;height:25px}
+.subject .subject-copy{min-width:0}
+.syllabus-tabs{display:flex;align-items:stretch;gap:9px;flex-wrap:wrap}
+.syllabus-tab-btn{min-height:44px;display:flex;align-items:center;justify-content:center;gap:9px}
+.syllabus-tab-btn span{width:22px;height:22px;display:grid;place-items:center;flex:none}
+.syllabus-tab-btn span svg{width:21px;height:21px;display:block}
+.syllabus-grid-scroll{width:100%;overflow-x:auto;overscroll-behavior-x:contain;border-radius:17px;scrollbar-width:thin;scrollbar-color:#655477 #171522}
+.syllabus-column-head,.syllabus-rows{min-width:790px}
+.syllabus-column-head{grid-template-columns:42px minmax(190px,1.7fr) repeat(2,minmax(88px,.7fr)) repeat(var(--revision-count,1),minmax(88px,.7fr));gap:10px;align-items:center;padding:12px 12px;margin:0;border:1px solid #40354f;border-bottom:1px solid #343040;border-radius:17px 17px 0 0;background:linear-gradient(145deg,#211d2d,#191825);color:#e8dff2;font-size:11px;font-weight:700}
+.syllabus-column-head span{display:flex;align-items:center;justify-content:center;gap:7px;white-space:nowrap}
+.syllabus-column-head .head-serial{justify-content:center;color:#bdb1ce;font-size:10px}
+.syllabus-column-head .head-chapter{justify-content:flex-start;padding-left:2px}
+.syllabus-rows{border-radius:0 0 17px 17px;border-top:0}
+.syllabus-chapter-row{grid-template-columns:42px minmax(190px,1.7fr) repeat(2,minmax(88px,.7fr)) repeat(var(--revision-count,1),minmax(88px,.7fr));gap:10px}
+@media(max-width:1000px){
+ .syllabus-column-head{display:grid!important}
+ .syllabus-chapter-row{grid-template-columns:42px minmax(190px,1.7fr) repeat(2,minmax(88px,.7fr)) repeat(var(--revision-count,1),minmax(88px,.7fr))}
+ .syllabus-serial{grid-row:auto;grid-column:auto}
+ .syllabus-chapter-name{grid-column:auto}
+ .status-pill{grid-column:auto}
+}
+@media(max-width:620px){
+ .syllabus-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+ .syllabus-tab-btn{min-height:42px;min-width:0;padding:8px 6px;font-size:11px}
+ .subjectbar{gap:7px}
+ .subject{min-height:49px;padding:8px 10px}
+}
+
+
+/* Final table header alignment + editable chapter rows */
+.syllabus-column-head{
+ display:grid!important;
+ grid-template-columns:42px minmax(190px,1.7fr) repeat(2,minmax(88px,.7fr)) repeat(var(--revision-count,1),minmax(88px,.7fr))!important;
+ gap:10px!important;align-items:center!important;min-width:790px;
+ padding:12px 12px!important;margin:0!important;
+ border:1px solid #40354f!important;border-bottom:1px solid #343040!important;
+ border-radius:17px 17px 0 0!important;
+}
+.syllabus-column-head span:first-child{grid-column:auto!important;padding-left:0!important;justify-content:center!important}
+.syllabus-column-head .head-chapter{justify-content:flex-start!important;padding-left:2px!important}
+.revision-heading{display:flex!important;align-items:center;justify-content:center;gap:7px;white-space:nowrap;min-width:0}
+.revision-heading>svg{flex:none;color:#e2b4ed}
+.remove-revision,.remove-chapter{display:inline-grid;place-items:center;flex:none;position:relative;z-index:3;width:26px;height:26px;padding:0;border:1px solid #9272a3;border-radius:8px;background:#392b46;color:#f4d7fa;cursor:pointer;pointer-events:auto;transition:background .16s,border-color .16s,color .16s}
+.remove-revision:hover,.remove-chapter:hover{background:#633d57;border-color:#e7a8c9;color:#fff}
+.syllabus-chapter-name{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0}
+.chapter-label{min-width:0;overflow-wrap:anywhere}
+.add-chapter-row{display:grid;grid-template-columns:42px minmax(190px,1.7fr) repeat(2,minmax(88px,.7fr)) repeat(var(--revision-count,1),minmax(88px,.7fr));gap:10px;align-items:center;padding:10px 12px;background:#ffffff04;border-top:1px dashed #51445f}
+.add-chapter-mark{width:30px;height:30px;display:grid;place-items:center;border:1px solid #66527b;border-radius:9px;color:#e8b8ef;background:#2a2235}
+.add-chapter-name{grid-column:2/3;min-width:0;width:100%;padding:9px 10px;border:1px solid #4a4057;border-radius:9px;background:#11131b;color:#f1eaf6;font:500 11px 'Lexend',sans-serif;outline:none}
+.add-chapter-name:focus{border-color:#c99de4;box-shadow:0 0 0 3px #c99de41a}
+.add-chapter-weight{min-width:0;width:100%;padding:8px 7px;border:1px solid #4a4057;border-radius:9px;background:#211d2d;color:#e8dff2;font:500 10px 'Lexend',sans-serif}
+.add-chapter-submit{grid-column:4/-1;display:inline-flex;align-items:center;justify-content:center;gap:5px;padding:8px 9px;border:1px solid #80658e;border-radius:10px;background:linear-gradient(120deg,#392b46,#292238);color:#f2dff8;font:650 10px 'Lexend',sans-serif;white-space:nowrap}
+.add-chapter-submit:hover{border-color:#e0b2ed;box-shadow:0 0 14px #d5a5e533}
+@media(max-width:1000px){.syllabus-column-head{display:grid!important}.add-chapter-row{grid-template-columns:42px minmax(190px,1.7fr) repeat(2,minmax(88px,.7fr)) repeat(var(--revision-count,1),minmax(88px,.7fr))}}
+
+
+/* Syllabus add-chapter form lives below the table, not inside its scroll area. */
+.syllabus-grid-scroll{scrollbar-width:none!important;-ms-overflow-style:none;overflow-x:auto;overscroll-behavior-x:contain}
+.syllabus-grid-scroll::-webkit-scrollbar{display:none!important;width:0!important;height:0!important}
+.add-chapter-row{display:grid;grid-template-columns:minmax(130px,.8fr) minmax(180px,1.5fr) minmax(130px,.8fr) auto;gap:10px;align-items:center;margin-top:10px;padding:11px 12px;border:1px solid #40354f;border-radius:14px;background:linear-gradient(120deg,#191724,#151722)}
+.add-chapter-intro{display:flex;align-items:center;gap:8px;color:#d9c9e8;font:600 11px 'Lexend',sans-serif;white-space:nowrap}
+.add-chapter-name{grid-column:auto!important}
+.add-chapter-submit{grid-column:auto!important}
+.add-chapter-weight{min-width:0}
+@media(max-width:680px){.add-chapter-row{grid-template-columns:1fr 1fr}.add-chapter-intro{grid-column:1/-1}.add-chapter-name{grid-column:1/-1!important}.add-chapter-weight,.add-chapter-submit{width:100%}}
+
+/* Mock test performance studio */
+.mocktest-nav .subject-icon{color:#e8c5f2}
+.mock-tests-view{display:none;margin-top:24px;animation:rowFade .35s ease both}
+.mock-tests-view.visible{display:block}
+.mock-view-head{display:flex;justify-content:space-between;align-items:center;gap:18px;margin:0 0 18px}
+.mock-eyebrow{font-size:9px;letter-spacing:1.7px;text-transform:uppercase;color:#e7a9d0;font-weight:800}
+.mock-view-head h2{font-size:23px;margin:7px 0 5px;color:#f7effa}
+.mock-view-head p,.mock-history-head p,.mock-chart-head p,.mock-entry-head p{font-size:11px;color:#a99eb8;margin:0;line-height:1.6}
+.mock-add-btn,.mock-save-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 15px;border:1px solid #b68bc9;border-radius:12px;background:linear-gradient(115deg,#e9a9cc,#bba9f5);color:#21172b;font:750 11px 'Lexend',sans-serif;box-shadow:0 7px 22px #c78ad52a;transition:transform .18s,box-shadow .18s}
+.mock-add-btn:hover,.mock-save-btn:hover{transform:translateY(-1px);box-shadow:0 10px 26px #c78ad54a}
+.mock-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.mock-stat{padding:14px 15px;border:1px solid #393247;border-radius:15px;background:linear-gradient(145deg,#1c1a28,#141620)}
+.mock-stat span{display:block;color:#a99eb8;font-size:10px}
+.mock-stat strong{display:block;margin-top:7px;color:#f4eafa;font-size:22px;font-weight:750;font-variant-numeric:tabular-nums}
+.mock-stat small{display:block;margin-top:3px;color:#82788f;font-size:9px}
+.mock-chart-card,.mock-entry-panel,.mock-history-panel{border:1px solid #373143;border-radius:21px;background:linear-gradient(145deg,#17161f,#11131b);box-shadow:0 12px 35px #0002}
+.mock-chart-card{padding:20px 20px 14px;margin-bottom:14px}
+.mock-chart-head,.mock-history-head,.mock-entry-head{display:flex;align-items:center;justify-content:space-between;gap:15px}
+.mock-chart-head h3,.mock-history-head h3,.mock-entry-head h3{font-size:15px;color:#f2eafa;margin:0 0 5px}
+.mock-chart-tools{display:flex;align-items:center;gap:9px}
+.mock-chart-tools select,.mock-percent-btn{border:1px solid #393647;border-radius:10px;background:#1b1b25;color:#ddd3e8;padding:9px 12px;font:600 10px 'Lexend',sans-serif}
+.mock-percent-btn{min-width:42px;cursor:pointer}
+.mock-percent-btn[aria-pressed="true"]{background:#32263e;border-color:#bd92d5;color:#f4d9ff}
+.mock-legend{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin:12px 0 2px}
+.legend-chip{display:flex;align-items:center;gap:7px;border:1px solid #393647;border-radius:999px;padding:7px 11px;background:#1b1b25;color:#ddd3e8;font:650 10px 'Lexend',sans-serif;cursor:pointer;opacity:.45;transition:opacity .18s,border-color .18s}
+.legend-chip.on{opacity:1;border-color:#51445f}
+.legend-chip i{width:8px;height:8px;border-radius:50%;background:var(--series-color)}
+.legend-chip.chemistry{--series-color:#ffad21}.legend-chip.maths{--series-color:#4c91ff}.legend-chip.physics{--series-color:#ff527c}
+.mock-chart-wrap{width:100%;overflow:hidden}
+.mock-chart-wrap svg{display:block;width:100%;height:auto;min-height:220px}
+.mock-chart-foot{display:flex;justify-content:space-between;gap:12px;color:#8e849b;font-size:9px;padding-top:4px}
+.mock-entry-panel{padding:18px;margin-bottom:14px}
+.mock-entry-head{margin-bottom:16px}
+.mock-close-btn{width:30px;height:30px;border:1px solid #51445f;border-radius:50%;background:#211d2b;color:#ead9f1;font-size:21px;cursor:pointer}
+.mock-entry-panel[hidden]{display:none}
+.mock-basic-fields{display:grid;grid-template-columns:1fr 2fr;gap:12px;margin-bottom:14px}
+.mock-basic-fields label{display:grid;gap:6px;color:#bcb0c8;font-size:10px;font-weight:650}
+.mock-basic-fields input,.mock-field-row input,.mock-analysis-row input{min-width:0;width:100%;border:1px solid #40394d;border-radius:9px;background:#10121a;color:#f3eafa;padding:9px 10px;font:500 11px 'Lexend',sans-serif;outline:none}
+.mock-basic-fields input:focus,.mock-field-row input:focus,.mock-analysis-row input:focus{border-color:#bd94d4;box-shadow:0 0 0 3px #bd94d41a}
+.mock-form-grid,.mock-analysis-grid{border:1px solid #393247;border-radius:14px;padding:13px;margin-bottom:12px}
+.mock-form-title{display:flex;justify-content:space-between;gap:12px;color:#eadcf2;font-size:11px;font-weight:750;margin-bottom:10px}
+.mock-form-title span{font-size:9px;color:#92879e;font-weight:500}
+.mock-field-row{display:grid;grid-template-columns:1fr minmax(110px,180px);align-items:center;gap:12px;margin:7px 0}
+.mock-field-row b,.mock-analysis-row b{font-size:10px;color:#cfc2dc}
+.mock-total-field{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:10px;border-top:1px solid #393247;color:#b8a9c5;font-size:10px}
+.mock-total-field strong{font-size:16px;color:#f0c4e3}
+.mock-analysis-labels,.mock-analysis-row{display:grid;grid-template-columns:1fr repeat(3,minmax(65px,110px));gap:9px;align-items:center}
+.mock-analysis-labels{margin-bottom:7px;color:#9d91aa;font-size:9px;text-align:center}
+.mock-analysis-labels b{font-weight:650}
+.mock-analysis-row{margin:7px 0}
+.mock-analysis-row b{font-weight:700}
+.mock-analysis-row input{text-align:center;padding:8px 5px}
+.mock-form-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:14px}
+.mock-cancel-btn{padding:10px 14px;border:1px solid #494154;border-radius:10px;background:#1b1a25;color:#d7c9e1;font:600 10px 'Lexend',sans-serif}
+.mock-save-btn{padding:10px 14px}
+.mock-history-panel{padding:17px}
+.mock-history-head{margin-bottom:13px}
+.mock-history-head>span{font-size:10px;color:#bba9d0}
+.mock-history-scroll{overflow-x:auto;scrollbar-width:thin;scrollbar-color:#655477 #171522}
+.mock-history-table{width:100%;min-width:760px;border-collapse:separate;border-spacing:0;font-size:10px;color:#e6ddec}
+.mock-history-table th{padding:10px 9px;background:#211e2c;color:#cdbddd;font-size:9px;font-weight:750;text-align:center;border-top:1px solid #41374f;border-bottom:1px solid #41374f}
+.mock-history-table th:first-child{border-radius:9px 0 0 0}.mock-history-table th:last-child{border-radius:0 9px 0 0}
+.mock-history-table td{padding:10px 9px;text-align:center;border-bottom:1px solid #302a3a;font-variant-numeric:tabular-nums}
+.mock-history-table td.source{text-align:left;font-weight:650;color:#f0e7f5}
+.mock-history-table td.total{font-weight:800;color:#f2c5e1}
+.mock-analysis-mini{display:flex;gap:7px;justify-content:center;color:#9e92aa;white-space:nowrap}
+.mock-delete{border:1px solid #594253;border-radius:7px;background:#241b27;color:#e5a9c5;width:25px;height:25px;cursor:pointer}
+.mock-empty{padding:24px!important;color:#93889f!important}
+@media(max-width:760px){.mock-summary{grid-template-columns:repeat(2,minmax(0,1fr))}.mock-view-head{align-items:flex-start;flex-direction:column}.mock-add-btn{align-self:stretch}.mock-chart-card{padding:14px}.mock-chart-head{align-items:flex-start;flex-direction:column}.mock-legend{justify-content:flex-start}.mock-basic-fields{grid-template-columns:1fr}.mock-chart-wrap svg{min-height:180px}}
+@media(max-width:420px){.mock-analysis-labels,.mock-analysis-row{grid-template-columns:.8fr repeat(3,minmax(48px,1fr));gap:5px}.mock-analysis-row input{font-size:10px;padding:7px 3px}.mock-summary{gap:7px}.mock-stat{padding:11px}.mock-stat strong{font-size:19px}}
+
+
+.mock-history-table{min-width:1080px}
+.mock-history-table thead tr:first-child th{background:#252131;color:#eadcf4;border-bottom:1px solid #51445f}
+.mock-history-table thead tr:nth-child(2) th{background:#1d1b29;color:#bdaecb;font-size:9px}
+.mock-history-table th[rowspan="2"]{vertical-align:middle}
+.mock-history-table td:nth-child(4),.mock-history-table td:nth-child(8),.mock-history-table td:nth-child(11),.mock-history-table td:nth-child(14){border-left:1px solid #42384e}
+.mock-history-table th:nth-child(4),.mock-history-table th:nth-child(5),.mock-history-table th:nth-child(6){border-left:1px solid #42384e}
+.mock-history-table th[colspan="3"]{border-left:1px solid #51445f}
+.mock-history-table td{white-space:nowrap}
+
+
+/* Mock Tests: three clear compartments, matching the subject tabs in Syllabus */
+.mock-workspace-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:18px 0 16px;padding:6px;border:1px solid #302a3b;border-radius:18px;background:#11121a}
+.mock-workspace-tab{display:flex;align-items:center;gap:12px;min-width:0;padding:13px 15px;border:1px solid transparent;border-radius:13px;background:transparent;color:#c9bad8;text-align:left;cursor:pointer;transition:background .2s,border-color .2s,transform .2s}
+.mock-workspace-tab:hover{background:#ffffff08;border-color:#4a3e59;transform:translateY(-1px)}
+.mock-workspace-tab.active{background:linear-gradient(120deg,#e9a9cc,#bba9f5);border-color:#e8b7e5;color:#21172b;box-shadow:0 7px 20px #d39bd52b}
+.mock-workspace-tab>svg{width:25px;height:25px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.mock-workspace-tab span{display:grid;gap:3px;min-width:0}
+.mock-workspace-tab b{font:750 12px 'Lexend',sans-serif}
+.mock-workspace-tab small{font:500 9px 'Lexend',sans-serif;opacity:.75;white-space:nowrap}
+.mock-tab-panel{animation:rowFade .25s ease both}
+.mock-tab-panel[hidden]{display:none!important}
+.mock-tab-panel.active{display:block}
+.mock-panel-kicker{display:block;color:#e5a9ce;font:800 9px 'Lexend',sans-serif;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.mock-view-head h2{font-size:24px;letter-spacing:-.4px}
+.mock-chart-card{padding:22px 22px 15px;background:radial-gradient(ellipse at 95% 0%,#30243d55,transparent 42%),linear-gradient(145deg,#191722,#10131b);border-color:#3c334a}
+.mock-chart-head{align-items:flex-end}
+.mock-chart-head h3{font-size:17px;margin:0 0 5px}
+.mock-chart-head p{font-size:10px}
+.mock-chart-tools select{min-width:125px;cursor:pointer}
+.mock-percent-btn{cursor:pointer}
+.mock-performance-tip{display:flex;align-items:center;gap:12px;margin-top:13px;padding:14px 16px;border:1px solid #403449;border-radius:15px;background:linear-gradient(100deg,#211a2b,#171722)}
+.tip-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:#e5a9ce18;color:#e8b4d8;flex:none}
+.tip-icon svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linejoin:round}
+.mock-performance-tip span:last-child{display:grid;gap:3px}
+.mock-performance-tip b{font:700 11px 'Lexend',sans-serif;color:#eadcf2}
+.mock-performance-tip small{font:500 9px 'Lexend',sans-serif;color:#a89bb4}
+.mock-add-intro{display:flex;align-items:center;gap:15px;padding:18px 20px;margin-bottom:13px;border:1px solid #42364f;border-radius:18px;background:radial-gradient(circle at 90% 10%,#49344f66,transparent 35%),linear-gradient(120deg,#211b2b,#171722)}
+.mock-add-illustration{width:58px;height:58px;display:grid;place-items:center;border:1px solid #6e557b;border-radius:17px;background:#cda1e51b;color:#e7b8e3;flex:none}
+.mock-add-illustration svg{width:42px;height:42px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.mock-add-intro h3{margin:0 0 5px;color:#f4eafa;font:750 17px 'Lexend',sans-serif}
+.mock-add-intro p{margin:0;color:#a99db6;font:500 10px 'Lexend',sans-serif;line-height:1.6}
+.mock-entry-panel{padding:17px;background:linear-gradient(145deg,#171620,#11141d);border-color:#3b3247}
+.mock-entry-panel form{display:grid;gap:12px}
+.mock-form-section{padding:15px;border:1px solid #393246;border-radius:15px;background:#ffffff03}
+.mock-form-section-head{display:flex;align-items:center;gap:10px;margin-bottom:13px}
+.mock-section-icon{width:34px;height:34px;display:grid;place-items:center;flex:none;border-radius:11px;background:#d9a8e31b;color:#dcb4eb}
+.mock-section-icon svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.mock-section-icon.marks-icon{background:#9c8df21a;color:#bba9f5}
+.mock-section-icon.analysis-icon{background:#a8d8c41a;color:#a8d8c4}
+.mock-form-section-head>span:nth-child(2){display:grid;gap:3px;min-width:0}
+.mock-form-section-head>span:nth-child(2) b{font:750 11px 'Lexend',sans-serif;color:#f0e6f5}
+.mock-form-section-head>span:nth-child(2) small{font:500 9px 'Lexend',sans-serif;color:#998da6}
+.mock-total-badge{margin-left:auto;display:flex;align-items:center;gap:8px;padding:8px 11px;border:1px solid #685176;border-radius:11px;background:#32243b;color:#bba9c9;font:600 9px 'Lexend',sans-serif;white-space:nowrap}
+.mock-total-badge b{color:#f3c4e4;font:800 13px 'Lexend',sans-serif}
+.mock-basic-fields{grid-template-columns:minmax(170px,.8fr) minmax(230px,1.4fr);gap:12px;margin:0}
+.mock-basic-fields label{gap:7px;color:#c9bbd5;font:650 10px 'Lexend',sans-serif}
+.mock-basic-fields label span{padding-left:2px}
+.mock-basic-fields input{height:40px;border-radius:10px;background:#10121b;border-color:#453a51;font:500 10px 'Lexend',sans-serif}
+.mock-subject-inputs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.mock-subject-input{display:grid;grid-template-columns:34px minmax(0,1fr) 62px;align-items:center;gap:9px;padding:12px;border:1px solid #40364d;border-radius:13px;background:#11131c;min-width:0}
+.mock-subject-input.physics-input{border-color:#674050;background:linear-gradient(135deg,#2b1b27,#17141d)}
+.mock-subject-input.chemistry-input{border-color:#6a5337;background:linear-gradient(135deg,#302619,#17151b)}
+.mock-subject-input.maths-input{border-color:#3e5273;background:linear-gradient(135deg,#1c2637,#151720)}
+.mock-subject-symbol{width:32px;height:32px;display:grid;place-items:center;border-radius:10px;background:#ffffff0b;color:#e5bdd8}
+.mock-subject-symbol svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.chemistry-input .mock-subject-symbol{color:#ffc16b}.maths-input .mock-subject-symbol{color:#91baff}
+.mock-subject-label{display:grid;gap:4px;min-width:0}
+.mock-subject-label b{font:750 10px 'Lexend',sans-serif;color:#f0e8f5}
+.mock-subject-label small{font:500 8px 'Lexend',sans-serif;color:#a194ad}
+.mock-subject-input input{width:100%;min-width:0;padding:9px 5px;border:1px solid #51465e;border-radius:9px;background:#0f1119;color:#f5eafa;text-align:center;font:750 13px 'Lexend',sans-serif;outline:none}
+.mock-subject-input input:focus{border-color:#d0a4e7;box-shadow:0 0 0 3px #d0a4e71a}
+.mock-analysis-grid{padding:0;border:0;margin:0}
+.mock-analysis-labels,.mock-analysis-row{grid-template-columns:minmax(100px,1.3fr) repeat(3,minmax(0,1fr));gap:10px}
+.mock-analysis-labels{padding:0 12px 8px;margin:0 0 3px;border-bottom:1px solid #393246;text-align:center}
+.mock-analysis-labels span{text-align:left}
+.mock-analysis-row{padding:7px 12px;margin:0;border-bottom:1px solid #302a39}
+.mock-analysis-row:last-child{border-bottom:0}
+.mock-analysis-row b{display:flex;align-items:center;gap:8px;font:650 10px 'Lexend',sans-serif}
+.analysis-dot{width:7px;height:7px;border-radius:50%;display:inline-block;background:#e5a9c8}
+.wrong-dot{background:#ff718b}.skip-dot{background:#e9bb73}.correct-dot{background:#91d5b8}
+.mock-analysis-row input{height:34px;text-align:center;border-radius:9px;background:#11131c;border-color:#40394b;font:600 10px 'Lexend',sans-serif}
+.mock-form-actions{padding-top:4px}
+.mock-cancel-btn,.mock-save-btn{min-height:40px;padding:10px 16px;border-radius:11px;font:700 10px 'Lexend',sans-serif;cursor:pointer}
+.mock-cancel-btn{background:#201c29;border-color:#4b4058}
+.mock-save-btn{background:linear-gradient(120deg,#e9a9cc,#bba9f5);color:#24192c}
+.mock-history-panel{padding:19px;background:linear-gradient(145deg,#171620,#11141d);border-color:#3b3247}
+.mock-history-head{margin-bottom:16px}
+.mock-history-head h3{font-size:18px;margin-bottom:4px}
+.mock-history-head p{font-size:10px}
+.mock-history-head>span{padding:8px 11px;border:1px solid #4a3a56;border-radius:10px;background:#261e30;color:#e5c4ed;font:700 10px 'Lexend',sans-serif}
+.mock-history-scroll{border:1px solid #3b3346;border-radius:13px;overflow:auto}
+.mock-history-table{min-width:1080px}
+.mock-history-table th{padding:12px 9px}
+.mock-history-table td{padding:11px 9px}
+@media(max-width:760px){
+ .mock-workspace-tabs{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;padding:5px}
+ .mock-workspace-tab{flex-direction:column;justify-content:center;text-align:center;gap:6px;padding:10px 5px}
+ .mock-workspace-tab>svg{width:22px;height:22px}
+ .mock-workspace-tab b{font-size:10px}
+ .mock-workspace-tab small{font-size:8px;white-space:normal}
+ .mock-subject-inputs{grid-template-columns:1fr}
+ .mock-subject-input{grid-template-columns:38px minmax(0,1fr) 80px}
+ .mock-basic-fields{grid-template-columns:1fr}
+ .mock-form-section-head{flex-wrap:wrap}
+ .mock-total-badge{margin-left:auto}
+}
+@media(max-width:420px){
+ .mock-analysis-labels,.mock-analysis-row{grid-template-columns:minmax(76px,1.1fr) repeat(3,minmax(0,1fr));gap:6px;padding-left:5px;padding-right:5px}
+ .mock-analysis-row input{padding:6px 2px}
+ .mock-add-intro{padding:14px}
+ .mock-add-illustration{width:48px;height:48px}
+ .mock-form-section{padding:11px}
+}
+
+
+/* Test history — compact, readable, subject-coloured score table */
+.mock-history-panel{padding:21px;background:radial-gradient(ellipse at 100% 0%,#30243d3d,transparent 36%),linear-gradient(145deg,#191722,#11141c);border:1px solid #42384f;border-radius:20px}
+.mock-history-head{align-items:center;margin-bottom:17px}
+.mock-history-head h3{font-size:19px;letter-spacing:-.35px}
+.mock-history-head>span{display:inline-flex;align-items:center;justify-content:center;min-width:66px;padding:8px 12px;border:1px solid #574467;border-radius:999px;background:#2a2035;color:#edc8f0;font:750 10px 'Lexend',sans-serif}
+.mock-history-scroll{width:100%;overflow-x:auto;border:1px solid #40374c;border-radius:15px;background:#12131c;scrollbar-width:thin;scrollbar-color:#705b80 #171520}
+.mock-history-table{width:100%;min-width:850px;border-collapse:separate;border-spacing:0;table-layout:fixed;color:#eee6f4;font:500 10px 'Lexend',sans-serif}
+.mock-history-table .col-number{width:48px}
+.mock-history-table .col-date{width:100px}
+.mock-history-table .col-source{width:190px}
+.mock-history-table .col-marks{width:145px}
+.mock-history-table .col-total{width:76px}
+.mock-history-table .col-analysis{width:125px}
+.mock-history-table .col-action{width:48px}
+.mock-history-table thead th{height:53px;padding:9px 8px;text-align:center;vertical-align:middle;background:#262131;color:#e6d8ed;border:0;border-bottom:1px solid #51435f;font:750 10px 'Lexend',sans-serif;white-space:nowrap}
+.mock-history-table thead th:first-child{border-radius:13px 0 0 0}
+.mock-history-table thead th:last-child{border-radius:0 13px 0 0}
+.mock-history-table thead th small{display:block;margin-top:5px;color:#a99bb8;font:600 8px 'Lexend',sans-serif;letter-spacing:.4px}
+.mock-history-table thead .wrong-head{color:#ff9bab}
+.mock-history-table thead .skip-head{color:#f0c77e}
+.mock-history-table thead .correct-head{color:#9ce0c1}
+.mock-history-table tbody tr{background:#171721;transition:background .16s}
+.mock-history-table tbody tr:nth-child(even){background:#1b1a26}
+.mock-history-table tbody tr:hover{background:#292236}
+.mock-history-table tbody td{height:61px;padding:9px 8px;text-align:center;vertical-align:middle;border:0;border-bottom:1px solid #302a3b;font-size:10px;font-variant-numeric:tabular-nums}
+.mock-history-table tbody tr:last-child td{border-bottom:0}
+.mock-history-table td.history-number{color:#bba8cd;font-weight:800;font-size:10px}
+.mock-history-table td.history-date{color:#d6c9df;white-space:nowrap}
+.mock-history-table td.source{text-align:left;white-space:normal}
+.mock-history-table td.source b{display:block;color:#f2eafa;font-size:10px;font-weight:750;line-height:1.45}
+.mock-history-table td.source small{display:block;margin-top:4px;color:#8e829c;font-size:8px}
+.mock-history-table td.total strong{display:block;color:#f3c4e3;font-size:16px;font-weight:850;line-height:1}
+.mock-history-table td.total small{display:block;margin-top:4px;color:#93869f;font-size:8px}
+.history-triplet{display:flex;align-items:center;justify-content:center;gap:4px;white-space:nowrap}
+.history-triplet>span{display:grid;justify-items:center;gap:4px;min-width:28px;padding:5px 4px;border:1px solid #393246;border-radius:8px;background:#211e2b}
+.history-triplet i{font:700 7px 'Lexend',sans-serif;color:#9f91ad;font-style:normal}
+.history-triplet b{font:750 10px 'Lexend',sans-serif;color:#e9dfef}
+.marks-triplet>span{min-width:34px;background:#252033;border-color:#51435f}
+.marks-triplet>span:nth-child(1){border-bottom:2px solid #ff718b}
+.marks-triplet>span:nth-child(2){border-bottom:2px solid #ffbd62}
+.marks-triplet>span:nth-child(3){border-bottom:2px solid #83aef7}
+.marks-triplet>span:nth-child(1) b{color:#ff9bae}
+.marks-triplet>span:nth-child(2) b{color:#ffd08b}
+.marks-triplet>span:nth-child(3) b{color:#a8c7ff}
+.wrong-triplet>span{background:#301d29;border-color:#583347}
+.wrong-triplet b{color:#ff9bab}
+.skip-triplet>span{background:#30291f;border-color:#5a4b32}
+.skip-triplet b{color:#f0c77e}
+.correct-triplet>span{background:#1d2d29;border-color:#34564a}
+.correct-triplet b{color:#9ce0c1}
+.history-actions .mock-delete{width:29px;height:29px;border-radius:9px;background:#2b1d2a;border-color:#5c3c52;color:#e8a8c8;transition:background .16s,transform .16s}
+.history-actions .mock-delete:hover{background:#583148;transform:translateY(-1px)}
+.mock-history-table .mock-empty{height:180px;padding:25px!important;text-align:center!important;color:#a89bb4!important}
+.mock-empty-icon{display:grid;place-items:center;width:43px;height:43px;margin:0 auto 10px;border:1px solid #584669;border-radius:14px;background:#2a2035;color:#dfb8ed}
+.mock-empty-icon svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.mock-history-table .mock-empty b{display:block;color:#e9dcef;font:750 12px 'Lexend',sans-serif;margin-bottom:5px}
+.mock-history-table .mock-empty small{display:block;color:#988ba5;font:500 9px 'Lexend',sans-serif}
+@media(max-width:760px){
+ .mock-history-panel{padding:14px}
+ .mock-history-table{min-width:850px}
+ .mock-history-head h3{font-size:16px}
+}
+
+
+/* Resource chapter completion tints — neutral first, completed chapters last */
+.chapter{transition:background .22s ease,border-color .22s ease,box-shadow .22s ease}
+.chapter.resource-theory-done,
+.chapter.resource-pyqs-done{
+ border-color:#477c78!important;
+ background:linear-gradient(112deg,#142522 0%,#131c22 58%,#151922 100%)!important;
+ box-shadow:inset 3px 0 0 #70b9a6,0 5px 16px #071b1830;
+}
+.chapter.resource-theory-done .num,
+.chapter.resource-pyqs-done .num{
+ background:linear-gradient(145deg,#244b45,#1b3438)!important;
+ color:#a8e2d0!important;border:1px solid #477a70;
+}
+.chapter.resource-both-done{
+ border-color:#559b8d!important;
+ background:linear-gradient(112deg,#17332e 0%,#172a30 55%,#171d29 100%)!important;
+ box-shadow:inset 3px 0 0 #8bd6bd,0 7px 22px #0a2c243b;
+}
+.chapter.resource-both-done .num{
+ background:linear-gradient(145deg,#286052,#244b55)!important;
+ color:#c2f4df!important;border:1px solid #67ae98;
+}
+.chapter.resource-theory-done .chaptertitle,
+.chapter.resource-pyqs-done .chaptertitle,
+.chapter.resource-both-done .chaptertitle{color:#edf8f3}
+.chapter.resource-theory-done .chaptermeta,
+.chapter.resource-pyqs-done .chaptermeta,
+.chapter.resource-both-done .chaptermeta{color:#a9cfc3}
+.resource-status-label{
+ display:inline-flex;align-items:center;gap:4px;margin-left:7px;padding:3px 7px;
+ border:1px solid #52877c;border-radius:999px;background:#1b3934;color:#b5e8d5;
+ font:700 8px 'Lexend',sans-serif;letter-spacing:.1px;vertical-align:middle;
+ white-space:nowrap;
+}
+.resource-status-label svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.resource-status-dot{width:5px;height:5px;border-radius:50%;background:#8bd6bd;box-shadow:0 0 7px #8bd6bd77}
+.chapter.resource-both-done .resource-status-label{background:#245044;border-color:#69ad98;color:#d0f8e5}
+.chapter.resource-pyqs-done{border-color:#527e8c!important;box-shadow:inset 3px 0 0 #8ac5cf,0 5px 16px #071b1830}
+.chapter.resource-pyqs-done .num{background:linear-gradient(145deg,#254c5a,#203c4a)!important;color:#c3eaf1!important;border-color:#568d9b}
+.chapter.resource-pyqs-done .resource-status-label{border-color:#568d9b;background:#1d3540;color:#c5eaf0}
+.chapter.resource-pyqs-done .resource-status-dot{background:#8ac5cf;box-shadow:0 0 7px #8ac5cf77}
+@media(max-width:620px){
+ .resource-status-label{margin-left:3px;padding:2px 5px;font-size:7px}
+}
+
+
+/* Mock test save feedback */
+.mock-save-notice{display:flex;align-items:center;gap:9px;margin:0 0 16px;padding:11px 14px;border:1px solid #3c8068;border-radius:11px;background:#142b25;color:#b9efd7;font:650 11px 'Lexend',sans-serif}
+.mock-save-notice:before{content:"✓";display:grid;place-items:center;width:20px;height:20px;flex:none;border-radius:50%;background:#245b46;color:#d7ffea;font-weight:900}
+.mock-save-notice.error{border-color:#8d5555;background:#301c22;color:#ffd0d0}
+.mock-save-notice.error:before{content:"!";background:#71383d;color:#ffe3e3}
+.mock-save-notice[hidden]{display:none}
+.mock-save-btn:disabled{opacity:.65;cursor:wait}
+
+
+/* Resource completion colours: theory-only yellow, PYQs-only blue, both green */
+.chapter.resource-theory-done{
+ border-color:#a48643!important;
+ background:linear-gradient(112deg,#332a18 0%,#252117 58%,#191923 100%)!important;
+ box-shadow:inset 3px 0 0 #e5bd63,0 5px 16px #241a0730!important;
+}
+.chapter.resource-theory-done .num{
+ background:linear-gradient(145deg,#634d22,#493b20)!important;
+ color:#ffe3a0!important;border:1px solid #a48643!important;
+}
+.chapter.resource-theory-done .chaptertitle{color:#fff1cf!important}
+.chapter.resource-theory-done .chaptermeta{color:#d9c28e!important}
+.chapter.resource-theory-done .resource-status-label{
+ border-color:#a48643!important;background:#49391e!important;color:#ffe1a0!important;
+}
+.chapter.resource-theory-done .resource-status-dot{
+ background:#e5bd63!important;box-shadow:0 0 7px #e5bd6377!important;
+}
+.chapter.resource-both-done{
+ border-color:#559b8d!important;
+ background:linear-gradient(112deg,#17332e 0%,#172a30 55%,#171d29 100%)!important;
+ box-shadow:inset 3px 0 0 #8bd6bd,0 7px 22px #0a2c243b!important;
+}
+.chapter.resource-both-done .num{
+ background:linear-gradient(145deg,#286052,#244b55)!important;
+ color:#c2f4df!important;border:1px solid #67ae98!important;
+}
+.chapter.resource-both-done .chaptertitle{color:#edf8f3!important}
+.chapter.resource-both-done .chaptermeta{color:#a9cfc3!important}
+.chapter.resource-both-done .resource-status-label{
+ background:#245044!important;border-color:#69ad98!important;color:#d0f8e5!important;
+}
+
+
+/* Softer mock-test graph treatment */
+.mock-chart-card{background:linear-gradient(145deg,#17161f,#11131b)}
+.mock-chart-wrap{padding:4px 0 0}
+.mock-chart-wrap svg{display:block;width:100%;height:auto;min-height:220px;overflow:visible}
+.mock-chart-wrap svg text{user-select:none}
+.mock-legend{gap:7px}
+.legend-chip{background:#191923;border-color:#343141}
+.legend-chip.on{border-color:#51445f;box-shadow:0 2px 10px #0002}
+
+
+/* Syllabus chapter weightage palette: warm, softened gradients matching the reference sheet */
+.syllabus-grid-scroll{width:100%;overflow-x:auto;overscroll-behavior-x:contain;border-radius:17px;scrollbar-width:thin;scrollbar-color:#655477 #171522}
+.syllabus-column-head,.syllabus-rows{min-width:1080px}
+.syllabus-column-head{
+ display:grid!important;
+ grid-template-columns:42px 66px 76px minmax(205px,1.7fr) repeat(2,minmax(96px,.8fr)) repeat(var(--revision-count,1),minmax(112px,1fr))!important;
+ gap:8px!important;
+}
+.syllabus-column-head .head-serial{grid-column:auto!important;justify-content:center;padding:0;color:#c8bbd4;font-size:9px}.syllabus-column-head .head-expected,.syllabus-column-head .head-total{grid-column:auto!important;justify-content:center;padding:0;color:#c8bbd4;font-size:9px}
+.syllabus-column-head .head-chapter{justify-content:flex-start;padding-left:3px}
+.syllabus-chapter-row{
+ grid-template-columns:42px 66px 76px minmax(205px,1.7fr) repeat(2,minmax(96px,.8fr)) repeat(var(--revision-count,1),minmax(112px,1fr))!important;
+ gap:8px!important;
+}
+.syllabus-expected,.syllabus-total{
+ min-height:31px;display:flex;align-items:center;justify-content:center;border-radius:7px;
+ font-size:10px;font-weight:800;font-variant-numeric:tabular-nums;
+ color:#27232c;border:1px solid #ffffff55;box-shadow:inset 0 1px #ffffff70;
+}
+.syllabus-total{background:linear-gradient(145deg,#30303b,#252631);color:#eee7f3;border-color:#41404d;box-shadow:inset 0 1px #ffffff0b}
+.syllabus-chapter-name{
+ min-height:33px!important;border-radius:7px!important;padding:7px 10px!important;
+ font-size:10px!important;font-weight:700!important;line-height:1.35!important;
+ border:1px solid #ffffff4a!important;box-shadow:inset 0 1px #ffffff8a,0 2px 5px #00000012!important;
+}
+.weight-high{
+ background:linear-gradient(105deg,#f0e5b9 0%,#e9dfa9 58%,#e2d69a 100%)!important;
+}
+.weight-mid{
+ background:linear-gradient(105deg,#d1e9ce 0%,#bfe1bf 56%,#acd7b4 100%)!important;
+}
+.weight-one{
+ background:linear-gradient(105deg,#d1dff0 0%,#b9cce8 58%,#a9bfdf 100%)!important;
+}
+.weight-low{
+ background:linear-gradient(105deg,#f0c6c2 0%,#e7b2b1 58%,#d99e9f 100%)!important;
+}
+.syllabus-expected.weight-high{background:linear-gradient(145deg,#f4e9bd,#e9dca5)!important}
+.syllabus-expected.weight-mid{background:linear-gradient(145deg,#d4ebcf,#b6ddb9)!important}
+.syllabus-expected.weight-one{background:linear-gradient(145deg,#d4e1f2,#b5c9e8)!important}
+.syllabus-expected.weight-low{background:linear-gradient(145deg,#f2cfca,#e5aaa9)!important}
+.syllabus-chapter-row{transition:background .18s ease!important}
+.syllabus-chapter-row:hover{background:#ffffff08!important}
+.syllabus-rows .syllabus-chapter-row:last-child{border-bottom:0}
+@media(max-width:1000px){
+ .syllabus-column-head{display:grid!important}
+ .syllabus-chapter-row{grid-template-columns:42px 66px 76px minmax(205px,1.7fr) repeat(2,minmax(96px,.8fr)) repeat(var(--revision-count,1),minmax(112px,1fr))!important}
+}
+@media(max-width:620px){
+ .syllabus-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+ .syllabus-column-head{display:grid!important}
+ .syllabus-chapter-row{grid-template-columns:42px 66px 76px minmax(205px,1.7fr) repeat(2,minmax(96px,.8fr)) repeat(var(--revision-count,1),minmax(112px,1fr))!important}
+}
+
+
+/* Minimal structural fix: merge Expected Questions cells only */
+.syllabus-rows{
+ display:grid!important;
+ grid-template-columns:42px 66px 76px minmax(205px,1.7fr) repeat(2,minmax(96px,.8fr)) repeat(var(--revision-count,1),minmax(112px,1fr))!important;
+ gap:0 8px!important;
+ align-items:stretch!important;
+}
+.syllabus-rows .syllabus-chapter-row{display:contents!important}
+.syllabus-rows .syllabus-serial,
+.syllabus-rows .syllabus-total,
+.syllabus-rows .syllabus-chapter-name,
+.syllabus-rows .status-control{
+ align-self:center;
+ margin:4px 0;
+}
+.syllabus-rows .syllabus-expected{
+ grid-row:span var(--expected-span,1);
+ align-self:stretch;
+ margin:4px 0;
+}
+@media(max-width:1000px){
+ .syllabus-rows{grid-template-columns:42px 66px 76px minmax(205px,1.7fr) repeat(2,minmax(96px,.8fr)) repeat(var(--revision-count,1),minmax(112px,1fr))!important}
+}
+
+
+/* Final syllabus layout: no Total Questions column; only grouped Expected Questions cells span rows */
+.syllabus-grid-scroll{width:100%;overflow-x:auto;overscroll-behavior-x:contain;border-radius:17px;scrollbar-width:thin;scrollbar-color:#655477 #171522}
+.syllabus-column-head{
+ display:grid!important;
+ grid-template-columns:42px 66px minmax(205px,1.7fr) repeat(2,minmax(96px,.8fr)) repeat(var(--revision-count,1),minmax(112px,1fr))!important;
+ gap:8px!important;align-items:center!important;
+}
+.syllabus-column-head .head-serial,.syllabus-column-head .head-expected{justify-content:center!important;padding:0!important}
+.syllabus-column-head .head-chapter{justify-content:flex-start!important;padding-left:3px!important}
+.syllabus-rows{
+ display:grid!important;
+ grid-template-columns:42px 66px minmax(205px,1.7fr) repeat(2,minmax(96px,.8fr)) repeat(var(--revision-count,1),minmax(112px,1fr))!important;
+ grid-auto-rows:minmax(43px,auto)!important;
+ grid-auto-flow:row!important;
+ column-gap:8px!important;row-gap:5px!important;
+ align-items:stretch!important;
+}
+.syllabus-rows .syllabus-chapter-row{display:contents!important}
+.syllabus-rows .syllabus-serial{
+ grid-column:1;align-self:center;justify-self:center;
+ width:30px!important;height:30px!important;min-width:30px!important;
+ margin:0!important;border-radius:9px!important;
+ display:grid!important;place-items:center!important;
+ font-size:12px!important;line-height:1!important;
+}
+.syllabus-rows .syllabus-expected{
+ grid-column:2;align-self:stretch;justify-self:stretch;
+ display:flex!important;align-items:center!important;justify-content:center!important;
+ min-height:0!important;margin:0!important;padding:8px 4px!important;
+ border-radius:8px!important;font-size:10px!important;font-weight:850!important;
+}
+.syllabus-rows .syllabus-chapter-name{
+ grid-column:3;align-self:center;justify-self:stretch;
+ min-height:33px!important;margin:0!important;padding:7px 10px!important;
+ border-radius:7px!important;
+}
+.syllabus-rows .status-control{
+ align-self:center;justify-self:stretch;min-width:0;margin:0!important;
+}
+.syllabus-rows .status-control .status-pill{width:100%}
+@media(max-width:1000px){
+ .syllabus-column-head,.syllabus-rows{
+  grid-template-columns:42px 66px minmax(205px,1.7fr) repeat(2,minmax(96px,.8fr)) repeat(var(--revision-count,1),minmax(112px,1fr))!important;
+ }
+}
+@media(max-width:620px){
+ .syllabus-column-head,.syllabus-rows{
+  grid-template-columns:38px 58px minmax(190px,1.5fr) repeat(2,minmax(88px,.8fr)) repeat(var(--revision-count,1),minmax(105px,1fr))!important;
+ }
+ .syllabus-rows .syllabus-serial{width:28px!important;height:28px!important;min-width:28px!important}
+}
+
+
+/* Final alignment polish for syllabus grid */
+.syllabus-rows{position:relative!important;isolation:isolate!important}
+.syllabus-rows .syllabus-serial{
+ position:relative!important;left:auto!important;right:auto!important;
+ justify-self:center!important;align-self:center!important;
+}
+.syllabus-rows .syllabus-expected{
+ justify-self:stretch!important;align-self:stretch!important;
+}
+.syllabus-rows .syllabus-chapter-name,
+.syllabus-rows .status-control{min-width:0!important}
+
+
+/* Clean syllabus layout: Expected Questions removed completely */
+.syllabus-column-head{
+ display:grid!important;
+ grid-template-columns:42px minmax(205px,1.7fr) repeat(2,minmax(96px,.8fr)) repeat(var(--revision-count,1),minmax(112px,1fr))!important;
+ gap:8px!important;align-items:center!important;
+}
+.syllabus-column-head .head-serial{justify-content:center!important;padding:0!important}
+.syllabus-column-head .head-chapter{justify-content:flex-start!important;padding-left:3px!important}
+.syllabus-rows{
+ display:grid!important;
+ grid-template-columns:42px minmax(205px,1.7fr) repeat(2,minmax(96px,.8fr)) repeat(var(--revision-count,1),minmax(112px,1fr))!important;
+ grid-auto-rows:minmax(43px,auto)!important;
+ gap:5px 8px!important;align-items:stretch!important;
+}
+.syllabus-rows .syllabus-chapter-row{display:contents!important}
+.syllabus-rows .syllabus-serial{
+ grid-column:1;align-self:center;justify-self:center;
+ width:30px!important;height:30px!important;min-width:30px!important;
+ margin:0!important;border-radius:9px!important;display:grid!important;place-items:center!important;
+ font-size:12px!important;line-height:1!important;
+}
+.syllabus-rows .syllabus-chapter-name{
+ grid-column:2;align-self:center;justify-self:stretch;min-width:0!important;
+ min-height:33px!important;margin:0!important;padding:7px 10px!important;border-radius:8px!important;
+}
+.syllabus-rows .status-control{align-self:center;justify-self:stretch;min-width:0;margin:0!important}
+.syllabus-rows .status-control .status-pill{width:100%}
+.syllabus-rows .physics-priority-purple{
+ background:linear-gradient(112deg,#d9c1ee 0%,#c9a9e7 54%,#b991dc 100%)!important;
+ border:1px solid #a987cf!important;
+ color:#30233e!important;
+ box-shadow:inset 0 1px #f4eaff99,0 2px 7px #10091d25!important;
+}
+.syllabus-rows .physics-priority-purple .chapter-label{color:#30233e!important;font-weight:800!important}
+@media(max-width:1000px){
+ .syllabus-column-head,.syllabus-rows{
+  grid-template-columns:42px minmax(205px,1.7fr) repeat(2,minmax(96px,.8fr)) repeat(var(--revision-count,1),minmax(112px,1fr))!important;
+ }
+}
+@media(max-width:620px){
+ .syllabus-column-head,.syllabus-rows{
+  grid-template-columns:38px minmax(190px,1.5fr) repeat(2,minmax(88px,.8fr)) repeat(var(--revision-count,1),minmax(105px,1fr))!important;
+ }
+ .syllabus-rows .syllabus-serial{width:28px!important;height:28px!important;min-width:28px!important}
+}
+
+
+/* Extra left breathing room for serial numbers and first chapter column */
+.syllabus-grid-scroll{
+ padding:8px 10px 8px 14px!important;
+ box-sizing:border-box!important;
+}
+.syllabus-column-head,
+.syllabus-rows{
+ padding-left:4px!important;
+ box-sizing:border-box!important;
+}
+.syllabus-rows .syllabus-serial{
+ margin-left:2px!important;
+}
+.syllabus-column-head .head-serial{
+ padding-left:2px!important;
+}
+@media(max-width:620px){
+ .syllabus-grid-scroll{padding-left:12px!important;padding-right:8px!important}
+ .syllabus-column-head,.syllabus-rows{padding-left:3px!important}
+}
+
+
+/* More readable chapter labels: larger type and deeper ink contrast */
+.syllabus-rows .syllabus-chapter-name{
+  font-size:13px!important;
+  line-height:1.45!important;
+  font-weight:750!important;
+  color:#282033!important;
+  letter-spacing:.05px!important;
+  padding:9px 12px!important;
+}
+.syllabus-rows .syllabus-chapter-name .chapter-label{
+  color:#282033!important;
+  font-size:inherit!important;
+  font-weight:800!important;
+}
+@media(max-width:620px){
+  .syllabus-rows .syllabus-chapter-name{
+    font-size:12.5px!important;
+    padding:8px 10px!important;
+  }
+}
+
+
+/* A clearer gap between Theory, PYQs and each Revision control */
+.syllabus-rows{
+  column-gap:8px!important;
+}
+.syllabus-column-head{
+  column-gap:8px!important;
+}
+.syllabus-rows .status-control{
+  padding-inline:2px!important;
+}
+@media(max-width:620px){
+  .syllabus-rows,.syllabus-column-head{
+    column-gap:8px!important;
+  }
+}
+
+
+/* Status dropdowns near the bottom of the syllabus open upward */
+.status-control.menu-up .status-menu{
+ top:auto!important;
+ bottom:calc(100% + 7px)!important;
+ transform:translateX(-50%)!important;
+ transform-origin:bottom center!important;
+}
+.status-control.menu-open{z-index:120!important}
+.status-control.menu-open .status-menu{z-index:121!important}
+
+
+/* Final refinements: compact chapter labels, tight table header, dark active icons */
+.syllabus-column-head{
+  font-size:10px!important;
+  line-height:1.2!important;
+  padding:9px 12px!important;
+  min-height:38px!important;
+}
+.syllabus-column-head .head-serial,
+.syllabus-column-head .head-chapter{
+  font-size:10px!important;
+}
+.syllabus-rows .syllabus-chapter-name{
+  min-height:29px!important;
+  padding:5px 9px!important;
+  font-size:10px!important;
+  line-height:1.25!important;
+  font-weight:700!important;
+}
+.syllabus-rows .syllabus-chapter-name .chapter-label{
+  font-size:10px!important;
+  line-height:1.25!important;
+  font-weight:700!important;
+}
+@media(max-width:620px){
+  .syllabus-rows .syllabus-chapter-name,
+  .syllabus-rows .syllabus-chapter-name .chapter-label{
+    font-size:10px!important;
+    padding-top:5px!important;
+    padding-bottom:5px!important;
+  }
+}
+.subject.active .subject-icon,
+.subject.active .subject-icon svg,
+.syllabus-tab-btn.active .subject-icon,
+.syllabus-tab-btn.active svg{
+  color:#171322!important;
+  stroke:#171322!important;
+}
+
+
+/* Keep breathing room above the first currently sorted chapter row */
+.syllabus-rows{padding-top:10px!important;box-sizing:border-box}
+.syllabus-rows>.syllabus-chapter-row:first-child{margin-top:0!important}
+\n
+/* Chemistry and Maths resource-library placeholders */
+.subject-library{width:100%}
+.subject-library.hidden{display:none!important}
+.blank-resource-box{border:1px dashed #655675;border-radius:12px;background:#11131b;padding:16px 14px;color:#9e97ad;font-size:11px;display:flex;align-items:center;justify-content:center;gap:8px;min-height:54px;text-align:center}
+.blank-resource-box svg{width:16px;height:16px;flex:none;stroke:#c6a9e9}
+.chapter.open .blank-resource-box{border-style:solid;border-color:#8b70a5;background:#151421;color:#c9bfd7}
+
+
+/* Compact status dropdowns: proportionate columns and matching chapter-cell corners */
+.syllabus-chapter-row{
+ grid-template-columns:42px minmax(190px,1.7fr) repeat(2,minmax(88px,.7fr)) repeat(var(--revision-count,1),minmax(88px,.7fr));
+}
+.syllabus-column-head{
+ grid-template-columns:42px minmax(190px,1.7fr) repeat(2,minmax(88px,.7fr)) repeat(var(--revision-count,1),minmax(88px,.7fr));
+}
+.status-control{min-width:0!important;width:100%!important}
+.status-pill{
+ width:100%!important;
+ min-width:0!important;
+ min-height:31px!important;
+ padding:0 22px!important;
+ border-radius:7px!important;
+ box-sizing:border-box;
+}
+.status-icon{left:8px!important}
+.status-chevron{right:8px!important}
+
+
+.resrow{margin-bottom:0}
+#groupModal .resource-modal-rows{display:flex;flex-direction:column;gap:14px;margin-top:18px}
+#groupModal .inorganic-note-row{padding:14px 0;border-bottom:1px solid var(--line)}
+#groupModal .inorganic-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+#groupModal .inorganic-add-link,#groupModal .inorganic-edit-link{border:1px solid var(--line);background:#171a26;color:var(--text);border-radius:10px;padding:8px 12px;font-size:12px;font-weight:700;cursor:pointer}
+#groupModal .inorganic-add-link{background:var(--mint);color:#17201d;border-color:transparent}
+</style></head>
+<body><main class="shell">
+<nav class="subjectbar" aria-label="Study sections">
+<button class="subject" data-subject="physics"><span class="subject-icon"><svg viewBox="0 0 32 32" width="25" height="25" fill="none" stroke="currentColor" stroke-width="1.7"><ellipse cx="16" cy="16" rx="13" ry="5.5"/><ellipse cx="16" cy="16" rx="13" ry="5.5" transform="rotate(60 16 16)"/><ellipse cx="16" cy="16" rx="13" ry="5.5" transform="rotate(120 16 16)"/><circle cx="16" cy="16" r="2.2" fill="currentColor" stroke="none"/></svg></span><span class="subject-copy"><strong>Physics</strong><small>Resources Ready</small></span></button>
+<button class="subject" data-subject="maths"><span class="subject-icon"><svg viewBox="0 0 32 32" width="25" height="25" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 26V5M5 26h23"/><path d="M8 21c4-1 5-12 10-12 3 0 4 5 7 5"/><circle cx="18" cy="9" r="1.6" fill="currentColor" stroke="none"/><path d="M24 14h2"/></svg></span><span class="subject-copy"><strong>Maths</strong><small>Coming Soon</small></span></button>
+<button class="subject" data-subject="chemistry"><span class="subject-icon"><svg viewBox="0 0 32 32" width="25" height="25" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5h8M14 5v9L6.5 26a2 2 0 0 0 1.8 3h15.4a2 2 0 0 0 1.8-3L18 14V5"/><path d="M10 22h12"/></svg></span><span class="subject-copy"><strong>Chemistry</strong><small>PYQ Links Added</small></span></button>
+<button class="subject syllabus-tab active" data-subject="syllabus"><span class="subject-icon"><svg viewBox="0 0 32 32" width="25" height="25" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="5" width="18" height="24" rx="3"/><path d="M12 5V3h8v2m-7 10 2.5 2.5L21 12m-8 9h7"/></svg></span><span class="subject-copy"><strong>Syllabus</strong><small>Topic-wise Checklist</small></span></button>
+<button class="subject mocktest-nav" data-subject="mocktests"><span class="subject-icon"><svg viewBox="0 0 32 32" width="25" height="25" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="24" height="22" rx="4"/><path d="M9 21v-5m7 5V9m7 12v-8M8 10h3"/></svg></span><span class="subject-copy"><strong>Mock Tests</strong><small>Performance Tracker</small></span></button>
+</nav>
+<section class="workspace">
+<div class="workspace-main">
+<section id="physicsPanel">
+<div class="toolbar"><div class="searchwrap"><span>⌕</span><input id="search" class="search" placeholder="Search a chapter or resource…" autocomplete="off"></div><button id="expandAll" class="filterbtn">Expand all</button></div>
+<div class="sectionhead"><div><h2>Physics · Chapter Library</h2><p>Open a chapter to see its playlists and practice links.</p></div><div class="count" id="chapterCount">24 chapters</div></div>
+<div class="grid" id="chapterGrid"></div>
+<div class="sectionhead"><div><h2>More Ways to Practise</h2><p>Extra question series, year-wise PYQs and study material.</p></div></div>
+<div class="resourcegrid" id="extraGrid"></div>
+</section>
+<section id="blankPanel" class="subject-library hidden">
+ <div class="toolbar"><div class="searchwrap"><span>⌕</span><input id="blankSearch" class="search" placeholder="Search a chapter…" autocomplete="off"></div><button id="blankExpandAll" class="filterbtn" type="button">Expand all</button></div>
+ <div class="sectionhead"><div><h2 id="blankTitle">Chemistry · Chapter Library</h2><p id="blankSubtitle">Chapter-wise resource blocks, ready to fill with your links.</p></div><div class="count" id="blankCount"></div></div>
+ <div class="grid" id="blankChapterGrid"></div>
+ <div id="chemistryExtraSection" class="hidden" style="margin-top:28px">
+  <div class="sectionhead"><div><h2>More Ways to Practise</h2><p>Extra Chemistry question series and study material.</p></div></div>
+  <div class="resourcegrid" id="chemistryExtraGrid"></div>
+ </div>
+ <div id="mathsExtraSection" class="hidden" style="margin-top:28px">
+  <div class="sectionhead"><div><h2>More Maths Resources</h2><p>Extra chapter material and PDFs.</p></div></div>
+  <div class="resourcegrid" id="mathsExtraGrid"></div>
+ </div>
+</section>
+<section id="syllabusView">
+<div class="syllabus-view-head"><div><h2>Syllabus Checklist</h2><p>Track theory, PYQs and two rounds of revision, chapter by chapter.</p></div></div>
+<div class="syllabus-tabs" id="syllabusTabs" role="tablist" aria-label="Syllabus subjects"></div>
+<div class="revision-toolbar"><span class="revision-hint" id="revisionHint">One revision round included</span><button class="add-revision-btn" id="addRevision" type="button"><svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M10 3v14M3 10h14"/></svg> Add Revision</button></div><div id="fullSyllabus"></div>
+</section>
+
+<section id="mockTestsView" class="mock-tests-view">
+ <div class="mock-view-head">
+  <div><span class="mock-eyebrow">YOUR PRACTICE, IN PERSPECTIVE</span><h2>Mock Test Studio</h2><p>A little record of every attempt, every lesson, and every improvement.</p></div>
+ </div>
+ <nav class="mock-workspace-tabs" role="tablist" aria-label="Mock test sections">
+  <button class="mock-workspace-tab active" data-mock-tab="performance" role="tab" aria-selected="true">
+   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5m0 14h17M7 15l4-4 3 2 6-7"/><circle cx="20" cy="6" r="1.5"/></svg><span><b>Performance</b><small>Score insights & graph</small>
+  </button>
+  <button class="mock-workspace-tab" data-mock-tab="add" role="tab" aria-selected="false">
+   <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3.5" width="16" height="17" rx="3"/><path d="M12 8v8m-4-4h8"/></svg><span><b>Add Test</b><small>Record a new mock</small>
+  </button>
+  <button class="mock-workspace-tab" data-mock-tab="history" role="tab" aria-selected="false">
+   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5A8.5 8.5 0 1 1 3.7 14"/><path d="M4 3.5v4.5h4.5M12 7v5l3.5 2"/></svg><span><b>Test History</b><small>All recorded attempts</small>
+  </button>
+ </nav>
+
+ <section class="mock-tab-panel active" id="mockPerformancePanel" data-mock-panel="performance">
+  <div class="mock-summary" id="mockSummary"></div>
+  <section class="mock-chart-card">
+   <div class="mock-chart-head"><div><span class="mock-panel-kicker">YOUR SCORE JOURNEY</span><h3>Performance Trajectory</h3><p>Follow your total and subject-wise marks across mock tests.</p></div>
+    <div class="mock-chart-tools"><select id="mockRange" aria-label="Chart range"><option value="all">All Tests</option><option value="5">Last 5 Tests</option><option value="10">Last 10 Tests</option></select><button id="mockPercent" class="mock-percent-btn" type="button" aria-pressed="false">％</button></div>
+   </div>
+   <div class="mock-legend">
+    <span class="legend-chip on" style="--series-color:#bba9f5;cursor:default;opacity:1"><i></i>Total</span>
+    <button class="legend-chip chemistry on" data-series="chemistry"><i></i>Chemistry</button>
+    <button class="legend-chip maths on" data-series="maths"><i></i>Maths</button>
+    <button class="legend-chip physics on" data-series="physics"><i></i>Physics</button>
+   </div>
+   <div class="mock-chart-wrap"><svg id="mockChart" viewBox="0 0 900 390" role="img" aria-label="Mock test total marks and subject-wise performance chart"></svg></div>
+   <div class="mock-chart-foot"><span>New scores appear here as soon as you save a test.</span><span id="mockChartCount">No tests yet</span></div>
+  </section>
+  <div class="mock-performance-tip"><span class="tip-icon"><svg viewBox="0 0 24 24"><path d="m12 3 2.3 5.7L20 11l-5.7 2.3L12 19l-2.3-5.7L4 11l5.7-2.3L12 3Z"/></svg></span><span><b>Small steps add up.</b><small>Focus on your trend, not just one test's score.</small></span></div>
+ </section>
+
+ <section class="mock-tab-panel" id="mockAddPanel" data-mock-panel="add" hidden>
+  <div class="mock-add-intro"><div class="mock-add-illustration"><svg viewBox="0 0 100 100" aria-hidden="true"><rect x="20" y="14" width="58" height="70" rx="12"/><path d="M35 35h28M35 47h18M35 59h12"/><circle cx="70" cy="70" r="16"/><path d="M70 62v16m-8-8h16"/></svg></div><div><span class="mock-panel-kicker">NEW ATTEMPT</span><h3>Log your mock test</h3><p>Enter the marks and question analysis. Your dashboard will update automatically.</p></div></div>
+  <section class="mock-entry-panel" id="mockEntryPanel">
+   <form id="mockTestForm">
+    <div class="mock-form-section">
+     <div class="mock-form-section-head"><span class="mock-section-icon"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4m8-4v4M8 11h8"/></svg></span><span><b>Test details</b><small>Give this attempt a name and date.</small></span></div>
+     <div class="mock-basic-fields">
+      <label><span>Test date</span><input type="date" id="mockDate" required></label>
+      <label><span>Source of mock test</span><input type="text" id="mockSource" placeholder="e.g. JEE Replica - 03" maxlength="90" required></label>
+     </div>
+    </div>
+    <div class="mock-form-section">
+     <div class="mock-form-section-head"><span class="mock-section-icon marks-icon"><svg viewBox="0 0 24 24"><path d="M4 19V5m0 14h16M7 15l4-4 3 2 6-7"/></svg></span><span><b>Subject-wise marks</b><small>Enter each subject score out of 100.</small></span><strong class="mock-total-badge">Total <b id="mockTotalPreview">0 / 300</b></strong></div>
+     <div class="mock-subject-inputs">
+      <label class="mock-subject-input physics-input"><span class="mock-subject-symbol"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="3.5"/><ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(120 12 12)"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg></span><span class="mock-subject-label"><b>Physics</b><small>Out of 100</small></span><input type="number" min="0" max="100" id="markPhysics" placeholder="00" required></label>
+      <label class="mock-subject-input chemistry-input"><span class="mock-subject-symbol"><svg viewBox="0 0 24 24"><path d="M9 3h6m-5 0v7l-5 9a1.5 1.5 0 0 0 1.3 2.2h11.4A1.5 1.5 0 0 0 19 19l-5-9V3M8 16h8"/></svg></span><span class="mock-subject-label"><b>Chemistry</b><small>Out of 100</small></span><input type="number" min="0" max="100" id="markChemistry" placeholder="00" required></label>
+      <label class="mock-subject-input maths-input"><span class="mock-subject-symbol"><svg viewBox="0 0 24 24"><path d="M3 20V4M3 20h18M5 16c4 0 4-10 9-10 3 0 4 5 7 5"/></svg></span><span class="mock-subject-label"><b>Maths</b><small>Out of 100</small></span><input type="number" min="0" max="100" id="markMaths" placeholder="00" required></label>
+     </div>
+    </div>
+    <div class="mock-form-section">
+     <div class="mock-form-section-head"><span class="mock-section-icon analysis-icon"><svg viewBox="0 0 24 24"><path d="m5 6 4 4m0-4-4 4m9-2h6M5 16l4 4m0-4-4 4m9-2h6"/></svg></span><span><b>Answers analysis</b><small>Count wrong, skipped and correct questions for each subject.</small></span></div>
+     <div class="mock-analysis-grid">
+      <div class="mock-analysis-labels"><span>Result</span><b>Physics</b><b>Chemistry</b><b>Maths</b></div>
+      <div class="mock-analysis-row"><b><i class="analysis-dot wrong-dot"></i>Wrong</b><input type="number" min="0" id="wrongPhysics" value="0" aria-label="Physics wrong"><input type="number" min="0" id="wrongChemistry" value="0" aria-label="Chemistry wrong"><input type="number" min="0" id="wrongMaths" value="0" aria-label="Maths wrong"></div>
+      <div class="mock-analysis-row"><b><i class="analysis-dot skip-dot"></i>Skipped</b><input type="number" min="0" id="skipPhysics" value="0" aria-label="Physics skipped"><input type="number" min="0" id="skipChemistry" value="0" aria-label="Chemistry skipped"><input type="number" min="0" id="skipMaths" value="0" aria-label="Maths skipped"></div>
+      <div class="mock-analysis-row"><b><i class="analysis-dot correct-dot"></i>Correct</b><input type="number" min="0" id="correctPhysics" value="0" aria-label="Physics correct"><input type="number" min="0" id="correctChemistry" value="0" aria-label="Chemistry correct"><input type="number" min="0" id="correctMaths" value="0" aria-label="Maths correct"></div>
+     </div>
+    </div>
+    <div class="mock-form-actions"><button type="reset" class="mock-cancel-btn" id="cancelMockForm">Clear Form</button><button type="submit" class="mock-save-btn"><svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M10 3v14M3 10h14"/></svg>Save Mock Test</button></div>
+   </form>
+  </section>
+ </section>
+
+ <section class="mock-tab-panel" id="mockHistoryPanel" data-mock-panel="history" hidden>
+  <section class="mock-history-panel"><div class="mock-history-head"><div><span class="mock-panel-kicker">YOUR TEST ARCHIVE</span><h3>Test History</h3><p>Every recorded attempt, organised in one place.</p></div><span id="mockHistoryCount">0 tests</span></div>
+   <div class="mock-history-scroll"><table class="mock-history-table"><thead>
+<tr>
+ <th class="col-number">#</th><th class="col-date">Date</th><th class="col-source">Mock Test</th>
+ <th class="col-marks">Subject-wise Marks <small>P · C · M</small></th>
+ <th class="col-total">Total</th><th class="col-analysis wrong-head">Wrong <small>P · C · M</small></th>
+ <th class="col-analysis skip-head">Skipped <small>P · C · M</small></th>
+ <th class="col-analysis correct-head">Correct <small>P · C · M</small></th><th class="col-action"></th>
+</tr>
+</thead><tbody id="mockHistoryBody"><tr><td colspan="9" class="mock-empty"><span class="mock-empty-icon"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h5m-5 4h8"/></svg></span><b>No mock tests yet</b><small>Your saved attempts will appear here once you add your first test.</small></td></tr></tbody></table></div>
+  </section>
+ </section>
+</section>
+</div>
+
+</section>
+<footer class="footer"><svg viewBox="0 0 24 24" width="14" height="14" style="vertical-align:-3px;margin-right:5px" aria-hidden="true"><path d="M12 2c3 4 7 5 7 10a7 7 0 1 1-14 0c0-5 4-6 7-10Z" fill="none" stroke="#f0a9c8" stroke-width="1.5"/><path d="M12 9v10" stroke="#a8d8c4" stroke-width="1.5"/></svg>Made for your study days · <b>Study Nook</b> ♡</footer>
+</main>
+<script>
+const chapters = [
+["Units, Dimensions, Errors and Vectors","https://www.youtube.com/playlist?list=PLjvx7xqdpePJ2frgR0Q6FwVllpWUxUo_Y"],
+["Kinematics","https://www.youtube.com/playlist?list=PLjvx7xqdpePLItW_yyRSUfrzSqA5ezpqL"],
+["Laws of Motion","https://www.youtube.com/playlist?list=PLjvx7xqdpePIZbs8Yf8Pi34ek7MMmj9rb"],
+["WEP & Circular Motion","https://www.youtube.com/playlist?list=PLjvx7xqdpePIfZAomhvUbS0q8QF69SzQu"],
+["COM & Collision","https://www.youtube.com/playlist?list=PLjvx7xqdpePJVQvIDMa9inrxGWyi-Vnr2"],
+["Rotational Motion","https://www.youtube.com/playlist?list=PLjvx7xqdpePLNEB-VLtUhBnF5LZmoYapS"],
+["Gravitation","https://www.youtube.com/playlist?list=PLjvx7xqdpePJBciKC3lFr_d00mDQceq8s"],
+["Solids or Elasticity","https://www.youtube.com/playlist?list=PLjvx7xqdpePL5iNvM26ZGPhVQJyHKBokr"],
+["Fluids","https://www.youtube.com/playlist?list=PLjvx7xqdpePL2VCkyQT1KsQ1lPt7qs8fj"],
+["Simple Harmonic Motion","https://www.youtube.com/playlist?list=PLjvx7xqdpePKJBO8-qr0Im7QmJ86vZ_Rm"],
+["Thermal Properties & Heat Transfer","https://www.youtube.com/playlist?list=PLjvx7xqdpePJZ1hTpE-y-BKiwtdJFXLKF"],
+["KTG & Thermodynamics","https://www.youtube.com/playlist?list=PLjvx7xqdpePL4PBaaFvkMbALzJP3DPFQM"],
+["Wave Motion","https://www.youtube.com/playlist?list=PLjvx7xqdpePIBAIo5trSIhWP7viOOI5oD"],
+["Electrostatics","https://www.youtube.com/playlist?list=PLjvx7xqdpePL-IQ8QCmk5BpycShF0RaKO"],
+["Capacitor","https://www.youtube.com/playlist?list=PLjvx7xqdpePJyUSPmJSQK_M7W-Z-qN9iW"],
+["Current Electricity","https://www.youtube.com/playlist?list=PLjvx7xqdpePJJNDrvHyZEdwu2uGohWaCU"],
+["Moving Charges & MEC","https://www.youtube.com/playlist?list=PLjvx7xqdpePL2mwAZqflTLYlAbvdLA8J4"],
+["Electromagnetic Induction","https://www.youtube.com/playlist?list=PLjvx7xqdpePKLweoAM4zkoZs02Ss6YKMR"],
+["AC Circuits","https://www.youtube.com/playlist?list=PLjvx7xqdpePLqHPbozt5lLpkHvhrzecop"],
+["Wave Optics","https://www.youtube.com/playlist?list=PLjvx7xqdpePJ3lHx7uc5dSi-JqmJweDSZ"],
+["EM Waves","https://www.youtube.com/playlist?list=PLjvx7xqdpePJ3lHx7uc5dSi-JqmJweDSZ"],
+["Ray Optics","https://www.youtube.com/playlist?list=PLjvx7xqdpePKE_6kKSGES5qJtCz-kd_5d"],
+["Semiconductor Devices","https://www.youtube.com/playlist?list=PLjvx7xqdpePLhZB09b59Df7ivOAwMiRuf"],
+["Modern Physics","https://www.youtube.com/playlist?list=PLjvx7xqdpePL4vTqUUyIbtg5FubHYGNFr"]
+];
+const advPYQ = [
+["Rotational Motion","https://youtube.com/playlist?list=PLjvx7xqdpePKde4SA51PGHIUBe7OMvcXi&si=anRqc8lRR3PioYoU"],["Gravitation","https://youtube.com/playlist?list=PLjvx7xqdpePKanayCkZv7q-ha20XJYXK7&si=0JEnJA1jxZuH4R3I"],["Ray Optics","https://youtube.com/playlist?list=PLjvx7xqdpePJXRSUGGq8EPyVrLrlbULll&si=UnGiGGdmET6z_YOt"],["Thermodynamics & Thermal Prop","https://youtube.com/playlist?list=PLjvx7xqdpePIU0qCZxQzuqxXOKcVEViTp&si=37wJlcnhzKdv6Jac"],["Modern Physics","https://youtube.com/playlist?list=PLjvx7xqdpePI8dkU9MJJdMYMiO4PzE3vw&si=WleuyGsjTboenxmf"],["WEP/COM/SHM","https://youtube.com/playlist?list=PLjvx7xqdpePLfFRTqvZaLXrPgTFcB6pR_&si=MV80GneXKkWZRwjn"],["Wave Optics","https://youtube.com/playlist?list=PLjvx7xqdpePKnBj7wLc1PIfofMHdgnZzO&si=wO0eqxnartLAGmhx"],["Electrostatics","https://youtube.com/playlist?list=PLjvx7xqdpePIR965G0P1qxLB3db5ZXOjU&si=f4hOcNxOc29AHm3L"],["Errors & Dimensions","https://youtube.com/playlist?list=PLjvx7xqdpePIDou2YZ98ffW2EINM3ps6J&si=VQdd1hZRARUKPOMP"],["Kinematics","https://youtube.com/playlist?list=PLjvx7xqdpePJD9UKvd3dUfh6TYYquKqiw"],["Moving Charges & MEC","https://youtube.com/playlist?list=PLjvx7xqdpePIVm9NaFfSEDvnAjO0bPYZx&si=3F-ZgnnoTujxppx_"],["EMI","https://youtube.com/playlist?list=PLjvx7xqdpePI7r9BYXuDR4UFxAqOcVDdm&si=NSKQgbd7Zob7oTjn"],["Current Electricity","https://youtube.com/playlist?list=PLjvx7xqdpePK8x0SBEGmK0u7OfS5zWG6K&si=rSB_aRobXH6cSE1Y"],["Capacitors","https://youtube.com/playlist?list=PLjvx7xqdpePLO2aWjGceeoKxjgNWxhm2S&si=2RYiufzUbSIYMo56"],["Fluid Mechanics","https://youtube.com/playlist?list=PLjvx7xqdpePJQlTdsR7eVAOFiwp1zHfP2&si=suC3NaS7sbfJloRW"],["Wave Motion","https://youtube.com/playlist?list=PLjvx7xqdpePKy_eSktpdxckYkAlF9lcsX&si=mdLolLhBA1HJDwOm"],["Alternating Current","https://youtube.com/playlist?list=PLjvx7xqdpePKQlhpANgTfiMW6bXGVtTCR&si=ZT_2tbmSqu-IeHun"]
+];
+const mainPYQ=[["2019","https://www.youtube.com/playlist?list=PLjvx7xqdpePJRzfnLS6MKTkQ_rEdSR6Y8"],["2020","https://www.youtube.com/playlist?list=PLjvx7xqdpePJAOH1hZ0j06R3t12vP3Cow"],["2021","https://www.youtube.com/playlist?list=PLjvx7xqdpePIKCKDXltYrS64nNzlZ3eLZ"],["2022 June","https://www.youtube.com/playlist?list=PLjvx7xqdpePJ_2bx5f4gD75Vj_9BcTr1D"],["2022 July","https://www.youtube.com/playlist?list=PLjvx7xqdpePLQtNSsdpoVGzpyWui8sQPY"],["2023 Jan","https://www.youtube.com/playlist?list=PLjvx7xqdpePKD3h36ZWZz9gC0fBPkQrl9"],["2023 April","https://www.youtube.com/playlist?list=PLjvx7xqdpePKyNfr1NVrTFB7GBLcnczMR"],["2024 Jan","https://www.youtube.com/playlist?list=PLjvx7xqdpePJoAzJbQbGy2VPOHOCA8-z6"],["2024 April","https://www.youtube.com/playlist?list=PLjvx7xqdpePKza34Et-2Xx1vGBPwf593C"],["2025 Jan","https://www.youtube.com/playlist?list=PLjvx7xqdpePLTiob1BUMA8SydLmHTNXqv"],["2025 April","https://www.youtube.com/playlist?list=PLjvx7xqdpePKnkKJ8B0-UhvOzM2zToPL3"],["2026 Jan","https://www.youtube.com/playlist?list=PLjvx7xqdpePKPYSBNy8wBilBVxCvPxSxD"],["2026 April","https://www.youtube.com/playlist?list=PLDR7DQWnMSFI"]];
+const advNon=[["Rotational Motion","https://bit.ly/2WIZ2j5"],["Gravitation","https://bit.ly/3t5Mqyr"],["Ray Optics","https://bit.ly/3tcm4e8"],["Magnetism","https://bit.ly/3t2A3Dd"],["EMI and AC","https://bit.ly/3jwsEZF"],["Electrostatics","https://bit.ly/38vEeOm"],["Capacitor","https://bit.ly/3gSRqRX"],["Current Electricity","https://bit.ly/3n5k1HR"],["Thermodynamics","https://bit.ly/2Yh3I07"],["Modern Physics","https://bit.ly/3tbPQ2v"]];
+const series=[["Top PYQs Series","https://youtube.com/playlist?list=PLjvx7xqdpePIhuRDZnZA49oCEALDv48b_&si=8iLgRkkIZtk_Tb9c"],["Rank Booster Series 1.0","https://youtube.com/playlist?list=PLjvx7xqdpePJCP49_Ama1H83s_9LzFkR6&si=m6zCNc5p8HKaI769"],["Sure Shot Series","https://youtube.com/playlist?list=PLjvx7xqdpePJD6xrZkipYKAgTioEVsjKu&si=IegYJ4FMQrGv5nAH"],["11th Physics Marathon","https://www.youtube.com/live/oyL9yCpHxEU?si=WxIQCiuYII4wNZ2r"],["12th Physics Marathon","https://www.youtube.com/live/tzI8crdu6RI?si=NzXtVN2xkW_t0i_y"],["PHD Series*","https://youtube.com/playlist?list=PLjvx7xqdpePIeCvAk2eO45rgZIgdQmpPD&si=Y0fZpxSU9k6l9EIi"],["Advanced Booster Series","https://www.youtube.com/playlist?list=PLjvx7xqdpePJE4ULlrkbwIHBLlur_XCxT"],["Short Tricks","https://www.youtube.com/playlist?list=PLjvx7xqdpePIDJyG3o2lXHTnwlF0bKs2-"],["Experiments & Instruments","https://www.youtube.com/playlist?list=PLjvx7xqdpePKWv06iJ0AfFDU1rDvTyvUR"]];
+const materials=[["Short Notes 11/12 Physics","https://telegram.me/edunitimg/6188"],["JEE Main 2019–2026 PYQs PDF","https://drive.google.com/drive/folders/1785MiemoRxcc3o6dto6DKCdEfcW70gO_?usp=drive_link"],["RBS 1.0 PDF","https://drive.google.com/file/d/1iti5pswAu9vKM5aeueynsUReNSf7T1Up/view?usp=drive_link"],["Top PYQs PDF","https://drive.google.com/drive/folders/1bz7jQo1VvE-wBTjRYu_H1lYwsOfCXDzr?usp=sharing"],["Units Conversions & Constants","https://drive.google.com/file/d/1EhTyNmcLWrSwn4ZV5YLNmLYAMlXioo0j/view?usp=drive_link"]];
+const extraResources=[
+["Question Series","9 resources","series"],["JEE Advanced PYQs","17 topic playlists","adv"],["JEE Main PYQs","13 year/shift playlists","main"],["Advanced Level · Non-PYQs","10 topic playlists","non"],["Materials & PDFs","5 downloads","materials"]
+];
+function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function makeRes(name,url,type){return `<div class="resrow"><div><div class="resname">${esc(name)}</div><div class="restype">${type}</div></div><a class="openlink" href="${url}" target="_blank" rel="noopener">Open ↗</a></div>`}
+function chapterExtras(name){
+ const matches=[];
+ const norm=name.toLowerCase();
+ const a=advPYQ.filter(x=>{let n=x[0].toLowerCase();return (norm.includes("rotation")&&n.includes("rotation"))||(norm.includes("gravitation")&&n.includes("gravitation"))||(norm.includes("ray optics")&&n.includes("ray optics"))||(norm.includes("thermal")&&n.includes("thermal"))||(norm.includes("thermodynamics")&&n.includes("thermodynamics"))||(norm.includes("modern")&&n.includes("modern"))||(norm.includes("kinematics")&&n.includes("kinematics"))||((norm.includes("wave optics"))&&n.includes("wave optics"))||(norm.includes("electrostatics")&&n.includes("electrostatics"))||(norm.includes("moving charges")&&n.includes("moving charges"))||(norm.includes("electromagnetic induction")&&n==="emi")||(norm.includes("current electricity")&&n.includes("current electricity"))||(norm.includes("capacitor")&&n.includes("capacitor"))||(norm.includes("fluid")&&n.includes("fluid"))||(norm.includes("wave motion")&&n.includes("wave motion"))||(norm.includes("ac circuits")&&n.includes("alternating current"))||(norm.includes("errors")&&n.includes("errors"))||(norm.includes("com & collision")&&n.includes("wep/com"))||(norm.includes("simple harmonic")&&n.includes("wep/com"))||(norm.includes("wep")&&n.includes("wep/com"));});
+ a.forEach(x=>matches.push([`JEE Advanced PYQ · ${x[0]}`,x[1],"Topic-wise PYQs"]));
+ const b=advNon.filter(x=>norm.includes(x[0].toLowerCase())||(norm.includes("electromagnetic induction")&&x[0]==="EMI and AC")||(norm.includes("ac circuits")&&x[0]==="EMI and AC")||(norm.includes("ktg")&&x[0]==="Thermodynamics")||(norm.includes("thermal")&&x[0]==="Thermodynamics")||(norm.includes("moving charges")&&x[0]==="Magnetism")||(norm.includes("semiconductor")&&x[0]==="Modern Physics"));
+ b.forEach(x=>matches.push([`Advanced level · ${x[0]}`,x[1],"Non-PYQ practice"]));
+ return matches;
+}
+const grid=document.getElementById("chapterGrid"),search=document.getElementById("search");
+
+function resourceStatusForChapter(resourceName){
+ const aliases={
+  "solids or elasticity":"solids",
+  "fluids":"fluid mechanics",
+  "ac circuits":"alternating current",
+  "semiconductor devices":"semiconductors",
+  "capacitors":"capacitor"
+ };
+ const normalize=value=>String(value||"").toLowerCase()
+  .replace(/&/g," ").replace(/\band\b/g," ")
+  .replace(/[^a-z0-9]/g,"").replace(/s$/,"");
+ let target=aliases[String(resourceName||"").toLowerCase()]||resourceName;
+ let idx=syllabusData.physics.findIndex(row=>normalize(row[0])===normalize(target));
+ if(idx<0){
+  const targetNorm=normalize(target);
+  idx=syllabusData.physics.findIndex(row=>{
+   const n=normalize(row[0]);
+   return n===targetNorm||n.includes(targetNorm)||targetNorm.includes(n);
+  });
+ }
+ if(idx<0)return {tier:0,className:"",label:"",index:-1};
+ const theoryDone=statusValue("physics",idx,"theory")==="Done";
+ const pyqsDone=statusValue("physics",idx,"pyqs")==="Done";
+ if(theoryDone&&pyqsDone)return {tier:2,className:"resource-both-done",label:"Theory + PYQs done",index:idx};
+ if(theoryDone)return {tier:1,className:"resource-theory-done",label:"Theory done",index:idx};
+ if(pyqsDone)return {tier:1,className:"resource-pyqs-done",label:"PYQs done",index:idx};
+ return {tier:0,className:"",label:"",index:idx};
+}
+function renderChapters(){
+ const q=search.value.trim().toLowerCase();let shown=0;
+ const openNames=new Set([...grid.querySelectorAll(".chapter.open .chaptertitle")].map(el=>el.childNodes[0]?.textContent?.trim()).filter(Boolean));
+ const ordered=chapters.map(([name,url],i)=>({name,url,i,status:resourceStatusForChapter(name)}))
+  .sort((a,b)=>a.status.tier-b.status.tier||a.i-b.i);
+ grid.innerHTML=ordered.map(({name,url,i,status})=>{
+  const extras=chapterExtras(name),allText=(name+" "+extras.map(x=>x[0]).join(" ")).toLowerCase();
+  if(q&&!allText.includes(q))return "";
+  shown++;
+  let resources=makeRes("Chapter playlist",url,"Eduniti chapter playlist");
+  extras.forEach(x=>resources+=makeRes(x[0],x[1],x[2]));
+  const stateBadge=status.label?`<span class="resource-status-label">${status.tier===2?'<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8 3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>':'<span class="resource-status-dot"></span>'}${status.label}</span>`:"";
+  return `<article class="chapter ${status.className}" data-resource-tier="${status.tier}"><button class="chapterhead" aria-expanded="${openNames.has(name)?"true":"false"}"><span class="num">${String(i+1).padStart(2,"0")}</span><span class="chaptertitle">${esc(name)}<div class="chaptermeta">${1+extras.length} resource${extras.length?"s":""} · tap to explore ${stateBadge}</div></span><span class="chev" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path d="m6.5 9 5.5 5.5L17.5 9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button><div class="resources">${resources}</div></article>`;
+ }).join("")||`<div class="empty">No matching chapter found. Try another keyword ♡</div>`;
+ document.getElementById("chapterCount").textContent=`${shown} of ${chapters.length} chapters`;
+ grid.querySelectorAll(".chapterhead").forEach(btn=>btn.addEventListener("click",()=>{const card=btn.closest(".chapter");card.classList.toggle("open");btn.setAttribute("aria-expanded",card.classList.contains("open"));}));
+}
+
+const chemistryExtraResources=[
+ ["Organic Chemistry · JEE Main 2025","1 resource","chemOrganic"],
+ ["Physical + Inorganic Chemistry · JEE Main 2025","1 resource","chemPhysicalInorganic"],
+ ["Chemistry Short Notes · PW","2 downloads","chemShortNotes"],
+ ["Inorganic Notes","Class 11 & Class 12","chemInorganicNotes"]
+];
+const chemOrganic=[["JEEfinity · Organic Chemistry (Jan Attempt 2025)","https://www.youtube.com/watch?v=yKoGUVOSKlc"]];
+const chemPhysicalInorganic=[["JEEfinity · Physical + Inorganic Chemistry (Jan Attempt 2025)","https://www.youtube.com/watch?v=Wu8RIn4EGI0"]];
+const chemShortNotes=[
+ ["11th Chemistry Short Notes · PW","https://www.pw.live/study-v2/test-series-v2/booklet-pdfs?bookletId=69f1f4ee7792150515a03e9f&title=11th%20Chemistry%20Booklet"],
+ ["12th Chemistry Short Notes · PW","https://www.pw.live/study-v2/test-series-v2/booklet-pdfs?bookletId=69d7357199760323295d789a&title=12th%20Chemistry%20Booklet"]
+];
+const inorganicNoteSlots=[
+ ["Class 11 Inorganic Notes","studyNookInorganicClass11"],
+ ["Class 12 Inorganic Notes","studyNookInorganicClass12"]
+];
+function renderExtras(){
+ const groups={series,adv:advPYQ,main:mainPYQ,non:advNon,materials};
+ const card=([title,desc,key])=>`<article class="resourcecard"><h3>${esc(title)}</h3><p>${esc(desc)}</p><button class="filterbtn" data-open="${key}"><span>Browse resources</span><svg class="button-icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></article>`;
+ document.getElementById("extraGrid").innerHTML=extraResources.map(card).join("");
+ document.querySelectorAll("[data-open]").forEach(btn=>btn.addEventListener("click",()=>openGroup(btn.dataset.open)));
+}
+function openGroup(key){
+ const names={series:"Question Series",adv:"JEE Advanced PYQs",main:"JEE Main PYQs",non:"Advanced Level · Non-PYQs",materials:"Study Materials",chemOrganic:"Chemistry · Organic Chemistry",chemPhysicalInorganic:"Chemistry · Physical + Inorganic",chemShortNotes:"Chemistry · PW Short Notes",chemInorganicNotes:"Chemistry · Inorganic Notes",mathsNehaPdf:"Maths · Neha Ma'am PDF"};
+ const groups={series,adv:advPYQ,main:mainPYQ,non:advNon,materials,chemOrganic,chemPhysicalInorganic,chemShortNotes};
+ let box=document.getElementById("groupModal");if(!box){box=document.createElement("div");box.id="groupModal";box.style.cssText="position:fixed;inset:0;background:#000b;z-index:5;display:grid;place-items:center;padding:18px";document.body.appendChild(box);}
+ let rows;
+ if(key==="mathsNehaPdf"){
+  const storageKey="studyNookMathsNehaMaamPdf";
+  let saved="";try{saved=localStorage.getItem(storageKey)||"";}catch(e){}
+  const action=saved?`<a class="openlink" href="${esc(saved)}" target="_blank" rel="noopener noreferrer">Open ↗</a>`:`<button class="openlink inorganic-add-link" data-storage="${storageKey}" type="button">Add link +</button>`;
+  rows=`<div class="resrow inorganic-note-row"><div><div class="resname">Neha Ma'am PDF</div><div class="restype">${saved?"Saved PDF link":"Add your PDF URL"}</div></div><div class="inorganic-actions">${action}${saved?`<button class="inorganic-edit-link" data-storage="${storageKey}" type="button">Edit</button>`:""}</div></div>`;
+ }else if(key==="chemInorganicNotes"){
+  rows=inorganicNoteSlots.map(([label,storageKey])=>{
+   let saved="";try{saved=localStorage.getItem(storageKey)||"";}catch(e){}
+   const action=saved?`<a class="openlink" href="${esc(saved)}" target="_blank" rel="noopener noreferrer">Open ↗</a>`:`<button class="openlink inorganic-add-link" data-storage="${storageKey}" type="button">Add link +</button>`;
+   return `<div class="resrow inorganic-note-row"><div><div class="resname">${esc(label)}</div><div class="restype">${saved?"Saved resource link":"Add your class notes URL"}</div></div><div class="inorganic-actions">${action}${saved?`<button class="inorganic-edit-link" data-storage="${storageKey}" type="button">Edit</button>`:""}</div></div>`;
+  }).join("");
+ }else{
+  rows=groups[key].map(x=>makeRes(x[0],x[1],"Resource link")).join("");
+ }
+ box.innerHTML=`<div style="width:min(650px,100%);max-height:85vh;overflow:auto;background:#12141e;border:1px solid #51465b;border-radius:20px;padding:20px;box-shadow:0 25px 80px #000"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><h2 style="font-size:19px;margin:0">${names[key]}</h2><button id="closeModal" class="filterbtn">Close ✕</button></div><div class="resource-modal-rows">${rows}</div></div>`;
+ document.getElementById("closeModal").onclick=()=>box.remove();box.onclick=e=>{if(e.target===box)box.remove();};
+ box.querySelectorAll(".inorganic-add-link,.inorganic-edit-link").forEach(btn=>btn.addEventListener("click",()=>{
+  const key=btn.dataset.storage;
+  const current=(()=>{try{return localStorage.getItem(key)||"";}catch(e){return "";}})();
+  const value=prompt(key==="studyNookMathsNehaMaamPdf"?"Paste the Neha Ma'am PDF link:":"Paste the Class 11/12 Inorganic Notes link:",current);
+  if(value===null)return;
+  const url=value.trim();
+  if(url && !/^https?:\/\//i.test(url)){alert("Please enter a valid link starting with http:// or https://");return;}
+  try{if(url)localStorage.setItem(key,url);else localStorage.removeItem(key);}catch(e){alert("Could not save this link in this browser.");return;}
+  openGroup("chemInorganicNotes");
+ }));
+}
+
+
+const syllabusData={
+ physics:[
+ ["KTG & Thermodynamics","4","288"],["Thermal Properties & Heat Transfer","4","0"],["Fluid Mechanics","4","186"],["Solids","4","67"],["Modern Physics","3","171"],["Electrostatics","1-2","0"],["Current Electricity","1-2","0"],["Ray Optics","1-2","0"],["Units Dimensions Errors & Vectors","1-2","0"],["Kinematics","1-2","0"],["Moving Charges & MEC","1","0"],["Rotational Motion","1","158"],["Wave Optics","1","109"],["Semiconductors","1","0"],["Gravitation","1","0"],["Alternating Current","1","0"],["Laws of Motion","0-1","0"],["Electromagnetic Induction","0-1","0"],["Simple Harmonic Motion","0-1","0"],["WEP & Circular Motion","0-1","0"],["EM Waves","0-1","0"],["Capacitor","0-1","0"],["COM & Collision","0-1","82"],["Wave Motion","0-1","77"]
+ ],
+ maths:[
+ ["Straight Line","3-4","80"],["Circle","3-4","64"],["Parabola","3-4","45"],["Ellipse","3","38"],["Hyperbola","3","39"],["3D Geometry","3","116"],["Vector Algebra","3","112"],["Matrix & Determinants","1-2","12"],["Sequence & Series","1-2","0"],["Integration","1-2","0"],["Differential Equations","1-2","0"],["Limits, Continuity & Derivatives","1-2","0"],["Probability","1-2","88"],["Complex Number","1","10"],["Permutations & Combinations","1","87"],["Binomial Theorem","1","105"],["Area Under The Curve","0-1","0"],["Application of Derivatives","0-1","0"],["Sets & Relation","0-1","0"],["Quadratic Equations","0-1","0"],["Statistics","0-1","58"],["Functions","0-1","0"],["Trigonometry","0-1","0"],["Inverse Trigonometric Functions (ITF)","0-1","0"]
+ ],
+ chemistry:[
+ ["GOC & POC","3-4","263"],["Coordination Compound","2-3","0"],["Aldehyde, Ketone & Carboxylic Acid","1-2","113"],["Chemical Bonding","1-2","0"],["Electrochemistry","1-2","0"],["Thermodynamics","1-2","122"],["D & F - Block Elements","1-2","0"],["Amines","1-2","118"],["Mole Concept","1-2","111"],["Structure of Atoms","1-2","0"],["Periodic Table","1-2","0"],["Equilibrium","1-2","115"],["Chemical Kinetics","1-2","0"],["Liquid Solution","1-2","0"],["Biomolecule","1-2","0"],["Hydrocarbons","1","0"],["Haloalkanes & Haloarenes","1","77"],["P-Block Elements","1","0"],["Alcohol, Phenol & Ether","0-1","73"],["Redox Reactions","0-1","32"],["Salt Analysis","0-1","0"]
+ ]
+};
+const subjectMeta={
+ physics:{label:"Physics",icon:'<svg viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.65"><ellipse cx="16" cy="16" rx="12.5" ry="5" transform="rotate(0 16 16)"/><ellipse cx="16" cy="16" rx="12.5" ry="5" transform="rotate(60 16 16)"/><ellipse cx="16" cy="16" rx="12.5" ry="5" transform="rotate(120 16 16)"/><circle cx="16" cy="16" r="2.1" fill="currentColor" stroke="none"/></svg>'},
+ maths:{label:"Maths",icon:'<svg viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 26V5M5 26h23"/><path d="M8 21c4-1 5-12 10-12 3 0 4 5 7 5"/><circle cx="18" cy="9" r="1.6" fill="currentColor" stroke="none"/><path d="M24 14l2 0"/></svg>'},
+ chemistry:{label:"Chemistry",icon:'<svg viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4h8M14 4v9L6.8 25a2 2 0 0 0 1.7 3h15a2 2 0 0 0 1.7-3L18 13V4"/><path d="M10 22h12m-9-5h6"/></svg>'}
+};
+let revisionCount=1;
+try{
+ const storedRevision=localStorage.getItem("studyNookRevisionCount");
+ const backupRevision=readNookBackup()?.revisionCount;
+ revisionCount=Math.max(1,Math.min(5,Number(storedRevision||backupRevision||1)||1));
+}catch(e){}
+let statusKeys=["theory","pyqs","rev1"];
+function refreshStatusKeys(){statusKeys=["theory","pyqs",...Array.from({length:revisionCount},(_,i)=>`rev${i+1}`)];}
+const statusOptions=["Not Started","Pending","In Progress","Done"];
+const NOOK_BACKUP_KEY="studyNookAllDataBackupV1";
+function readNookBackup(){
+ try{return JSON.parse(localStorage.getItem(NOOK_BACKUP_KEY)||"null")}catch(e){return null}
+}
+function persistNookBackup(){
+ try{
+  const added={};
+  if(typeof baseChapterCounts!=="undefined"&&typeof syllabusData!=="undefined"){
+   Object.keys(baseChapterCounts).forEach(subject=>{
+    added[subject]=syllabusData[subject].slice(baseChapterCounts[subject]).map(([name,weight])=>({name,weight}));
+   });
+  }
+  const snapshot={
+   version:1, savedAt:new Date().toISOString(),
+   checks:checks||{}, addedChapters:added,
+   revisionCount:revisionCount||1,
+   mockTests:Array.isArray(mockTests)?mockTests:[],
+   mockSeries:typeof mockSeries!=="undefined"?mockSeries:{chemistry:true,maths:true,physics:true},
+   mockPercentMode:typeof mockPercentMode!=="undefined"?mockPercentMode:false,
+   mockRange:document.getElementById("mockRange")?.value||"all"
+  };
+  localStorage.setItem(NOOK_BACKUP_KEY,JSON.stringify(snapshot));
+  return true;
+ }catch(error){
+  console.warn("Study Nook backup could not be written:",error);
+  return false;
+ }
+}
+function readChecks(){
+ try{
+  const raw=localStorage.getItem("studyNookSyllabusV2");
+  if(raw){const parsed=JSON.parse(raw);if(parsed&&Object.keys(parsed).length)return parsed;}
+  return readNookBackup()?.checks||{};
+ }catch(e){return readNookBackup()?.checks||{}}
+}
+let checks=readChecks(),activeSyllabus="physics";
+const baseChapterCounts=Object.fromEntries(Object.entries(syllabusData).map(([k,v])=>[k,v.length]));
+function readAddedChapters(){
+ try{
+  const raw=localStorage.getItem("studyNookAddedChaptersV1");
+  if(raw){const parsed=JSON.parse(raw);if(parsed&&Object.keys(parsed).length)return parsed;}
+  return readNookBackup()?.addedChapters||{};
+ }catch(e){return readNookBackup()?.addedChapters||{}}
+}
+let addedChapters=readAddedChapters();
+Object.keys(syllabusData).forEach(subject=>{
+ const extras=Array.isArray(addedChapters[subject])?addedChapters[subject]:[];
+ syllabusData[subject].push(...extras.map(x=>[String(x.name||"New Chapter"),String(x.weight||"1-2"),""]));
+});
+function saveAddedChapters(){
+ const packed={};
+ Object.keys(baseChapterCounts).forEach(subject=>{
+  packed[subject]=syllabusData[subject].slice(baseChapterCounts[subject]).map(([name,weight])=>({name,weight}));
+ });
+ try{localStorage.setItem("studyNookAddedChaptersV1",JSON.stringify(packed))}catch(e){}
+ persistNookBackup();
+}
+try{
+ if(localStorage.getItem("studyNookRevisionCount")===null){
+  Object.keys(checks).forEach(k=>{if(/_rev[2-5]$/.test(k))delete checks[k];});
+  localStorage.setItem("studyNookRevisionCount","1");
+  localStorage.setItem("studyNookSyllabusV2",JSON.stringify(checks));
+ }
+}catch(e){}
+refreshStatusKeys();
+function saveChecks(){
+ try{localStorage.setItem("studyNookSyllabusV2",JSON.stringify(checks))}catch(e){}
+ persistNookBackup();
+}
+function statusValue(subject,i,key){return checks[`${subject}_${i}_${key}`]||"Not Started"}
+function subjectProgress(subject){
+ const rows=syllabusData[subject];let done=0,inProgress=0,pending=0;
+ rows.forEach((r,i)=>statusKeys.forEach(k=>{let v=statusValue(subject,i,k);if(v==="Done")done++;else if(v==="In Progress")inProgress++;else if(v==="Pending")pending++;}));
+ const total=rows.length*statusKeys.length;return {done,inProgress,pending,total,pct:Math.round(done/total*100),chapters:rows.length,fullyDone:rows.filter((r,i)=>statusKeys.every(k=>statusValue(subject,i,k)==="Done")).length};
+}
+function weightClass(exp){
+ if(exp==="3-4"||exp==="2-3"||exp==="3")return "weight-high";
+ if(exp==="1-2")return "weight-mid";
+ if(exp==="1")return "weight-one";
+ return "weight-low";
+}
+
+
+function statusIcon(value){
+ const icons={
+  "Done":'<svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="currentColor" opacity=".16"/><path d="m5.5 10.2 3 3 6-6.4" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  "In Progress":'<svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="2" opacity=".25"/><path d="M10 3a7 7 0 0 1 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>',
+  "Pending":'<svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="10" cy="10" r="7.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M10 5.8v4.5l3 1.8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  "Not Started":'<svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="10" cy="10" r="7.1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-dasharray="2.4 2.2"/></svg>'
+ };
+ return icons[value]||icons["Not Started"];
+}
+function renderStatusSelect(subject,i,key){
+ const val=statusValue(subject,i,key);
+ const id=`${subject}_${i}_${key}`;
+ return `<div class="status-control" data-status-control="${id}">
+   <button type="button" class="status-pill status-${val.toLowerCase().replaceAll(" ","-")}" data-status-trigger="${id}" aria-haspopup="listbox" aria-expanded="false" aria-label="${subjectMeta[subject].label} ${syllabusData[subject][i][0]} ${key}: ${val}">
+    <span class="status-icon">${statusIcon(val)}</span><span class="status-text">${val}</span>
+    <svg class="status-chevron" viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path d="m5 7 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+   </button>
+   <div class="status-menu" role="listbox" aria-label="Choose status" hidden>
+    ${statusOptions.map(option=>`<button type="button" role="option" aria-selected="${option===val}" class="status-option ${option===val?"selected":""}" data-status-choice="${id}" data-value="${option}">
+      <span class="option-icon">${statusIcon(option)}</span><span>${option}</span>${option===val?'<svg class="option-check" viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><path d="m4 10 4 4 8-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>':""}
+    </button>`).join("")}
+   </div>
+ </div>`;
+}
+
+
+function chapterCompletion(subject,index){
+ const keys=statusKeys;
+ const done=keys.filter(key=>statusValue(subject,index,key)==="Done").length;
+ return {done,total:keys.length,ratio:done/Math.max(1,keys.length)};
+}
+function renderSyllabusTable(subject){
+ const sortedRows=syllabusData[subject].map((row,index)=>({row,index,progress:chapterCompletion(subject,index)}))
+  .sort((a,b)=>a.progress.ratio-b.progress.ratio||a.index-b.index);
+ const rows=sortedRows.map(({row:[name,exp,total],index,progress},position)=>{
+  const rowNo=position+1;
+  const removable=index>=baseChapterCounts[subject];
+  const chapterTint=subject==="physics"&&index<4?"physics-priority-purple":weightClass(exp);
+  const statusCells=statusKeys.map((key,statusIndex)=>
+   renderStatusSelect(subject,index,key).replace(
+    '<div class="status-control"',
+    `<div class="status-control" style="grid-row:${rowNo};grid-column:${3+statusIndex}"`
+   )
+  ).join("");
+  return `<div class="syllabus-chapter-row" data-syllabus-row="${index}" data-completion="${progress.ratio}">
+   <div class="syllabus-serial" style="grid-row:${rowNo};grid-column:1">${String(index+1).padStart(2,"0")}</div>
+   <div class="syllabus-chapter-name ${chapterTint}" style="grid-row:${rowNo};grid-column:2"><span class="chapter-label">${esc(name)}</span>${removable?`<button class="remove-chapter" type="button" data-remove-chapter="${index}" title="Remove ${esc(name)}" aria-label="Remove chapter ${esc(name)}"><svg viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 6h11M8 6V4.2h4V6m-6.5 0 .7 10h7.6l.7-10M8.5 9v4.5m3-4.5v4.5"/></svg></button>`:""}</div>
+   ${statusCells}
+  </div>`;
+ }).join("");
+ const revisionHeads=Array.from({length:revisionCount},(_,i)=>`<div class="revision-heading"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.8 8.5A8 8 0 1 1 4 13"/><path d="M4 4.5v4.2h4.2"/></svg><span>Revision ${i+1}</span>${i>0?`<button class="remove-revision" type="button" data-remove-revision="${i+1}" title="Remove Revision ${i+1}" aria-label="Remove Revision ${i+1}"><svg viewBox="0 0 20 20" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 6h11M8 6V4.2h4V6m-6.5 0 .7 10h7.6l.7-10M8.5 9v4.5m3-4.5v4.5"/></svg></button>`:""}</div>`).join("");
+ return `<div class="syllabus-grid-scroll">
+  <div class="syllabus-column-head">
+   <span class="head-serial">S. No.</span><span class="head-chapter">Chapter</span>
+   <span>Theory</span><span>PYQs</span>${revisionHeads}
+  </div>
+  <div class="syllabus-rows">${rows}</div>
+ </div>
+ <div class="add-chapter-row">
+  <div class="add-chapter-intro"><span class="add-chapter-mark"><svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M10 3v14M3 10h14"/></svg></span><span>Add a chapter</span></div>
+  <input class="add-chapter-name" id="newChapterName" maxlength="80" placeholder="Enter chapter name…" aria-label="New chapter name">
+  <select class="add-chapter-weight" id="newChapterWeight" aria-label="Chapter weightage"><option value="3-4">3–4 questions</option><option value="2-3">2–3 questions</option><option value="1-2" selected>1–2 questions</option><option value="1">1 question</option><option value="0-1">0–1 questions</option></select>
+  <button class="add-chapter-submit" id="addChapterSubmit" type="button"><svg viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M10 3v14M3 10h14"/></svg>Add Chapter</button>
+ </div>`;
+}
+function reorderSyllabusRows(container,subject){
+ const parent=container.querySelector(".syllabus-rows");
+ const rows=[...parent.querySelectorAll(".syllabus-chapter-row")];
+ rows.sort((a,b)=>{
+  const ai=Number(a.dataset.syllabusRow),bi=Number(b.dataset.syllabusRow);
+  return chapterCompletion(subject,ai).ratio-chapterCompletion(subject,bi).ratio||ai-bi;
+ });
+ rows.forEach((row,position)=>{
+  const rowNo=position+1;
+  row.querySelector(".syllabus-serial").style.gridRow=String(rowNo);
+  row.querySelector(".syllabus-serial").style.gridColumn="1";
+  row.querySelector(".syllabus-chapter-name").style.gridRow=String(rowNo);
+  row.querySelector(".syllabus-chapter-name").style.gridColumn="2";
+  row.querySelectorAll(".status-control").forEach((control,statusIndex)=>{
+   control.style.gridRow=String(rowNo);
+   control.style.gridColumn=String(3+statusIndex);
+  });
+  parent.appendChild(row);
+  row.dataset.completion=String(chapterCompletion(subject,Number(row.dataset.syllabusRow)).ratio);
+ });
+}
+function renderSyllabus(){
+ const tabs=document.getElementById("syllabusTabs");
+ tabs.innerHTML=Object.keys(syllabusData).map(subject=>`<button class="syllabus-tab-btn ${activeSyllabus===subject?"active":""}" data-syllabus-tab="${subject}" role="tab" aria-selected="${activeSyllabus===subject}"><span>${subjectMeta[subject].icon}</span>${subjectMeta[subject].label}</button>`).join("");
+ tabs.querySelectorAll("[data-syllabus-tab]").forEach(btn=>btn.addEventListener("click",()=>{activeSyllabus=btn.dataset.syllabusTab;renderSyllabus();}));
+ document.documentElement.style.setProperty("--revision-count",revisionCount);
+ document.getElementById("revisionHint").textContent=`${revisionCount} of 5 revision rounds`;
+ const addButton=document.getElementById("addRevision");
+ addButton.disabled=revisionCount>=5;
+ addButton.innerHTML=revisionCount>=5?'✓ Maximum Revisions Added':'<svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M10 3v14M3 10h14"/></svg> Add Revision';
+ addButton.onclick=()=>{
+  if(revisionCount>=5)return;
+  revisionCount++;refreshStatusKeys();
+  try{localStorage.setItem("studyNookRevisionCount",String(revisionCount));}catch(e){}
+  persistNookBackup();
+  renderSyllabus();
+ };
+ document.getElementById("fullSyllabus").innerHTML=renderSyllabusTable(activeSyllabus);
+
+ const full=document.getElementById("fullSyllabus");
+ const addChapter=()=>{
+  const input=document.getElementById("newChapterName"),weight=document.getElementById("newChapterWeight");
+  const name=input?.value.trim();if(!name){input?.focus();return;}
+  if(syllabusData[activeSyllabus].some(row=>row[0].toLowerCase()===name.toLowerCase())){input.setCustomValidity("This chapter already exists");input.reportValidity();return;}
+  syllabusData[activeSyllabus].push([name,weight.value,""]);
+  saveAddedChapters();renderSyllabus();
+ };
+ document.getElementById("addChapterSubmit")?.addEventListener("click",addChapter);
+ document.getElementById("newChapterName")?.addEventListener("input",e=>e.target.setCustomValidity(""));
+ document.getElementById("newChapterName")?.addEventListener("keydown",e=>{if(e.key==="Enter")addChapter();});
+ full.querySelectorAll("[data-remove-chapter]").forEach(button=>button.addEventListener("click",()=>{
+  const index=Number(button.dataset.removeChapter);
+  if(index<baseChapterCounts[activeSyllabus])return;
+  syllabusData[activeSyllabus].splice(index,1);
+  const moved={};
+  Object.keys(checks).forEach(key=>{
+   const match=key.match(new RegExp(`^${activeSyllabus}_(\\d+)_(.+)$`));
+   if(!match)return;
+   const n=Number(match[1]);
+   if(n===index)delete checks[key];
+   else if(n>index){moved[`${activeSyllabus}_${n-1}_${match[2]}`]=checks[key];delete checks[key];}
+  });
+  Object.assign(checks,moved);saveChecks();saveAddedChapters();renderSyllabus();
+ }));
+ full.addEventListener("click",event=>{
+  const button=event.target.closest("[data-remove-revision]");
+  if(!button||!full.contains(button))return;
+  event.preventDefault();
+  event.stopPropagation();
+  const removeIndex=Number(button.dataset.removeRevision);
+  if(removeIndex<2||removeIndex>revisionCount)return;
+  const moved={};
+  Object.keys(checks).forEach(k=>{
+   const match=k.match(/^(.*)_rev([2-5])$/);
+   if(!match)return;
+   const n=Number(match[2]);
+   if(n===removeIndex)delete checks[k];
+   else if(n>removeIndex){moved[`${match[1]}_rev${n-1}`]=checks[k];delete checks[k];}
+  });
+  Object.assign(checks,moved);
+  revisionCount--;refreshStatusKeys();saveChecks();
+  try{localStorage.setItem("studyNookRevisionCount",String(revisionCount));}catch(e){}
+  persistNookBackup();
+  renderSyllabus();
+ });
+ full.querySelectorAll("[data-status-trigger]").forEach(trigger=>trigger.addEventListener("click",()=>{
+  const control=trigger.closest(".status-control"),menu=control.querySelector(".status-menu");
+  const willOpen=menu.hidden;
+  full.querySelectorAll(".status-control.menu-open").forEach(other=>{other.classList.remove("menu-open");other.querySelector(".status-menu").hidden=true;other.querySelector(".status-pill").setAttribute("aria-expanded","false");});
+  if(willOpen){
+   control.classList.add("menu-open");
+   menu.hidden=false;
+   trigger.setAttribute("aria-expanded","true");
+   control.classList.remove("menu-up");
+   /* Always open upward for the final five visible chapter rows.
+      Use the current DOM order because rows are automatically sorted by progress. */
+   const rows=[...full.querySelectorAll(".syllabus-rows .syllabus-chapter-row")];
+   const row=control.closest(".syllabus-chapter-row");
+   const rowPosition=rows.indexOf(row);
+   const isLastFive=rowPosition>=0&&rowPosition>=rows.length-5;
+   if(isLastFive){
+    control.classList.add("menu-up");
+   }else{
+    const rect=trigger.getBoundingClientRect();
+    const menuHeight=menu.scrollHeight||190;
+    const spaceBelow=window.innerHeight-rect.bottom;
+    const spaceAbove=rect.top;
+    if(spaceBelow<menuHeight+18&&spaceAbove>spaceBelow)control.classList.add("menu-up");
+   }
+  }
+ }));
+ full.querySelectorAll("[data-status-choice]").forEach(choice=>choice.addEventListener("click",()=>{
+  const [subject,index,key]=choice.dataset.statusChoice.split("_");
+  const value=choice.dataset.value;
+  checks[`${subject}_${index}_${key}`]=value;
+  saveChecks();
+  const control=choice.closest(".status-control");
+  const trigger=control.querySelector(".status-pill");
+  trigger.className=`status-pill status-${value.toLowerCase().replaceAll(" ","-")}`;
+  trigger.querySelector(".status-icon").innerHTML=statusIcon(value);
+  trigger.querySelector(".status-text").textContent=value;
+  trigger.setAttribute("aria-label",`${subjectMeta[subject].label} ${syllabusData[subject][Number(index)][0]} ${key}: ${value}`);
+  control.querySelectorAll(".status-option").forEach(option=>{
+   const selected=option.dataset.value===value;
+   option.classList.toggle("selected",selected);
+   option.setAttribute("aria-selected",String(selected));
+   const oldCheck=option.querySelector(".option-check");if(oldCheck)oldCheck.remove();
+   if(selected)option.insertAdjacentHTML("beforeend",'<svg class="option-check" viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><path d="m4 10 4 4 8-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+  });
+  control.classList.remove("menu-open");
+  control.querySelector(".status-menu").hidden=true;
+  trigger.setAttribute("aria-expanded","false");
+  reorderSyllabusRows(full,subject);
+  if(subject==="physics"&&(key==="theory"||key==="pyqs"))renderChapters();
+ }));
+
+
+}
+
+// Verified Chemistry PYQ links recovered from ChemShiksha video descriptions / exact video pages.
+// No guessed IDs are used. Maths stays empty because the supplied playlist screenshots show Chemistry only.
+const verifiedChemistryResources = {"GOC & POC": [["ChemShiksha 2026", "https://www.youtube.com/watch?v=W9zKg-uEass&list=PL0kk8JnKp_mZa_IXJncPoPnZvtt-7pYSF&index=3"], ["JEEfinity 2024 · Session 1", "https://www.youtube.com/watch?v=uQlND3MjaNU"], ["JEEfinity 2024 · Session 2", "https://www.youtube.com/watch?v=JAFcUE_IBps"], ["JEEfinity 2025 · Organic Chemistry (Jan Attempt)", "https://www.youtube.com/watch?v=yKoGUVOSKlc"]], "Coordination Compound": [["ChemShiksha 2024", "https://www.youtube.com/watch?v=ob01KusSsVE&list=PL0kk8JnKp_mZa_IXJncPoPnZvtt-7pYSF&index=25"], ["JEEfinity 2024", "https://www.youtube.com/watch?v=sinnUHGOETE"]], "Aldehyde, Ketone & Carboxylic Acid": [["ChemShiksha 2024", "https://www.youtube.com/watch?v=cp8IYUaMv8M&list=PL0kk8JnKp_mZa_IXJncPoPnZvtt-7pYSF&index=32"], ["JEEfinity 2024 · Part 1", "https://www.youtube.com/watch?v=gMJXJSri2OY"], ["JEEfinity 2024 · Part 2", "https://www.youtube.com/watch?v=diYrSR9bm-Q"]], "Chemical Bonding": [["ChemShiksha 2026", "https://www.youtube.com/watch?v=MIKPZR3O6WE&list=PL0kk8JnKp_mZa_IXJncPoPnZvtt-7pYSF&index=9"], ["JEEfinity 2024 · Part 1", "https://www.youtube.com/watch?v=7FWRfbLMPP4"], ["JEEfinity 2024 · Part 2", "https://www.youtube.com/watch?v=Oyw5lyxdPes"], ["JEEfinity 2025 · Physical + Inorganic Chemistry (Jan Attempt)", "https://www.youtube.com/watch?v=Wu8RIn4EGI0"]], "Electrochemistry": [["ChemShiksha 2026", "https://www.youtube.com/watch?v=MLXdIqJiJp0&list=PL0kk8JnKp_mZa_IXJncPoPnZvtt-7pYSF&index=5"], ["JEEfinity 2024", "https://www.youtube.com/watch?v=sOQ-Z21A6GE"]], "Thermodynamics": [["ChemShiksha 2026", "https://www.youtube.com/watch?v=FB-kot_T0Sw&list=PL0kk8JnKp_mZa_IXJncPoPnZvtt-7pYSF&index=7"], ["JEEfinity 2025 · Thermochemistry", "https://www.youtube.com/watch?v=yC3zbA7aNX8"], ["JEEfinity 2024", "https://www.youtube.com/watch?v=LHhmOo1G9ZY"]], "D & F - Block Elements": [["ChemShiksha 2022", "https://www.youtube.com/watch?v=BaLd1oQ0djs&list=PL0kk8JnKp_mZa_IXJncPoPnZvtt-7pYSF&index=46"], ["JEEfinity 2024", "https://www.youtube.com/watch?v=VZoMAstWqKE"]], "Amines": [["ChemShiksha 2024", "https://www.youtube.com/watch?v=4iQ-cFn4Odc&list=PL0kk8JnKp_mZa_IXJncPoPnZvtt-7pYSF&index=31"], ["JEEfinity 2024 · Part 1", "https://www.youtube.com/watch?v=ajeg3PgDlV4"], ["JEEfinity 2024 · Part 2", "https://www.youtube.com/watch?v=HHUQ-JR6BFs"]], "Mole Concept": [["ChemShiksha 2026", "https://www.youtube.com/watch?v=spYsoKllkZY&list=PL0kk8JnKp_mZa_IXJncPoPnZvtt-7pYSF&index=12"], ["JEEfinity 2024", "https://www.youtube.com/watch?v=Lx7I0ByolPo"]], "Periodic Table": [["ChemShiksha 2026", "https://www.youtube.com/watch?v=ajYa67cskCM&list=PL0kk8JnKp_mZa_IXJncPoPnZvtt-7pYSF&index=10"], ["JEEfinity 2025", "https://www.youtube.com/watch?v=2qK52n1YiY4"]], "Equilibrium": [["ChemShiksha 2026", "https://www.youtube.com/watch?v=Wk2u5aGs2jY&list=PL0kk8JnKp_mZa_IXJncPoPnZvtt-7pYSF&index=8"], ["JEEfinity 2024 · Chemical Equilibrium", "https://www.youtube.com/watch?v=ms2ZGUAFA6U"], ["JEEfinity 2024 · Ionic Equilibrium", "https://www.youtube.com/watch?v=SbjeFBuI8Pw"]], "Chemical Kinetics": [["ChemShiksha 2022", "https://www.youtube.com/watch?v=Re1k70tA7Rw&list=PL0kk8JnKp_mZa_IXJncPoPnZvtt-7pYSF&index=58"], ["JEEfinity 2024 · Part 1", "https://www.youtube.com/watch?v=RbYzqG7LFPk"], ["JEEfinity 2024 · Part 2", "https://www.youtube.com/watch?v=Ztx9V1nKdWA"]], "Liquid Solution": [["ChemShiksha 2026", "https://www.youtube.com/watch?v=fhzecxNEqz0&list=PL0kk8JnKp_mZa_IXJncPoPnZvtt-7pYSF&index=6"], ["JEEfinity 2024", "https://www.youtube.com/watch?v=qVFXj7Xok5Y"]], "Biomolecule": [["ChemShiksha 2026", "https://www.youtube.com/watch?v=spYsoKllkZY&list=PL0kk8JnKp_mZa_IXJncPoPnZvtt-7pYSF&index=12"], ["JEEfinity 2024 · Part 1", "https://www.youtube.com/watch?v=tdTp4WIY_3o"], ["JEEfinity 2024 · Part 2", "https://www.youtube.com/watch?v=rAVenOSsBr4"]], "Hydrocarbons": [["ChemShiksha 2026", "https://www.youtube.com/watch?v=yFqG6WzW0gE&list=PL0kk8JnKp_mZa_IXJncPoPnZvtt-7pYSF&index=2"], ["JEEfinity 2024", "https://www.youtube.com/watch?v=QMHztPSa6hs"]], "Haloalkanes & Haloarenes": [["ChemShiksha 2026", "https://www.youtube.com/watch?v=W4V-v5Zfees&list=PL0kk8JnKp_mZa_IXJncPoPnZvtt-7pYSF&index=1"], ["JEEfinity 2024", "https://www.youtube.com/watch?v=hXGD844--20"]], "Alcohol, Phenol & Ether": [["ChemShiksha 2024", "https://www.youtube.com/watch?v=G-0MFZhSFmk&list=PL0kk8JnKp_mZa_IXJncPoPnZvtt-7pYSF&index=33"], ["JEEfinity 2024", "https://www.youtube.com/watch?v=bI2Ppum3D3M"]], "Redox Reactions": [["ChemShiksha 2026", "https://www.youtube.com/watch?v=uRc3YoIv1Mk&list=PL0kk8JnKp_mZa_IXJncPoPnZvtt-7pYSF&index=4"], ["JEEfinity 2024", "https://www.youtube.com/watch?v=haUCJuxL4jk"]], "P-Block Elements": [["ChemShiksha 2024 · Groups 15–18", "https://www.youtube.com/watch?v=JDPZVhK_tlY&list=PL0kk8JnKp_mZa_IXJncPoPnZvtt-7pYSF&index=35"], ["JEEfinity 2024 · Groups 13–14", "https://www.youtube.com/watch?v=GjFX_0Rrvrg"], ["JEEfinity 2024 · Groups 15–16", "https://www.youtube.com/watch?v=HUrowle1SYc"], ["JEEfinity 2024 · Groups 17–18", "https://www.youtube.com/watch?v=ZfzyegbQPCY"]], "Structure of Atoms": [["ChemShiksha 2026", "https://www.youtube.com/watch?v=RXULAjzY1Fk&list=PL0kk8JnKp_mZa_IXJncPoPnZvtt-7pYSF&index=11"], ["JEEfinity 2024", "https://www.youtube.com/watch?v=RWOyfUEV2TY"]], "Atomic Structure": [["ChemShiksha 2026", "https://www.youtube.com/watch?v=RXULAjzY1Fk&list=PL0kk8JnKp_mZa_IXJncPoPnZvtt-7pYSF&index=11"], ["JEEfinity 2024", "https://www.youtube.com/watch?v=RWOyfUEV2TY"]]};
+const chemistryMindMapResources={
+ "Periodic Table":[["Mind Map Revision · Periodic Table", "https://www.youtube.com/playlist?list=PLdDRBo_oI6xzhT4DDoPRn6MvxQfwWcjvM"]],
+ "Chemical Bonding":[["Mind Map Revision · Chemical Bonding", "https://www.youtube.com/playlist?list=PLdDRBo_oI6xzhT4DDoPRn6MvxQfwWcjvM"]],
+ "D & F - Block Elements":[["Mind Map Revision · D and F Block", "https://www.youtube.com/playlist?list=PLdDRBo_oI6xzhT4DDoPRn6MvxQfwWcjvM"]],
+ "Coordination Compound":[["Mind Map Revision · Coordination Compounds", "https://www.youtube.com/playlist?list=PLdDRBo_oI6xzhT4DDoPRn6MvxQfwWcjvM"]],
+ "P-Block Elements":[["Mind Map Revision · P-Block", "https://www.youtube.com/playlist?list=PLdDRBo_oI6xzhT4DDoPRn6MvxQfwWcjvM"]],
+ "GOC & POC":[
+  ["Mind Map Revision · Nomenclature", "https://www.youtube.com/playlist?list=PLdDRBo_oI6xzhT4DDoPRn6MvxQfwWcjvM"],
+  ["Mind Map Revision · Isomerism", "https://www.youtube.com/playlist?list=PLdDRBo_oI6xzhT4DDoPRn6MvxQfwWcjvM"],
+  ["Mind Map Revision · General Organic Chemistry", "https://www.youtube.com/playlist?list=PLdDRBo_oI6xzhT4DDoPRn6MvxQfwWcjvM"]
+ ],
+ "Hydrocarbons":[["Mind Map Revision · Hydrocarbons", "https://www.youtube.com/playlist?list=PLdDRBo_oI6xzhT4DDoPRn6MvxQfwWcjvM"]],
+ "Haloalkanes & Haloarenes":[["Mind Map Revision · Haloalkanes and Haloarenes", "https://www.youtube.com/playlist?list=PLdDRBo_oI6xzhT4DDoPRn6MvxQfwWcjvM"]],
+ "Alcohol, Phenol & Ether":[["Mind Map Revision · Alcohol, Phenol and Ether", "https://www.youtube.com/playlist?list=PLdDRBo_oI6xzhT4DDoPRn6MvxQfwWcjvM"]],
+ "Aldehyde, Ketone & Carboxylic Acid":[["Mind Map Revision · Aldehydes, Ketones and Carboxylic Acids", "https://www.youtube.com/playlist?list=PLdDRBo_oI6xzhT4DDoPRn6MvxQfwWcjvM"]],
+ "Amines":[["Mind Map Revision · Amines and N-Derivatives", "https://www.youtube.com/playlist?list=PLdDRBo_oI6xzhT4DDoPRn6MvxQfwWcjvM"]]
+};
+const mathsSameer2026JanuaryResources={
+ "Parabola":[["Sameer Sir · 2026 (January) · Parabola, Ellipse & Hyperbola","https://www.youtube.com/watch?v=ze6pUWYfAvY"]],
+ "Ellipse":[["Sameer Sir · 2026 (January) · Parabola, Ellipse & Hyperbola","https://www.youtube.com/watch?v=ze6pUWYfAvY"]],
+ "Hyperbola":[["Sameer Sir · 2026 (January) · Parabola, Ellipse & Hyperbola","https://www.youtube.com/watch?v=ze6pUWYfAvY"]],
+ "Application of Derivatives":[["Sameer Sir · 2026 (January) · Application of Derivatives","https://www.youtube.com/watch?v=M_qbEf-byTs"]],
+ "Limits, Continuity & Derivatives":[["Sameer Sir · 2026 (January) · Limits, Continuity and Differentiability","https://www.youtube.com/watch?v=UuGzs0Ns4fU"]],
+ "Probability":[["Sameer Sir · 2026 (January) · Probability","https://www.youtube.com/watch?v=jy7nL_It1Go"]],
+ "Complex Number":[["Sameer Sir · 2026 (January) · Complex Number & Quadratic Equation","https://www.youtube.com/watch?v=10"]],
+ "Quadratic Equations":[["Sameer Sir · 2026 (January) · Complex Number & Quadratic Equation","https://www.youtube.com/watch?v=10"]],
+ "Straight Line":[["Sameer Sir · 2026 (January) · Straight Lines & Circle","https://www.youtube.com/watch?v=11"]],
+ "Circle":[["Sameer Sir · 2026 (January) · Straight Lines & Circle","https://www.youtube.com/watch?v=11"]],
+ "Binomial Theorem":[["Sameer Sir · 2026 (January) · Binomial Theorem","https://www.youtube.com/watch?v=12"]],
+ "Permutations & Combinations":[["Sameer Sir · 2026 (January) · Permutation Combination","https://www.youtube.com/watch?v=13"]],
+ "Area Under The Curve":[["Sameer Sir · 2026 (January) · Area Under Curves","https://www.youtube.com/watch?v=14"]],
+ "Differential Equations":[["Sameer Sir · 2026 (January) · Differential Equations","https://www.youtube.com/watch?v=15"]],
+ "Integration":[["Sameer Sir · 2026 (January) · Definite Integration","https://www.youtube.com/watch?v=16"]],
+ "Functions":[["Sameer Sir · 2026 (January) · Functions","https://www.youtube.com/watch?v=17"]],
+ "Matrix & Determinants":[["Sameer Sir · 2026 (January) · Matrices & Determinants","https://www.youtube.com/watch?v=18"]],
+ "3D Geometry":[["Sameer Sir · 2026 (January) · Three Dimensional Geometry","https://www.youtube.com/watch?v=19"]],
+ "Vector Algebra":[["Sameer Sir · 2026 (January) · Vector Algebra","https://www.youtube.com/watch?v=20"]],
+ "Sequence & Series":[["Sameer Sir · 2026 (January) · Sequence Series","https://www.youtube.com/watch?v=21"]],
+};
+const mathsSameer2026AprilResources={
+ "Statistics":[["Sameer Sir · 2026 (April) · Statistics","https://www.youtube.com/watch?v=ttNUcvdFu-0&list=PLQ_UurEpRuK0"]],
+ "Complex Number":[["Sameer Sir · 2026 (April) · Complex Numbers","https://www.youtube.com/watch?v=bKI9GhZWsc4&list=PLQ_UurEpRuK0"]],
+ "3D Geometry":[["Sameer Sir · 2026 (April) · Three Dimensional Geometry","https://www.youtube.com/watch?v=TdfpEXlXdzU&list=PLQ_UurEpRuK0"]],
+ "Probability":[["Sameer Sir · 2026 (April) · Probability","https://www.youtube.com/watch?v=jy7nL_It1Go&list=PLQ_UurEpRuK0"]],
+ "Vector Algebra":[["Sameer Sir · 2026 (April) · Vector Algebra","https://www.youtube.com/watch?v=anHNpWmgklk&list=PLQ_UurEpRuK0"]],
+ "Differential Equations":[["Sameer Sir · 2026 (April) · Differential Equations","https://www.youtube.com/watch?v=872OdB9v4SA&list=PLQ_UurEpRuK0"]],
+ "Area Under The Curve":[["Sameer Sir · 2026 (April) · Area Under Curves","https://www.youtube.com/watch?v=sg96gLhu8oU&list=PLQ_UurEpRuK0"]],
+ "Integration":[["Sameer Sir · 2026 (April) · Indefinite and Definite Integration","https://www.youtube.com/watch?v=j-9md7Hfjao&list=PLQ_UurEpRuK0"]],
+ "Limits, Continuity & Derivatives":[["Sameer Sir · 2026 (April) · LCD, MOD and AOD","https://www.youtube.com/watch?v=b76Ih3YDFW0&list=PLQ_UurEpRuK0"]],
+ "Functions":[["Sameer Sir · 2026 (April) · Functions","https://www.youtube.com/watch?v=88jsO7k91s8&list=PLQ_UurEpRuK0"]],
+ "Sets & Relation":[["Sameer Sir · 2026 (April) · Sets Relations and ITF","https://www.youtube.com/watch?v=cvhySEyOMp8&list=PLQ_UurEpRuK0"]],
+ "Matrix & Determinants":[["Sameer Sir · 2026 (April) · Determinants","https://www.youtube.com/watch?v=nhEy3Rj55zM&list=PLQ_UurEpRuK0"], ["Sameer Sir · 2026 (April) · Matrices","https://www.youtube.com/watch?v=mOIQ1w7AeIk&list=PLQ_UurEpRuK0"]],
+ "Parabola":[["Sameer Sir · 2026 (April) · Conic Sections","https://www.youtube.com/watch?v=YXAPCCFrlw8&list=PLQ_UurEpRuK0"]],
+ "Ellipse":[["Sameer Sir · 2026 (April) · Conic Sections","https://www.youtube.com/watch?v=YXAPCCFrlw8&list=PLQ_UurEpRuK0"]],
+ "Hyperbola":[["Sameer Sir · 2026 (April) · Conic Sections","https://www.youtube.com/watch?v=YXAPCCFrlw8&list=PLQ_UurEpRuK0"]],
+ "Circle":[["Sameer Sir · 2026 (April) · Circle","https://www.youtube.com/watch?v=X4JemIFza2Q&list=PLQ_UurEpRuK0"]],
+ "Straight Line":[["Sameer Sir · 2026 (April) · Straight Lines","https://www.youtube.com/watch?v=2N_TYe86Dl8&list=PLQ_UurEpRuK0"]],
+ "Trigonometry":[["Sameer Sir · 2026 (April) · Trigonometric Ratios Identities and Equations","https://www.youtube.com/watch?v=IjMxrSSd_Ew&list=PLQ_UurEpRuK0"]],
+ "Permutations & Combinations":[["Sameer Sir · 2026 (April) · Permutation & Combination","https://www.youtube.com/watch?v=HkG9U42yFwM&list=PLQ_UurEpRuK0"]],
+ "Binomial Theorem":[["Sameer Sir · 2026 (April) · Binomial Theorem","https://www.youtube.com/watch?v=-oeM68kTHOE&list=PLQ_UurEpRuK0"]],
+ "Sequence & Series":[["Sameer Sir · 2026 (April) · Sequences & Series","https://www.youtube.com/watch?v=pRs35Fi4nr4&list=PLQ_UurEpRuK0"]],
+ "Quadratic Equations":[["Sameer Sir · 2026 (April) · Quadratic Equations","https://www.youtube.com/watch?v=0NJD1XYnVN0&list=PLQ_UurEpRuK0"]],
+};
+const mathsSameer2025Resources={
+ "Quadratic Equations":[["Sameer Sir · JEE Main 2025 · Quadratic Equation","https://www.youtube.com/watch?v=6"]],
+ "Complex Number":[["Sameer Sir · JEE Main 2025 · Complex Numbers","https://www.youtube.com/watch?v=7"]],
+ "Trigonometry":[["Sameer Sir · JEE Main 2025 · Trigonometry","https://www.youtube.com/watch?v=8"]],
+ "Binomial Theorem":[["Sameer Sir · JEE Main 2025 · Binomial Theorem","https://www.youtube.com/watch?v=9"]],
+ "Sequence & Series":[["Sameer Sir · JEE Main 2025 · Sequences and Series","https://www.youtube.com/watch?v=10"]],
+ "Permutations & Combinations":[["Sameer Sir · JEE Main 2025 · Permutation & Combination","https://www.youtube.com/watch?v=11"]],
+ "Probability":[["Sameer Sir · JEE Main 2025 · Probability","https://www.youtube.com/watch?v=12"]],
+ "Statistics":[["Sameer Sir · JEE Main 2025 · Statistics","https://www.youtube.com/watch?v=13"]],
+ "Matrix & Determinants":[["Sameer Sir · JEE Main 2025 · Matrices","https://www.youtube.com/watch?v=14"]],
+ "Matrix & Determinants":[["Sameer Sir · JEE Main 2025 · Determinants","https://www.youtube.com/watch?v=15"]],
+ "Straight Line":[["Sameer Sir · JEE Main 2025 · Straight Lines","https://www.youtube.com/watch?v=16"]],
+ "Circle":[["Sameer Sir · JEE Main 2025 · Circles","https://www.youtube.com/watch?v=17"]],
+ "Parabola":[["Sameer Sir · JEE Main 2025 · Parabola","https://www.youtube.com/watch?v=18"]],
+ "Ellipse":[["Sameer Sir · JEE Main 2025 · Ellipse","https://www.youtube.com/watch?v=19"]],
+ "Hyperbola":[["Sameer Sir · JEE Main 2025 · Hyperbola","https://www.youtube.com/watch?v=20"]],
+ "Sets & Relation":[["Sameer Sir · JEE Main 2025 · Sets and Relations","https://www.youtube.com/watch?v=21"]],
+ "Functions":[["Sameer Sir · JEE Main 2025 · Functions","https://www.youtube.com/watch?v=22"]],
+ "Inverse Trigonometric Functions (ITF)":[["Sameer Sir · JEE Main 2025 · Inverse Trigo Functions","https://www.youtube.com/watch?v=23"]],
+ "Limits, Continuity & Derivatives":[["Sameer Sir · JEE Main 2025 · Limits","https://www.youtube.com/watch?v=24"]],
+ "Limits, Continuity & Derivatives":[["Sameer Sir · JEE Main 2025 · Continuity & Differentiability","https://www.youtube.com/watch?v=25"]],
+ "Application of Derivatives":[["Sameer Sir · JEE Main 2025 · Application of Derivatives","https://www.youtube.com/watch?v=26"]],
+ "Integration":[["Sameer Sir · JEE Main 2025 · Indefinite Integration","https://www.youtube.com/watch?v=27"]],
+ "Integration":[["Sameer Sir · JEE Main 2025 · Definite Integration","https://www.youtube.com/watch?v=28"]],
+ "Area Under The Curve":[["Sameer Sir · JEE Main 2025 · Area Under Curves","https://www.youtube.com/watch?v=29"]],
+ "Differential Equations":[["Sameer Sir · JEE Main 2025 · Differential Equations","https://www.youtube.com/watch?v=30"]],
+ "Vector Algebra":[["Sameer Sir · JEE Main 2025 · Vector Algebra","https://www.youtube.com/watch?v=31"]],
+ "3D Geometry":[["Sameer Sir · JEE Main 2025 · 3D Geometry","https://www.youtube.com/watch?v=32"]],
+};
+const mathsRevisionResources={
+ "Quadratic Equations":[["JEE Main PYQs · 2024", "https://www.youtube.com/watch?v=9Hr7QFUMpwg"], ["JEE Main PYQs · 2023", "https://www.youtube.com/watch?v=xhHP6Q31aRQ"], ["JEE Main PYQs · 2022", "https://www.youtube.com/watch?v=s53y_PcunYM"]],
+ "Sequence & Series":[["JEE Main PYQs · 2024", "https://www.youtube.com/watch?v=XAYARoMZo_c"], ["JEE Main PYQs · 2023", "https://www.youtube.com/watch?v=8H_nqI1biaA"], ["JEE Main PYQs · 2022", "https://www.youtube.com/watch?v=YAyZnla33_E"]],
+ "Functions":[["JEE Main PYQs · 2024", "https://www.youtube.com/watch?v=Nye2ZrDTLRE"], ["JEE Main PYQs · 2023", "https://www.youtube.com/watch?v=gxh41ZGE-kA"], ["JEE Main PYQs · 2022", "https://www.youtube.com/watch?v=8Us50Nos8D4"]],
+ "Integration":[ ["JEE Main PYQs · 2024", "https://www.youtube.com/watch?v=OHo6vlARezw"], ["JEE Main PYQs · 2023", "https://www.youtube.com/watch?v=dA7FyKjnfgQ"], ["JEE Main PYQs · 2022", "https://www.youtube.com/watch?v=jKJy4AYjmdM"]],
+ "Vector Algebra":[["JEE Main PYQs · 2024", "https://www.youtube.com/watch?v=1fFcJ2Lp8Pg"], ["JEE Main PYQs · 2023", "https://www.youtube.com/watch?v=8K9kBSjLNew"], ["JEE Main PYQs · 2022", "https://www.youtube.com/watch?v=HoC62l5iLPM"]],
+ "3D Geometry":[["JEE Main PYQs · 2024", "https://www.youtube.com/watch?v=z1bK4gMWdqE"], ["JEE Main PYQs · 2023", "https://www.youtube.com/watch?v=7U7mg7lixYE"], ["JEE Main PYQs · 2022", "https://www.youtube.com/watch?v=bnv1LeFbEbE"]],
+ "Differential Equations":[["JEE Main PYQs · 2024", "https://www.youtube.com/watch?v=Td42Gdmoo-k"], ["JEE Main PYQs · 2023", "https://www.youtube.com/watch?v=PNur8d4cSFQ"], ["JEE Main PYQs · 2022", "https://www.youtube.com/watch?v=g6BcxEsY5Nw"]],
+ "Binomial Theorem":[["JEE Main PYQs · 2024", "https://www.youtube.com/watch?v=SzSGFyHf5jE"], ["JEE Main PYQs · 2023", "https://www.youtube.com/watch?v=Vc3P5o9dXsI"]],
+ "Matrix & Determinants":[["JEE Main PYQs · 2024", "https://www.youtube.com/watch?v=mHuBM6mwzMM"], ["JEE Main PYQs · 2023", "https://www.youtube.com/watch?v=G8XA4INeXUc"], ["JEE Main PYQs · 2022", "https://www.youtube.com/watch?v=UmICIQXF0UY"]],
+ "Straight Line":[["JEE Main PYQs · 2024", "https://www.youtube.com/watch?v=iprgyv5ykMg"], ["JEE Main PYQs · 2023", "https://www.youtube.com/watch?v=nz4olRewBnA"], ["JEE Main PYQs · 2022", "https://www.youtube.com/watch?v=x6cm_kXtKIg"]],
+ "Complex Number":[],
+ "Trigonometry":[],
+ "Permutations & Combinations":[],
+ "Probability":[],
+ "Statistics":[],
+ "Circle":[],
+ "Parabola":[],
+ "Ellipse":[],
+ "Hyperbola":[],
+ "Sets & Relation":[],
+ "Inverse Trigonometric Functions (ITF)":[],
+ "Area Under the Curve":[],
+ "Limits, Continuity & Derivatives":[]
+};
+function renderBlankSubjectLibrary(subject){
+ const data=syllabusData[subject]||[];
+ const label=subject==="chemistry"?"Chemistry":"Maths";
+ const grid=document.getElementById("blankChapterGrid");
+ const search=document.getElementById("blankSearch");
+ const query=(search?.value||"").trim().toLowerCase();
+ const filtered=data.map(([name],i)=>({name,i})).filter(x=>!query||x.name.toLowerCase().includes(query));
+ document.getElementById("blankTitle").textContent=`${label} · Chapter Library`;
+ document.getElementById("blankSubtitle").textContent="Chapter-wise resource blocks, ready for your links.";
+ document.getElementById("blankCount").textContent=`${filtered.length} of ${data.length} chapters`;
+ const chemExtraSection=document.getElementById("chemistryExtraSection");
+ chemExtraSection.classList.toggle("hidden",subject!=="chemistry");
+ const mathsExtraSection=document.getElementById("mathsExtraSection");
+ mathsExtraSection.classList.toggle("hidden",subject!=="maths");
+ if(subject==="maths"){
+  const mathsCard=`<article class="resourcecard"><h3>Neha Ma'am PDF</h3><p>Add or update your Maths PDF link.</p><button class="filterbtn" data-maths-open="mathsNehaPdf"><span>Manage PDF link</span><svg class="button-icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></article>`;
+  document.getElementById("mathsExtraGrid").innerHTML=mathsCard;
+  document.querySelectorAll("[data-maths-open]").forEach(btn=>btn.addEventListener("click",()=>openGroup(btn.dataset.mathsOpen)));
+ }
+ if(subject==="chemistry"){
+  const card=([title,desc,key])=>`<article class="resourcecard"><h3>${esc(title)}</h3><p>${esc(desc)}</p><button class="filterbtn" data-chem-open="${key}"><span>Browse resources</span><svg class="button-icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></article>`;
+  document.getElementById("chemistryExtraGrid").innerHTML=chemistryExtraResources.map(card).join("");
+  document.querySelectorAll("[data-chem-open]").forEach(btn=>btn.addEventListener("click",()=>openGroup(btn.dataset.chemOpen)));
+ }
+ grid.innerHTML=filtered.map(({name,i})=>`<article class="chapter">
+  <button class="chapterhead" type="button" aria-expanded="false">
+   <span class="num">${String(i+1).padStart(2,"0")}</span>
+   <span class="chaptertitle">${esc(name)}<div class="chaptermeta">Resource block · ready to add links</div></span>
+   <span class="chev" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path d="m6.5 9 5.5 5.5L17.5 9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+  </button>
+  <div class="resources">${subject==="chemistry" ? [...(chemistryMindMapResources[name]||[]).map(([label,url])=>`<div class="resrow"><div><div class="resname">${esc(label)}</div><div class="restype">Mind Map Revision</div></div><a class="openlink" href="${url}" target="_blank" rel="noopener noreferrer">Open ↗</a></div>`),...(verifiedChemistryResources[name]||[]).map(([label,url])=>`<div class="resrow"><div><div class="resname">${esc(label)}</div><div class="restype">ChemShiksha / JEEfinity · PYQs</div></div><a class="openlink" href="${url}" target="_blank" rel="noopener noreferrer">Open ↗</a></div>`)].join("") || `<div class="blank-resource-box">No resource available</div>` : [...(mathsSameer2026JanuaryResources[name]||[]).map(([label,url])=>`<div class="resrow"><div><div class="resname">${esc(label)}</div><div class="restype">Sameer Sir · January 2026</div></div><a class="openlink" href="${url}" target="_blank" rel="noopener noreferrer">Open ↗</a></div>`),...(mathsSameer2026AprilResources[name]||[]).map(([label,url])=>`<div class="resrow"><div><div class="resname">${esc(label)}</div><div class="restype">Sameer Sir · April 2026 · MathonGo WAR Room</div></div><a class="openlink" href="${url}" target="_blank" rel="noopener noreferrer">Open ↗</a></div>`),...(mathsSameer2025Resources[name]||[]).map(([label,url])=>`<div class="resrow"><div><div class="resname">${esc(label)}</div><div class="restype">Sameer Sir · 2025</div></div><a class="openlink" href="${url}" target="_blank" rel="noopener noreferrer">Open ↗</a></div>`),...(mathsRevisionResources[name]||[]).map(([label,url])=>`<div class="resrow"><div><div class="resname">${esc(label)}</div><div class="restype">Chapterwise JEE Main PYQs · 2022–2024</div></div><a class="openlink" href="${url}" target="_blank" rel="noopener noreferrer">Open ↗</a></div>`)].join("") || `<div class="blank-resource-box">No resource added</div>`}</div>
+ </article>`).join("")||`<div class="empty">No matching chapter found. Try another keyword.</div>`;
+ grid.querySelectorAll(".chapterhead").forEach(btn=>btn.addEventListener("click",()=>{
+  const card=btn.closest(".chapter");card.classList.toggle("open");
+  btn.setAttribute("aria-expanded",card.classList.contains("open"));
+ }));
+}
+
+const blankSearchInput=document.getElementById("blankSearch");
+if(blankSearchInput){
+ blankSearchInput.addEventListener("input",()=>{
+  const activeSubject=document.querySelector('.subject.active[data-subject="maths"],.subject.active[data-subject="chemistry"]')?.dataset.subject||"chemistry";
+  renderBlankSubjectLibrary(activeSubject);
+ });
+ document.getElementById("blankExpandAll")?.addEventListener("click",()=>{
+  const cards=[...document.querySelectorAll("#blankChapterGrid .chapter")];
+  const shouldExpand=cards.some(card=>!card.classList.contains("open"));
+  cards.forEach(card=>{
+   card.classList.toggle("open",shouldExpand);
+   card.querySelector(".chapterhead")?.setAttribute("aria-expanded",String(shouldExpand));
+  });
+  document.getElementById("blankExpandAll").textContent=shouldExpand?"Collapse all":"Expand all";
+ });
+}
+
+function showSection(subject){
+ const physics=document.getElementById("physicsPanel"),blank=document.getElementById("blankPanel"),syllabus=document.getElementById("syllabusView"),mock=document.getElementById("mockTestsView");
+ physics.classList.toggle("hidden",subject!=="physics");
+ blank.classList.toggle("hidden",!["maths","chemistry"].includes(subject));
+ blank.style.display=["maths","chemistry"].includes(subject)?"block":"none";
+ if(["maths","chemistry"].includes(subject))renderBlankSubjectLibrary(subject);
+ syllabus.classList.toggle("visible",subject==="syllabus");
+ mock.classList.toggle("visible",subject==="mocktests");
+ if(subject==="syllabus"){document.getElementById("syllabusView").scrollIntoView({behavior:"smooth",block:"start"});}
+ if(subject==="mocktests"){renderMockDashboard();document.getElementById("mockTestsView").scrollIntoView({behavior:"smooth",block:"start"});}
+}
+
+/* Mock test tracker: all entries and chart preferences stay in this browser. */
+const MOCK_STORAGE_KEY="studyNookMockTestsV1";
+function readMockTests(){
+ try{
+  const raw=localStorage.getItem(MOCK_STORAGE_KEY);
+  if(raw){const x=JSON.parse(raw);if(Array.isArray(x))return x;}
+  const backup=readNookBackup();
+  return Array.isArray(backup?.mockTests)?backup.mockTests:[];
+ }catch(e){const backup=readNookBackup();return Array.isArray(backup?.mockTests)?backup.mockTests:[]}
+}
+const savedMockView=readNookBackup()||{};
+let mockTests=readMockTests(),
+ mockSeries={chemistry:true,maths:true,physics:true,...(savedMockView.mockSeries||{})},
+ mockPercentMode=!!savedMockView.mockPercentMode;
+function saveMockTests(){
+ try{
+  const payload=JSON.stringify(mockTests);
+  localStorage.setItem(MOCK_STORAGE_KEY,payload);
+  const verified=localStorage.getItem(MOCK_STORAGE_KEY);
+  if(verified!==payload)throw new Error("Saved data could not be verified.");
+  persistNookBackup();
+  return true;
+ }catch(error){
+  console.error("Study Nook could not save this mock test:",error);
+  return false;
+ }
+}
+function showMockNotice(message,kind="success"){
+ let notice=document.getElementById("mockSaveNotice");
+ if(!notice){
+  notice=document.createElement("div");
+  notice.id="mockSaveNotice";
+  notice.className="mock-save-notice";
+  notice.setAttribute("role","status");
+  notice.setAttribute("aria-live","polite");
+  const view=document.getElementById("mockTestsView");
+  const tabs=view?.querySelector(".mock-workspace-tabs");
+  if(tabs)tabs.insertAdjacentElement("afterend",notice);
+ }
+ notice.className=`mock-save-notice ${kind}`;
+ notice.textContent=message;
+ notice.hidden=false;
+}
+function mockEscape(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function mockNum(id){return Math.max(0,Number(document.getElementById(id)?.value||0))}
+function updateMockTotal(){
+ const total=mockNum("markPhysics")+mockNum("markChemistry")+mockNum("markMaths");
+ const out=document.getElementById("mockTotalPreview");if(out)out.textContent=`${total} / 300`;
+}
+function openMockForm(){
+ const panel=document.getElementById("mockEntryPanel");panel.hidden=false;
+ const date=document.getElementById("mockDate");
+ if(!date.value){const now=new Date();date.value=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(now.getDate()).padStart(2,"0")}`;}
+ panel.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function closeMockForm(){setMockTab("performance")}
+function mockFormatDate(date){
+ if(!date)return "—";const d=new Date(date+"T00:00:00");
+ return d.toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"});
+}
+function renderMockSummary(){
+ const n=mockTests.length,sorted=[...mockTests].sort((a,b)=>a.date.localeCompare(b.date));
+ const avg=n?Math.round(mockTests.reduce((a,t)=>a+t.total,0)/n):0;
+ const best=n?Math.max(...mockTests.map(t=>t.total)):0;
+ const latest=sorted.at(-1);
+ const cards=[
+  ["Tests Taken",n,"Recorded mocks"],
+  ["Average Score",n?`${avg}/300`:"—","Across all tests"],
+  ["Personal Best",n?`${best}/300`:"—","Highest total marks"],
+  ["Latest Score",latest?`${latest.total}/300`:"—",latest?latest.source:"Waiting for first mock"]
+ ];
+ document.getElementById("mockSummary").innerHTML=cards.map(([label,value,note])=>`<div class="mock-stat"><span>${label}</span><strong>${value}</strong><small>${mockEscape(note)}</small></div>`).join("");
+}
+function renderMockChart(){
+ const svg=document.getElementById("mockChart"),range=document.getElementById("mockRange")?.value||"all";
+ let data=[...mockTests].sort((a,b)=>a.date.localeCompare(b.date));
+ if(range!=="all")data=data.slice(-Number(range));
+ const W=900,H=390,L=58,R=24,T=20,B=55,plotW=W-L-R,plotH=H-T-B;
+ const max=mockPercentMode?100:300;
+ const ticks=mockPercentMode?[0,20,40,60,80,100]:[0,50,100,150,200,250,300];
+ const x=i=>data.length===1?L+plotW/2:L+(i/(Math.max(1,data.length-1)))*plotW;
+ const y=value=>T+plotH-(value/max)*plotH;
+ const smoothPath=points=>{
+  if(!points.length)return "";
+  if(points.length===1)return `M ${points[0].x.toFixed(1)} ${points[0].y.toFixed(1)}`;
+  let d=`M ${points[0].x.toFixed(1)} ${points[0].y.toFixed(1)}`;
+  for(let i=0;i<points.length-1;i++){
+   const p0=points[Math.max(0,i-1)],p1=points[i],p2=points[i+1],p3=points[Math.min(points.length-1,i+2)];
+   const cp1x=p1.x+(p2.x-p0.x)/6,cp1y=p1.y+(p2.y-p0.y)/6;
+   const cp2x=p2.x-(p3.x-p1.x)/6,cp2y=p2.y-(p3.y-p1.y)/6;
+   d+=` C ${cp1x.toFixed(1)} ${cp1y.toFixed(1)}, ${cp2x.toFixed(1)} ${cp2y.toFixed(1)}, ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
+  }
+  return d;
+ };
+ const areaPath=(line,points)=>points.length?`${line} L ${points[points.length-1].x.toFixed(1)} ${(T+plotH).toFixed(1)} L ${points[0].x.toFixed(1)} ${(T+plotH).toFixed(1)} Z`:"";
+ let out=`<defs>
+  <linearGradient id="mockTotalFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c4b3ed" stop-opacity=".16"/><stop offset="100%" stop-color="#c4b3ed" stop-opacity=".025"/></linearGradient>
+  <linearGradient id="mockChemFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffad21" stop-opacity=".12"/><stop offset="100%" stop-color="#ffad21" stop-opacity=".012"/></linearGradient>
+  <linearGradient id="mockMathFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#78aaff" stop-opacity=".11"/><stop offset="100%" stop-color="#78aaff" stop-opacity=".01"/></linearGradient>
+  <linearGradient id="mockPhysicsFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ff8eaa" stop-opacity=".11"/><stop offset="100%" stop-color="#ff8eaa" stop-opacity=".01"/></linearGradient>
+ </defs>`;
+ ticks.forEach(v=>{
+  const yy=y(v);
+  out+=`<line x1="${L}" y1="${yy}" x2="${W-R}" y2="${yy}" stroke="#ffffff" stroke-opacity="${v===0?".11":".055"}" stroke-width="1"/><text x="${L-12}" y="${yy+4}" text-anchor="end" fill="#93899d" font-size="11" font-family="Lexend, sans-serif">${mockPercentMode?v+"%":v}</text>`;
+ });
+ if(!data.length){
+  out+=`<text x="${W/2}" y="${H/2-8}" text-anchor="middle" fill="#c1b4cc" font-size="16" font-family="Lexend, sans-serif">Your performance graph will appear here</text><text x="${W/2}" y="${H/2+18}" text-anchor="middle" fill="#82788d" font-size="11" font-family="Lexend, sans-serif">Add your first mock test to get started</text>`;
+ }else{
+  const series=[
+   {key:"chemistry",color:"#ffad21",fill:"url(#mockChemFill)"},
+   {key:"maths",color:"#78aaff",fill:"url(#mockMathFill)"},
+   {key:"physics",color:"#ff8eaa",fill:"url(#mockPhysicsFill)"}
+  ];
+  // A quiet total trend sits behind the subject curves.
+  const totalPoints=data.map((t,i)=>({x:x(i),y:y(mockPercentMode?t.total/3:t.total),value:t.total}));
+  const totalLine=smoothPath(totalPoints);
+  if(totalPoints.length>1){
+   out+=`<path d="${areaPath(totalLine,totalPoints)}" fill="url(#mockTotalFill)"/><path d="${totalLine}" fill="none" stroke="#c4b3ed" stroke-width="1.9" stroke-opacity=".9" stroke-linecap="round" stroke-linejoin="round"/>`;
+   const end=totalPoints[totalPoints.length-1];
+   out+=`<circle cx="${end.x}" cy="${end.y}" r="7" fill="#c4b3ed" fill-opacity=".12"/><circle cx="${end.x}" cy="${end.y}" r="4.2" fill="#17161f" stroke="#d9ccfa" stroke-width="1.8"><title>Total: ${end.value}/300</title></circle>`;
+  }
+  series.forEach(({key,color,fill})=>{
+   if(!mockSeries[key])return;
+   const points=data.map((t,i)=>({x:x(i),y:y(t[key]),value:t[key]}));
+   const line=smoothPath(points);
+   if(points.length>1){
+    out+=`<path d="${areaPath(line,points)}" fill="${fill}"/>`;
+    out+=`<path d="${line}" fill="none" stroke="${color}" stroke-width="1.8" stroke-opacity=".92" stroke-linecap="round" stroke-linejoin="round"/>`;
+   }
+   points.forEach(p=>{
+    out+=`<circle cx="${p.x}" cy="${p.y}" r="3.1" fill="#17161f" stroke="${color}" stroke-width="1.6"><title>${key[0].toUpperCase()+key.slice(1)}: ${p.value}${mockPercentMode?"%":""}</title></circle>`;
+   });
+  });
+  data.forEach((t,i)=>{
+   const xx=x(i),label=t.source.length>17?t.source.slice(0,15)+"…":t.source;
+   out+=`<text x="${xx}" y="${H-25}" text-anchor="middle" fill="#948a9c" font-size="10" font-family="Lexend, sans-serif">${mockEscape(label)}</text>`;
+  });
+ }
+ svg.innerHTML=out;
+ document.getElementById("mockChartCount").textContent=`${data.length} ${data.length===1?"test":"tests"} shown`;
+}
+
+function mockTriplet(values,kind){
+ const letters=["P","C","M"];
+ return `<div class="history-triplet ${kind}">${values.map((v,i)=>`<span title="${["Physics","Chemistry","Maths"][i]}: ${v}"><i>${letters[i]}</i><b>${v}</b></span>`).join("")}</div>`;
+}
+function renderMockHistory(){
+ const tbody=document.getElementById("mockHistoryBody");
+ const data=[...mockTests].sort((a,b)=>b.date.localeCompare(a.date)||b.createdAt-a.createdAt);
+ document.getElementById("mockHistoryCount").textContent=`${data.length} ${data.length===1?"test":"tests"}`;
+ if(!data.length){
+  tbody.innerHTML='<tr><td colspan="9" class="mock-empty"><span class="mock-empty-icon"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h5m-5 4h8"/></svg></span><b>No mock tests yet</b><small>Your saved attempts will appear here once you add your first test.</small></td></tr>';
+  return;
+ }
+ tbody.innerHTML=data.map((t,i)=>`<tr>
+  <td class="history-number">${String(i+1).padStart(2,"0")}</td>
+  <td class="history-date"><span>${mockFormatDate(t.date)}</span></td>
+  <td class="source"><b>${mockEscape(t.source)}</b><small>Mock test ${String(data.length-i).padStart(2,"0")}</small></td>
+  <td class="history-marks">${mockTriplet([t.physics,t.chemistry,t.maths],"marks-triplet")}</td>
+  <td class="total"><strong>${t.total}</strong><small>/ 300</small></td>
+  <td>${mockTriplet(t.wrong,"wrong-triplet")}</td>
+  <td>${mockTriplet(t.skip,"skip-triplet")}</td>
+  <td>${mockTriplet(t.correct,"correct-triplet")}</td>
+  <td class="history-actions"><button class="mock-delete" type="button" data-delete-mock="${t.id}" aria-label="Delete ${mockEscape(t.source)}" title="Delete test"><svg viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 6h11M8 6V4.2h4V6m-6.5 0 .7 10h7.6l.7-10M8.5 9v4.5m3-4.5v4.5"/></svg></button></td>
+ </tr>`).join("");
+ tbody.querySelectorAll("[data-delete-mock]").forEach(btn=>btn.addEventListener("click",()=>{
+  mockTests=mockTests.filter(t=>String(t.id)!==btn.dataset.deleteMock);saveMockTests();renderMockDashboard();
+ }));
+}
+
+function setMockTab(tab){
+ document.querySelectorAll("[data-mock-tab]").forEach(btn=>{
+  const active=btn.dataset.mockTab===tab;btn.classList.toggle("active",active);btn.setAttribute("aria-selected",String(active));
+ });
+ document.querySelectorAll("[data-mock-panel]").forEach(panel=>{
+  const active=panel.dataset.mockPanel===tab;panel.hidden=!active;panel.classList.toggle("active",active);
+ });
+ if(tab==="performance")renderMockDashboard();
+ if(tab==="history")renderMockHistory();
+ if(tab==="add")openMockForm();
+}
+
+function renderMockDashboard(){renderMockSummary();renderMockChart();renderMockHistory();}
+function bindMockTracker(){
+ document.querySelectorAll("[data-mock-tab]").forEach(btn=>btn.addEventListener("click",()=>setMockTab(btn.dataset.mockTab)));
+ document.getElementById("toggleMockForm")?.addEventListener("click",()=>setMockTab("add"));
+ document.getElementById("closeMockForm")?.addEventListener("click",()=>setMockTab("performance"));
+ document.getElementById("cancelMockForm")?.addEventListener("click",()=>{document.getElementById("mockTestForm").reset();updateMockTotal();});
+ ["markPhysics","markChemistry","markMaths"].forEach(id=>document.getElementById(id)?.addEventListener("input",updateMockTotal));
+ const mockForm=document.getElementById("mockTestForm");
+ const draftKey="studyNookMockDraftV1";
+ try{
+  const draft=JSON.parse(localStorage.getItem(draftKey)||"null");
+  if(draft&&mockForm){
+   Object.entries(draft).forEach(([id,value])=>{const field=document.getElementById(id);if(field&&typeof value==="string")field.value=value;});
+   updateMockTotal();
+  }
+ }catch(e){}
+ const saveMockDraft=()=>{
+  if(!mockForm)return;
+  const draft={};
+  ["mockDate","mockSource","markPhysics","markChemistry","markMaths","wrongPhysics","wrongChemistry","wrongMaths","skipPhysics","skipChemistry","skipMaths","correctPhysics","correctChemistry","correctMaths"].forEach(id=>{
+   const field=document.getElementById(id);if(field)draft[id]=field.value;
+  });
+  try{localStorage.setItem(draftKey,JSON.stringify(draft))}catch(e){}
+ };
+ mockForm?.querySelectorAll("input").forEach(field=>field.addEventListener("input",saveMockDraft));
+ document.getElementById("cancelMockForm")?.addEventListener("click",()=>{try{localStorage.removeItem(draftKey)}catch(e){}});
+ mockForm?.addEventListener("submit",()=>{try{localStorage.removeItem(draftKey)}catch(e){}});
+
+ const savedRange=readNookBackup()?.mockRange;
+ if(savedRange&&document.getElementById("mockRange"))document.getElementById("mockRange").value=savedRange;
+ document.getElementById("mockRange")?.addEventListener("change",()=>{persistNookBackup();renderMockChart();});
+ document.getElementById("mockPercent")?.addEventListener("click",e=>{
+  mockPercentMode=!mockPercentMode;e.currentTarget.setAttribute("aria-pressed",String(mockPercentMode));e.currentTarget.textContent=mockPercentMode?"100":"％";persistNookBackup();renderMockChart();
+ });
+ document.querySelectorAll("[data-series]").forEach(btn=>btn.addEventListener("click",()=>{
+  const key=btn.dataset.series;mockSeries[key]=!mockSeries[key];btn.classList.toggle("on",mockSeries[key]);persistNookBackup();renderMockChart();
+ }));
+ document.getElementById("mockTestForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const form=e.currentTarget;
+  if(!form.reportValidity())return;
+  const date=document.getElementById("mockDate").value;
+  const source=document.getElementById("mockSource").value.trim();
+  const physics=mockNum("markPhysics"),chemistry=mockNum("markChemistry"),maths=mockNum("markMaths");
+  const marks=[physics,chemistry,maths];
+  if(!date||!source){showMockNotice("Please enter the test date and test name.","error");return;}
+  if(marks.some(value=>!Number.isFinite(value)||value<0||value>100)){
+   showMockNotice("Each subject mark must be between 0 and 100.","error");return;
+  }
+  const wrong=[mockNum("wrongPhysics"),mockNum("wrongChemistry"),mockNum("wrongMaths")];
+  const skip=[mockNum("skipPhysics"),mockNum("skipChemistry"),mockNum("skipMaths")];
+  const correct=[mockNum("correctPhysics"),mockNum("correctChemistry"),mockNum("correctMaths")];
+  const entry={id:`${Date.now()}-${Math.random().toString(36).slice(2,8)}`,date,source,physics,chemistry,maths,total:physics+chemistry+maths,wrong,skip,correct,createdAt:Date.now()};
+  mockTests.push(entry);
+  const saveButton=form.querySelector('button[type="submit"]');
+  if(saveButton){saveButton.disabled=true;saveButton.textContent="Saving…";}
+  const saved=saveMockTests();
+  if(saveButton){saveButton.disabled=false;saveButton.innerHTML='<svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M10 3v14M3 10h14"/></svg>Save Mock Test';}
+  if(!saved){
+   mockTests.pop();
+   showMockNotice("Could not save this test in this browser. Your form is still here—check browser storage permissions and try again.","error");
+   return;
+  }
+  form.reset();
+  updateMockTotal();
+  renderMockDashboard();
+  showMockNotice(`Saved "${source}" successfully. Your graph and test history have been updated.`);
+  setMockTab("performance");
+ });
+}
+
+function updateCountdown(){
+ const target=new Date(2027,0,15,0,0,0).getTime(),now=Date.now(),diff=Math.max(0,target-now);
+ const day=86400000,hour=3600000,minute=60000;
+ const d=Math.floor(diff/day),h=Math.floor(diff%day/hour),m=Math.floor(diff%hour/minute),sec=Math.floor(diff%minute/1000);
+ document.getElementById("days").textContent=String(d).padStart(2,"0");
+ document.getElementById("hours").textContent=String(h).padStart(2,"0");
+ document.getElementById("minutes").textContent=String(m).padStart(2,"0");
+ document.getElementById("seconds").textContent=String(sec).padStart(2,"0");
+
+}
+
+
+
+document.addEventListener("click",event=>{
+ if(!event.target.closest(".status-control")){
+  document.querySelectorAll(".status-control.menu-open").forEach(control=>{
+   control.classList.remove("menu-open");
+   const menu=control.querySelector(".status-menu"),trigger=control.querySelector(".status-pill");
+   if(menu)menu.hidden=true;if(trigger)trigger.setAttribute("aria-expanded","false");
+  });
+ }
+});
+document.addEventListener("keydown",event=>{
+ if(event.key==="Escape"){
+  document.querySelectorAll(".status-control.menu-open").forEach(control=>{
+   control.classList.remove("menu-open");
+   const menu=control.querySelector(".status-menu"),trigger=control.querySelector(".status-pill");
+   if(menu)menu.hidden=true;if(trigger){trigger.setAttribute("aria-expanded","false");trigger.focus();}
+  });
+ }
+});
+
+renderSyllabus();bindMockTracker();renderMockDashboard();persistNookBackup();
+showSection("syllabus");
+document.querySelectorAll(".subject").forEach(b=>b.classList.toggle("active",b.dataset.subject==="syllabus"));
+document.querySelectorAll(".subject").forEach(btn=>btn.addEventListener("click",()=>{
+ document.querySelectorAll(".subject").forEach(b=>b.classList.toggle("active",b===btn));
+ showSection(btn.dataset.subject);
+}));
+search.addEventListener("input",renderChapters);
+document.getElementById("expandAll").addEventListener("click",()=>{const cards=[...grid.querySelectorAll(".chapter")];const expand=cards.some(c=>!c.classList.contains("open"));cards.forEach(c=>{c.classList.toggle("open",expand);c.querySelector("button").setAttribute("aria-expanded",expand);});document.getElementById("expandAll").textContent=expand?"Collapse all":"Expand all";});
+renderChapters();renderExtras();
+</script></body></html>
