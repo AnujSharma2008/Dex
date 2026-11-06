@@ -1209,6 +1209,31 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--lilac);outline-offs
     }
 }
 
+
+/* Study Nook v78 — upgraded mock analytics graph */
+.mock-chart-card{
+ background:radial-gradient(ellipse at 8% 0%,rgba(160,132,238,.12),transparent 42%),
+            radial-gradient(ellipse at 96% 8%,rgba(229,164,223,.09),transparent 34%),
+            linear-gradient(145deg,#191727,#11121d)!important;
+ border-color:rgba(190,169,245,.2)!important;
+ box-shadow:0 18px 48px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.035)!important;
+}
+.mock-chart-tools select{
+ background:rgba(29,25,44,.94)!important;color:#e9e0f8!important;
+ border:1px solid rgba(190,169,245,.2)!important;border-radius:11px!important;
+ padding:9px 12px!important;min-height:36px;
+}
+.mock-chart-tools select:focus{outline:none;border-color:#bba9f5!important;box-shadow:0 0 0 3px rgba(187,169,245,.12)}
+.mock-legend{justify-content:flex-start!important;margin:16px 0 7px!important}
+.legend-chip{background:rgba(29,25,44,.75)!important;border-color:rgba(190,169,245,.14)!important}
+.legend-chip.on{background:rgba(187,169,245,.09)!important;border-color:rgba(187,169,245,.34)!important}
+.mock-chart-wrap{border-radius:15px;background:linear-gradient(180deg,rgba(255,255,255,.012),transparent);}
+#mockChart .mock-chart-series-line{filter:drop-shadow(0 2px 5px rgba(170,145,235,.12));}
+#mockChart .mock-chart-marker{stroke-width:2!important}
+#mockChart .mock-chart-marker.is-active-point{stroke-width:2.5!important}
+.mock-chart-foot{padding-top:9px!important;color:#958ba9!important}
+@media(max-width:760px){.mock-chart-tools{width:100%;flex-wrap:wrap}.mock-chart-tools select{flex:1;min-width:0}}
+
 </style></head>
 <body><main class="shell">
 <nav class="subjectbar" aria-label="Study sections">
@@ -1265,8 +1290,8 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--lilac);outline-offs
  <section class="mock-tab-panel active" id="mockPerformancePanel" data-mock-panel="performance">
   <div class="mock-summary" id="mockSummary"></div>
   <section class="mock-chart-card">
-   <div class="mock-chart-head"><div><span class="mock-panel-kicker">YOUR SCORE JOURNEY</span><h3>Performance Trajectory</h3><p>Follow your total and subject-wise marks across mock tests.</p></div>
-    <div class="mock-chart-tools"><select id="mockRange" aria-label="Chart range"><option value="all">All Tests</option><option value="5">Last 5 Tests</option><option value="10">Last 10 Tests</option></select><button id="mockPercent" class="mock-percent-btn" type="button" aria-pressed="false">％</button></div>
+   <div class="mock-chart-head"><div><span class="mock-panel-kicker">YOUR SCORE JOURNEY</span><h3>Performance Trajectory</h3><p>Switch between score, accuracy and attempt rate to understand your progress.</p></div>
+    <div class="mock-chart-tools"><select id="mockMetric" aria-label="Performance metric"><option value="score">Score trend</option><option value="accuracy">Accuracy</option><option value="attempts">Attempt rate</option></select><select id="mockRange" aria-label="Chart range"><option value="all">All Tests</option><option value="5">Last 5 Tests</option><option value="10">Last 10 Tests</option></select><button id="mockPercent" class="mock-percent-btn" type="button" aria-pressed="false">％</button></div>
    </div>
    <div class="mock-legend">
     <span class="legend-chip on" style="--series-color:#bba9f5;cursor:default;opacity:1"><i></i>Total</span>
@@ -1529,6 +1554,7 @@ function persistNookBackup(){
    mockTests:Array.isArray(mockTests)?mockTests:[],
    mockSeries:typeof mockSeries!=="undefined"?mockSeries:{chemistry:true,maths:true,physics:true},
    mockPercentMode:typeof mockPercentMode!=="undefined"?mockPercentMode:false,
+   mockMetricMode:typeof mockMetricMode!=="undefined"?mockMetricMode:"score",
    mockRange:document.getElementById("mockRange")?.value||"all"
   };
   localStorage.setItem(NOOK_BACKUP_KEY,JSON.stringify(snapshot));
@@ -2009,6 +2035,7 @@ const savedMockView=readNookBackup()||{};
 let mockTests=readMockTests(),
  mockSeries={chemistry:true,maths:true,physics:true,...(savedMockView.mockSeries||{})},
  mockPercentMode=!!savedMockView.mockPercentMode,
+ mockMetricMode=["score","accuracy","attempts"].includes(savedMockView.mockMetricMode)?savedMockView.mockMetricMode:"score",
  editingMockId=null;
 function saveMockTests(){
  try{
@@ -2096,15 +2123,33 @@ function renderMockSummary(){
  ];
  document.getElementById("mockSummary").innerHTML=cards.map(([label,value,note])=>`<div class="mock-stat"><span>${label}</span><strong>${value}</strong><small>${mockEscape(note)}</small></div>`).join("");
 }
+function mockMetricValue(test,key){
+ const subjectIndex={physics:0,chemistry:1,maths:2};
+ if(mockMetricMode==="score"){
+  if(key==="total")return mockPercentMode?Number(test.total||0)/3:Number(test.total||0);
+  return Number(test[key]||0);
+ }
+ const indices=key==="total"?[0,1,2]:[subjectIndex[key]];
+ const sum=(arr)=>indices.reduce((n,i)=>n+Number(arr?.[i]||0),0);
+ const correct=sum(test.correct),wrong=sum(test.wrong),skipped=sum(test.skip);
+ const denominator=mockMetricMode==="accuracy"?correct+wrong:correct+wrong+skipped;
+ if(!denominator)return 0;
+ return mockMetricMode==="accuracy"?(correct/denominator)*100:((correct+wrong)/denominator)*100;
+}
+function mockMetricLabel(){
+ return mockMetricMode==="accuracy"?"Accuracy":mockMetricMode==="attempts"?"Attempt rate":"Score";
+}
 function renderMockChart(){
  const svg=document.getElementById("mockChart"),range=document.getElementById("mockRange")?.value||"all";
- let data=[...mockTests].sort((a,b)=>a.date.localeCompare(b.date));
+ if(!svg)return;
+ let data=[...mockTests].sort((a,b)=>a.date.localeCompare(b.date)||Number(a.createdAt||0)-Number(b.createdAt||0));
  if(range!=="all")data=data.slice(-Number(range));
- const W=900,H=390,L=58,R=24,T=20,B=55,plotW=W-L-R,plotH=H-T-B;
- const max=mockPercentMode?100:300;
- const ticks=mockPercentMode?[0,20,40,60,80,100]:[0,50,100,150,200,250,300];
- const x=i=>data.length===1?L+plotW/2:L+(i/(Math.max(1,data.length-1)))*plotW;
- const y=value=>T+plotH-(value/max)*plotH;
+ const percentageMetric=mockMetricMode!=="score"||mockPercentMode;
+ const max=percentageMetric?100:300;
+ const W=900,H=390,L=62,R=24,T=24,B=58,plotW=W-L-R,plotH=H-T-B;
+ const ticks=percentageMetric?[0,20,40,60,80,100]:[0,50,100,150,200,250,300];
+ const x=i=>data.length===1?L+plotW/2:L+(i/Math.max(1,data.length-1))*plotW;
+ const y=value=>T+plotH-(Math.max(0,Math.min(max,Number(value)||0))/max)*plotH;
  const smoothPath=points=>{
   if(!points.length)return "";
   if(points.length===1)return `M ${points[0].x.toFixed(1)} ${points[0].y.toFixed(1)}`;
@@ -2119,92 +2164,89 @@ function renderMockChart(){
  };
  const areaPath=(line,points)=>points.length?`${line} L ${points[points.length-1].x.toFixed(1)} ${(T+plotH).toFixed(1)} L ${points[0].x.toFixed(1)} ${(T+plotH).toFixed(1)} Z`:"";
  let out=`<defs>
-  <linearGradient id="mockTotalFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c4b3ed" stop-opacity=".16"/><stop offset="100%" stop-color="#c4b3ed" stop-opacity=".025"/></linearGradient>
-  <linearGradient id="mockChemFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffad21" stop-opacity=".12"/><stop offset="100%" stop-color="#ffad21" stop-opacity=".012"/></linearGradient>
-  <linearGradient id="mockMathFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#78aaff" stop-opacity=".11"/><stop offset="100%" stop-color="#78aaff" stop-opacity=".01"/></linearGradient>
-  <linearGradient id="mockPhysicsFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ff8eaa" stop-opacity=".11"/><stop offset="100%" stop-color="#ff8eaa" stop-opacity=".01"/></linearGradient>
+  <linearGradient id="mockTotalFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c4b3ed" stop-opacity=".22"/><stop offset="100%" stop-color="#c4b3ed" stop-opacity=".015"/></linearGradient>
+  <linearGradient id="mockChemFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f2b2e7" stop-opacity=".14"/><stop offset="100%" stop-color="#f2b2e7" stop-opacity=".008"/></linearGradient>
+  <linearGradient id="mockMathFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#9bb5ff" stop-opacity=".13"/><stop offset="100%" stop-color="#9bb5ff" stop-opacity=".008"/></linearGradient>
+  <linearGradient id="mockPhysicsFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#9ee0cc" stop-opacity=".13"/><stop offset="100%" stop-color="#9ee0cc" stop-opacity=".008"/></linearGradient>
  </defs>`;
  ticks.forEach(v=>{
   const yy=y(v);
-  out+=`<line x1="${L}" y1="${yy}" x2="${W-R}" y2="${yy}" stroke="#ffffff" stroke-opacity="${v===0?".11":".055"}" stroke-width="1"/><text x="${L-12}" y="${yy+4}" text-anchor="end" fill="#93899d" font-size="11" font-family="Lexend, sans-serif">${mockPercentMode?v+"%":v}</text>`;
+  out+=`<line x1="${L}" y1="${yy}" x2="${W-R}" y2="${yy}" stroke="#d8c9f4" stroke-opacity="${v===0?".17":".065"}" stroke-width="1" stroke-dasharray="${v===0?"0":"3 7"}"/><text x="${L-13}" y="${yy+4}" text-anchor="end" fill="#a69ab9" font-size="11" font-family="Lexend, sans-serif">${percentageMetric?v+"%":v}</text>`;
  });
  if(!data.length){
-  out+=`<text x="${W/2}" y="${H/2-8}" text-anchor="middle" fill="#c1b4cc" font-size="16" font-family="Lexend, sans-serif">Your performance graph will appear here</text><text x="${W/2}" y="${H/2+18}" text-anchor="middle" fill="#82788d" font-size="11" font-family="Lexend, sans-serif">Add your first mock test to get started</text>`;
+  out+=`<text x="${W/2}" y="${H/2-8}" text-anchor="middle" fill="#d5c9e8" font-size="16" font-family="Lexend, sans-serif">Your ${mockMetricLabel().toLowerCase()} graph will appear here</text><text x="${W/2}" y="${H/2+18}" text-anchor="middle" fill="#8f849f" font-size="11" font-family="Lexend, sans-serif">Add your first mock test to start building your trend</text>`;
  }else{
   const series=[
-   {key:"chemistry",color:"#ffad21",fill:"url(#mockChemFill)"},
-   {key:"maths",color:"#78aaff",fill:"url(#mockMathFill)"},
-   {key:"physics",color:"#ff8eaa",fill:"url(#mockPhysicsFill)"}
+   {key:"physics",color:"#9ee0cc",fill:"url(#mockPhysicsFill)"},
+   {key:"chemistry",color:"#f2b2e7",fill:"url(#mockChemFill)"},
+   {key:"maths",color:"#9bb5ff",fill:"url(#mockMathFill)"}
   ];
-  // A quiet total trend sits behind the subject curves.
-  const totalPoints=data.map((t,i)=>({x:x(i),y:y(mockPercentMode?t.total/3:t.total),value:t.total}));
+  const totalPoints=data.map((t,i)=>({x:x(i),y:y(mockMetricValue(t,"total")),value:mockMetricValue(t,"total")}));
   const totalLine=smoothPath(totalPoints);
   if(totalPoints.length>1){
-   out+=`<path d="${areaPath(totalLine,totalPoints)}" fill="url(#mockTotalFill)"/><path d="${totalLine}" fill="none" class="mock-chart-series-line mock-total-line" stroke="#c4b3ed" stroke-width="1.9" stroke-opacity=".9" stroke-linecap="round" stroke-linejoin="round"/><path class="mock-chart-hit-line" data-mock-line="1" d="${totalLine}" fill="none" stroke="transparent" stroke-width="18" pointer-events="stroke"/>`;
-   const end=totalPoints[totalPoints.length-1];
-   out+=`<circle class="mock-total-halo" cx="${end.x}" cy="${end.y}" r="7" fill="#c4b3ed" fill-opacity=".12"/><circle class="mock-chart-marker mock-total-marker" cx="${end.x}" cy="${end.y}" r="4.2" fill="#17161f" stroke="#d9ccfa" stroke-width="1.8"><title>Total: ${end.value}/300</title></circle>`;
+   out+=`<path d="${areaPath(totalLine,totalPoints)}" fill="url(#mockTotalFill)"/><path d="${totalLine}" fill="none" class="mock-chart-series-line mock-total-line" stroke="#c4b3ed" stroke-width="2.8" stroke-opacity=".98" stroke-linecap="round" stroke-linejoin="round"/><path class="mock-chart-hit-line" data-mock-line="total" d="${totalLine}" fill="none" stroke="transparent" stroke-width="20" pointer-events="stroke"/>`;
   }
+  totalPoints.forEach((p,i)=>{
+   out+=`<circle class="mock-total-halo" cx="${p.x}" cy="${p.y}" r="8" fill="#c4b3ed" fill-opacity=".12"/><circle class="mock-chart-marker mock-total-marker" cx="${p.x}" cy="${p.y}" r="4.2" fill="#171522" stroke="#d9ccfa" stroke-width="2"><title>Total: ${p.value}${percentageMetric?"%":"/300"}</title></circle>`;
+  });
   series.forEach(({key,color,fill})=>{
    if(!mockSeries[key])return;
-   const points=data.map((t,i)=>({x:x(i),y:y(t[key]),value:t[key]}));
+   const points=data.map((t,i)=>({x:x(i),y:y(mockMetricValue(t,key)),value:mockMetricValue(t,key)}));
    const line=smoothPath(points);
    if(points.length>1){
-    out+=`<path d="${areaPath(line,points)}" fill="${fill}"/>`;
-    out+=`<path d="${line}" fill="none" class="mock-chart-series-line" stroke="${color}" stroke-width="1.8" stroke-opacity=".92" stroke-linecap="round" stroke-linejoin="round"/><path class="mock-chart-hit-line" data-mock-line="1" d="${line}" fill="none" stroke="transparent" stroke-width="18" pointer-events="stroke"/>`;
+    out+=`<path d="${areaPath(line,points)}" fill="${fill}"/><path d="${line}" fill="none" class="mock-chart-series-line" stroke="${color}" stroke-width="2.1" stroke-opacity=".96" stroke-linecap="round" stroke-linejoin="round"/><path class="mock-chart-hit-line" data-mock-line="${key}" d="${line}" fill="none" stroke="transparent" stroke-width="18" pointer-events="stroke"/>`;
    }
-   points.forEach(p=>{
-    out+=`<circle class="mock-chart-marker" cx="${p.x}" cy="${p.y}" r="3.1" fill="#17161f" stroke="${color}" stroke-width="1.6"><title>${key[0].toUpperCase()+key.slice(1)}: ${p.value}${mockPercentMode?"%":""}</title></circle>`;
-   });
+   points.forEach(p=>out+=`<circle class="mock-chart-marker" cx="${p.x}" cy="${p.y}" r="3.3" fill="#171522" stroke="${color}" stroke-width="1.9"><title>${key}: ${p.value.toFixed(1)}${percentageMetric?"%":""}</title></circle>`);
   });
   data.forEach((t,i)=>{
-   const xx=x(i),label=t.source.length>16?t.source.slice(0,15)+"…":t.source;
+   const xx=x(i),label=String(t.source||"Mock").length>16?String(t.source).slice(0,15)+"…":String(t.source||"Mock");
    const anchor=data.length===1?"middle":i===0?"start":i===data.length-1?"end":"middle";
-   const labelX=data.length>1&&i===0?xx:data.length>1&&i===data.length-1?xx:xx;
-   out+=`<text x="${labelX}" y="${H-25}" text-anchor="${anchor}" fill="#b0a5bb" font-size="10" font-weight="600" font-family="Lexend, sans-serif">${mockEscape(label)}</text>`;
+   out+=`<text x="${xx}" y="${H-25}" text-anchor="${anchor}" fill="#b9aecb" font-size="10" font-weight="600" font-family="Lexend, sans-serif">${mockEscape(label)}</text>`;
   });
-  // Transparent interaction targets make every plotted series easy to hover.
   data.forEach((t,i)=>{
    const xx=x(i);
-   const vals=[mockPercentMode?t.total/3:t.total,t.chemistry,t.maths,t.physics];
-   vals.forEach((value,seriesIndex)=>{
-    out+=`<circle class="mock-chart-hit" data-mock-point="${i}" cx="${xx}" cy="${y(value)}" r="11" fill="transparent" stroke="transparent" pointer-events="all"/>`;
+   ["total","physics","chemistry","maths"].forEach(key=>{
+    const val=mockMetricValue(t,key);
+    out+=`<circle class="mock-chart-hit" data-mock-point="${i}" cx="${xx}" cy="${y(val)}" r="12" fill="transparent" stroke="transparent" pointer-events="all"/>`;
    });
   });
  }
  svg.innerHTML=out;
  const tooltip=document.getElementById("mockChartTooltip");
+ const displayValue=(test,key)=>{
+  if(mockMetricMode==="score")return `${Math.round(mockMetricValue(test,key))}${mockPercentMode?"%":key==="total"?" / 300":""}`;
+  const index=key==="physics"?0:key==="chemistry"?1:2;
+  const c=key==="total"?test.correct?.reduce((a,b)=>a+Number(b||0),0):Number(test.correct?.[index]||0);
+  const w=key==="total"?test.wrong?.reduce((a,b)=>a+Number(b||0),0):Number(test.wrong?.[index]||0);
+  const sk=key==="total"?test.skip?.reduce((a,b)=>a+Number(b||0),0):Number(test.skip?.[index]||0);
+  const den=mockMetricMode==="accuracy"?c+w:c+w+sk;
+  return den?`${mockMetricValue(test,key).toFixed(1)}%`:"—";
+ };
  const showPoint=(index,event)=>{
   const current=data[index],previous=index>0?data[index-1]:null;
-  const delta=(value,prior)=>{if(prior===null||prior===undefined)return '<span class="mock-delta neutral">— first test</span>';const d=Number(value)-Number(prior);return `<span class="mock-delta ${d>0?"up":d<0?"down":"neutral"}">${d>0?"↑":d<0?"↓":"="} ${d>0?"+":""}${d}</span>`;};
-  const rows=[
-   ["Total",current.total,previous?.total],
-   ["Physics",current.physics,previous?.physics],
-   ["Chemistry",current.chemistry,previous?.chemistry],
-   ["Maths",current.maths,previous?.maths]
-  ];
-  tooltip.innerHTML=`<div class="mock-tip-head"><b>${mockEscape(current.source)}</b><small>${mockFormatDate(current.date)}</small></div><div class="mock-tip-compare">${previous?`Compared with <b>${mockEscape(previous.source)}</b>`:"Your first recorded mock — no previous comparison"}</div>${rows.map(([name,value,prior])=>`<div class="mock-tip-row"><span>${name}</span><b>${value}${mockPercentMode&&name!=="Total"?"%":""}${name==="Total"?" / 300":""}</b>${delta(value,prior)}</div>`).join("")}`;
-  if(tooltip.hidden){
-   tooltip.hidden=false;
-   tooltip.classList.remove("is-visible");
-   requestAnimationFrame(()=>tooltip.classList.add("is-visible"));
-  }else{
-   tooltip.classList.add("is-visible");
-  }
+  const delta=(key)=>{
+   if(!previous)return '<span class="mock-delta neutral">— first test</span>';
+   const a=mockMetricValue(current,key),b=mockMetricValue(previous,key),d=a-b;
+   if(!Number.isFinite(a)||!Number.isFinite(b))return '<span class="mock-delta neutral">—</span>';
+   return `<span class="mock-delta ${d>0?"up":d<0?"down":"neutral"}">${d>0?"↑":d<0?"↓":"="} ${d>0?"+":""}${d.toFixed(1)}${percentageMetric?" pp":""}</span>`;
+  };
+  const rows=[["Total","total"],["Physics","physics"],["Chemistry","chemistry"],["Maths","maths"]];
+  tooltip.innerHTML=`<div class="mock-tip-head"><b>${mockEscape(current.source)}</b><small>${mockFormatDate(current.date)}</small></div><div class="mock-tip-compare">${mockMetricLabel()}${previous?` · compared with <b>${mockEscape(previous.source)}</b>`:" · first recorded mock"}</div>${rows.map(([name,key])=>`<div class="mock-tip-row"><span>${name}</span><b>${displayValue(current,key)}</b>${delta(key)}</div>`).join("")}`;
+  if(tooltip.hidden){tooltip.hidden=false;tooltip.classList.remove("is-visible");requestAnimationFrame(()=>tooltip.classList.add("is-visible"));}
+  else tooltip.classList.add("is-visible");
   const wrap=document.querySelector(".mock-chart-wrap"),bounds=wrap.getBoundingClientRect();
   const px=event.clientX-bounds.left,py=event.clientY-bounds.top;
   tooltip.style.left=`${Math.max(8,Math.min(px+14,bounds.width-242))}px`;
   tooltip.style.top=`${Math.max(8,Math.min(py-12,bounds.height-174))}px`;
  };
  const nearestIndex=event=>{
-  const bounds=svg.getBoundingClientRect();
-  const viewX=(event.clientX-bounds.left)/Math.max(1,bounds.width)*W;
+  const bounds=svg.getBoundingClientRect(),viewX=(event.clientX-bounds.left)/Math.max(1,bounds.width)*W;
   return Math.max(0,Math.min(data.length-1,Math.round((viewX-L)/Math.max(1,plotW)*(data.length-1))));
  };
  const activatePoint=(index,event)=>{
   svg.classList.add("is-hovering");
   svg.querySelectorAll(".is-active-point").forEach(el=>el.classList.remove("is-active-point"));
-  const pointTargets=svg.querySelectorAll(`[data-mock-point="${index}"]`);
-  pointTargets.forEach(el=>el.classList.add("is-active-point"));
+  svg.querySelectorAll(`[data-mock-point="${index}"]`).forEach(el=>el.classList.add("is-active-point"));
   showPoint(index,event);
  };
  svg.querySelectorAll("[data-mock-point]").forEach(hit=>{
@@ -2218,12 +2260,9 @@ function renderMockChart(){
  svg.addEventListener("pointerleave",()=>{
   svg.classList.remove("is-hovering");
   svg.querySelectorAll(".is-active-point").forEach(el=>el.classList.remove("is-active-point"));
-  if(tooltip){
-   tooltip.classList.remove("is-visible");
-   window.setTimeout(()=>{if(!svg.matches(":hover"))tooltip.hidden=true;},190);
-  }
+  if(tooltip){tooltip.classList.remove("is-visible");window.setTimeout(()=>{if(!svg.matches(":hover"))tooltip.hidden=true;},190);}
  });
- document.getElementById("mockChartCount").textContent=`${data.length} ${data.length===1?"test":"tests"} shown`;
+ document.getElementById("mockChartCount").textContent=`${data.length} ${data.length===1?"test":"tests"} · ${mockMetricLabel().toLowerCase()}`;
 }
 
 function mockTriplet(values,kind){
@@ -2267,7 +2306,7 @@ function setMockTab(tab){
  if(tab==="add")openMockForm();
 }
 
-function renderMockDashboard(){renderMockSummary();renderMockChart();renderMockHistory();}
+function renderMockDashboard(){const metric=document.getElementById("mockMetric");if(metric)metric.value=mockMetricMode;const pct=document.getElementById("mockPercent");if(pct){pct.disabled=mockMetricMode!=="score";pct.style.opacity=mockMetricMode!=="score"?".35":"1";}renderMockSummary();renderMockChart();renderMockHistory();}
 function bindMockTracker(){
  document.querySelectorAll("[data-mock-tab]").forEach(btn=>btn.addEventListener("click",()=>setMockTab(btn.dataset.mockTab)));
  document.getElementById("toggleMockForm")?.addEventListener("click",()=>setMockTab("add"));
@@ -2295,9 +2334,13 @@ function bindMockTracker(){
  document.getElementById("cancelMockForm")?.addEventListener("click",()=>{try{localStorage.removeItem(draftKey)}catch(e){}});
  mockForm?.addEventListener("submit",()=>{try{localStorage.removeItem(draftKey)}catch(e){}});
 
+ const savedMetric=readNookBackup()?.mockMetricMode;
+ if(savedMetric&&document.getElementById("mockMetric"))document.getElementById("mockMetric").value=savedMetric;
  const savedRange=readNookBackup()?.mockRange;
  if(savedRange&&document.getElementById("mockRange"))document.getElementById("mockRange").value=savedRange;
  document.getElementById("mockRange")?.addEventListener("change",()=>{persistNookBackup();renderMockChart();});
+ document.getElementById("mockMetric")?.addEventListener("change",e=>{mockMetricMode=e.target.value;const pct=document.getElementById("mockPercent");if(pct){pct.disabled=mockMetricMode!=="score";pct.style.opacity=mockMetricMode!=="score"?".35":"1";}persistNookBackup();renderMockChart();});
+ const percentToggle=document.getElementById("mockPercent");if(percentToggle&&mockMetricMode!=="score"){percentToggle.disabled=true;percentToggle.style.opacity=".35";}
  document.getElementById("mockPercent")?.addEventListener("click",e=>{
   mockPercentMode=!mockPercentMode;e.currentTarget.setAttribute("aria-pressed",String(mockPercentMode));e.currentTarget.textContent=mockPercentMode?"100":"％";persistNookBackup();renderMockChart();
  });
