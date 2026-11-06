@@ -1086,6 +1086,129 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--lilac);outline-offs
 .mock-delta.up{color:#8fe0b9}.mock-delta.down{color:#ff9eae}.mock-delta.neutral{color:#aaa0b5}
 @media(max-width:620px){.mock-chart-tooltip{width:214px}.history-actions .mock-edit,.history-actions .mock-delete{width:27px;height:27px}}
 
+
+/* Study Nook v76 — smooth chapter/resource hover motion */
+.chapter {
+    will-change: transform, box-shadow, border-color, background;
+    transition:
+        transform 260ms cubic-bezier(.2,.75,.25,1),
+        box-shadow 260ms ease,
+        border-color 220ms ease,
+        background 260ms ease !important;
+}
+.chapter:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 10px 26px rgba(0,0,0,.28), 0 0 0 1px rgba(187,169,245,.10) !important;
+}
+.chapterhead {
+    transition: background 220ms ease, color 220ms ease;
+}
+.chaptertitle,
+.chaptermeta,
+.chapter .num,
+.chapter .chev,
+.resource-status-label,
+.resource-status-dot {
+    transition:
+        color 220ms ease,
+        background-color 220ms ease,
+        border-color 220ms ease,
+        box-shadow 240ms ease,
+        transform 240ms cubic-bezier(.2,.75,.25,1),
+        opacity 220ms ease !important;
+}
+.chapterhead:hover .num {
+    transform: scale(1.045);
+}
+.chapterhead:hover .chev {
+    transform: translateX(2px);
+}
+.chapterhead[aria-expanded="true"] .chev svg {
+    transform: rotate(180deg);
+}
+.chapter .resources {
+    transition: opacity 220ms ease;
+}
+.resource-status-label {
+    transform-origin: left center;
+}
+.chapter:hover .resource-status-label {
+    box-shadow: 0 0 12px rgba(139,214,189,.10);
+}
+.openlink,
+.filterbtn,
+.mock-edit,
+.mock-delete {
+    transition:
+        transform 220ms cubic-bezier(.2,.75,.25,1),
+        background-color 220ms ease,
+        border-color 220ms ease,
+        box-shadow 220ms ease,
+        color 220ms ease,
+        filter 220ms ease !important;
+}
+.openlink:hover,
+.filterbtn:hover,
+.mock-edit:hover,
+.mock-delete:hover {
+    transform: translateY(-1px);
+}
+@media (prefers-reduced-motion: reduce) {
+    .chapter, .chapterhead, .chaptertitle, .chaptermeta, .chapter .num,
+    .chapter .chev, .chapter .chev svg, .resource-status-label,
+    .resource-status-dot, .chapter .resources, .openlink, .filterbtn,
+    .mock-edit, .mock-delete {
+        transition: none !important;
+        transform: none !important;
+        animation: none !important;
+    }
+}
+
+
+/* Study Nook v77 — smooth mock graph hover */
+.mock-chart-wrap { isolation:isolate; }
+.mock-chart-tooltip {
+    opacity:0;
+    transform:translateY(7px) scale(.975);
+    transform-origin:top left;
+    transition:opacity 170ms ease, transform 190ms cubic-bezier(.2,.75,.25,1);
+    will-change:opacity,transform;
+}
+.mock-chart-tooltip.is-visible {
+    opacity:1;
+    transform:translateY(0) scale(1);
+}
+#mockChart .mock-chart-series-line {
+    transition:stroke-width 180ms ease, stroke-opacity 180ms ease, filter 180ms ease;
+}
+#mockChart .mock-chart-marker,
+#mockChart .mock-total-halo {
+    transform-box:fill-box;
+    transform-origin:center;
+    transition:transform 180ms cubic-bezier(.2,.75,.25,1), opacity 180ms ease, filter 180ms ease;
+}
+#mockChart.is-hovering .mock-chart-series-line { stroke-opacity:.38; }
+#mockChart.is-hovering .mock-chart-series-line:hover {
+    stroke-opacity:1;
+    stroke-width:2.8;
+    filter:drop-shadow(0 0 3px currentColor);
+}
+#mockChart .mock-chart-marker.is-active-point {
+    transform:scale(1.75);
+    filter:drop-shadow(0 0 4px currentColor);
+}
+#mockChart.is-hovering .mock-chart-marker:not(.is-active-point) { opacity:.55; }
+#mockChart .mock-chart-hit-line,
+#mockChart .mock-chart-hit { cursor:crosshair; }
+@media (prefers-reduced-motion: reduce) {
+    .mock-chart-tooltip,
+    #mockChart .mock-chart-series-line,
+    #mockChart .mock-chart-marker,
+    #mockChart .mock-total-halo {
+        transition:none !important;
+    }
+}
+
 </style></head>
 <body><main class="shell">
 <nav class="subjectbar" aria-label="Study sections">
@@ -2017,9 +2140,9 @@ function renderMockChart(){
   const totalPoints=data.map((t,i)=>({x:x(i),y:y(mockPercentMode?t.total/3:t.total),value:t.total}));
   const totalLine=smoothPath(totalPoints);
   if(totalPoints.length>1){
-   out+=`<path d="${areaPath(totalLine,totalPoints)}" fill="url(#mockTotalFill)"/><path d="${totalLine}" fill="none" stroke="#c4b3ed" stroke-width="1.9" stroke-opacity=".9" stroke-linecap="round" stroke-linejoin="round"/><path class="mock-chart-hit-line" data-mock-line="1" d="${totalLine}" fill="none" stroke="transparent" stroke-width="18" pointer-events="stroke"/>`;
+   out+=`<path d="${areaPath(totalLine,totalPoints)}" fill="url(#mockTotalFill)"/><path d="${totalLine}" fill="none" class="mock-chart-series-line mock-total-line" stroke="#c4b3ed" stroke-width="1.9" stroke-opacity=".9" stroke-linecap="round" stroke-linejoin="round"/><path class="mock-chart-hit-line" data-mock-line="1" d="${totalLine}" fill="none" stroke="transparent" stroke-width="18" pointer-events="stroke"/>`;
    const end=totalPoints[totalPoints.length-1];
-   out+=`<circle cx="${end.x}" cy="${end.y}" r="7" fill="#c4b3ed" fill-opacity=".12"/><circle cx="${end.x}" cy="${end.y}" r="4.2" fill="#17161f" stroke="#d9ccfa" stroke-width="1.8"><title>Total: ${end.value}/300</title></circle>`;
+   out+=`<circle class="mock-total-halo" cx="${end.x}" cy="${end.y}" r="7" fill="#c4b3ed" fill-opacity=".12"/><circle class="mock-chart-marker mock-total-marker" cx="${end.x}" cy="${end.y}" r="4.2" fill="#17161f" stroke="#d9ccfa" stroke-width="1.8"><title>Total: ${end.value}/300</title></circle>`;
   }
   series.forEach(({key,color,fill})=>{
    if(!mockSeries[key])return;
@@ -2027,10 +2150,10 @@ function renderMockChart(){
    const line=smoothPath(points);
    if(points.length>1){
     out+=`<path d="${areaPath(line,points)}" fill="${fill}"/>`;
-    out+=`<path d="${line}" fill="none" stroke="${color}" stroke-width="1.8" stroke-opacity=".92" stroke-linecap="round" stroke-linejoin="round"/><path class="mock-chart-hit-line" data-mock-line="1" d="${line}" fill="none" stroke="transparent" stroke-width="18" pointer-events="stroke"/>`;
+    out+=`<path d="${line}" fill="none" class="mock-chart-series-line" stroke="${color}" stroke-width="1.8" stroke-opacity=".92" stroke-linecap="round" stroke-linejoin="round"/><path class="mock-chart-hit-line" data-mock-line="1" d="${line}" fill="none" stroke="transparent" stroke-width="18" pointer-events="stroke"/>`;
    }
    points.forEach(p=>{
-    out+=`<circle cx="${p.x}" cy="${p.y}" r="3.1" fill="#17161f" stroke="${color}" stroke-width="1.6"><title>${key[0].toUpperCase()+key.slice(1)}: ${p.value}${mockPercentMode?"%":""}</title></circle>`;
+    out+=`<circle class="mock-chart-marker" cx="${p.x}" cy="${p.y}" r="3.1" fill="#17161f" stroke="${color}" stroke-width="1.6"><title>${key[0].toUpperCase()+key.slice(1)}: ${p.value}${mockPercentMode?"%":""}</title></circle>`;
    });
   });
   data.forEach((t,i)=>{
@@ -2060,7 +2183,13 @@ function renderMockChart(){
    ["Maths",current.maths,previous?.maths]
   ];
   tooltip.innerHTML=`<div class="mock-tip-head"><b>${mockEscape(current.source)}</b><small>${mockFormatDate(current.date)}</small></div><div class="mock-tip-compare">${previous?`Compared with <b>${mockEscape(previous.source)}</b>`:"Your first recorded mock — no previous comparison"}</div>${rows.map(([name,value,prior])=>`<div class="mock-tip-row"><span>${name}</span><b>${value}${mockPercentMode&&name!=="Total"?"%":""}${name==="Total"?" / 300":""}</b>${delta(value,prior)}</div>`).join("")}`;
-  tooltip.hidden=false;
+  if(tooltip.hidden){
+   tooltip.hidden=false;
+   tooltip.classList.remove("is-visible");
+   requestAnimationFrame(()=>tooltip.classList.add("is-visible"));
+  }else{
+   tooltip.classList.add("is-visible");
+  }
   const wrap=document.querySelector(".mock-chart-wrap"),bounds=wrap.getBoundingClientRect();
   const px=event.clientX-bounds.left,py=event.clientY-bounds.top;
   tooltip.style.left=`${Math.max(8,Math.min(px+14,bounds.width-242))}px`;
@@ -2071,15 +2200,29 @@ function renderMockChart(){
   const viewX=(event.clientX-bounds.left)/Math.max(1,bounds.width)*W;
   return Math.max(0,Math.min(data.length-1,Math.round((viewX-L)/Math.max(1,plotW)*(data.length-1))));
  };
+ const activatePoint=(index,event)=>{
+  svg.classList.add("is-hovering");
+  svg.querySelectorAll(".is-active-point").forEach(el=>el.classList.remove("is-active-point"));
+  const pointTargets=svg.querySelectorAll(`[data-mock-point="${index}"]`);
+  pointTargets.forEach(el=>el.classList.add("is-active-point"));
+  showPoint(index,event);
+ };
  svg.querySelectorAll("[data-mock-point]").forEach(hit=>{
-  hit.addEventListener("pointerenter",event=>showPoint(Number(hit.dataset.mockPoint),event));
-  hit.addEventListener("pointermove",event=>showPoint(Number(hit.dataset.mockPoint),event));
+  hit.addEventListener("pointerenter",event=>activatePoint(Number(hit.dataset.mockPoint),event));
+  hit.addEventListener("pointermove",event=>activatePoint(Number(hit.dataset.mockPoint),event));
  });
  svg.querySelectorAll("[data-mock-line]").forEach(hit=>{
-  hit.addEventListener("pointerenter",event=>showPoint(nearestIndex(event),event));
-  hit.addEventListener("pointermove",event=>showPoint(nearestIndex(event),event));
+  hit.addEventListener("pointerenter",event=>activatePoint(nearestIndex(event),event));
+  hit.addEventListener("pointermove",event=>activatePoint(nearestIndex(event),event));
  });
- svg.addEventListener("pointerleave",()=>{if(tooltip)tooltip.hidden=true;});
+ svg.addEventListener("pointerleave",()=>{
+  svg.classList.remove("is-hovering");
+  svg.querySelectorAll(".is-active-point").forEach(el=>el.classList.remove("is-active-point"));
+  if(tooltip){
+   tooltip.classList.remove("is-visible");
+   window.setTimeout(()=>{if(!svg.matches(":hover"))tooltip.hidden=true;},190);
+  }
+ });
  document.getElementById("mockChartCount").textContent=`${data.length} ${data.length===1?"test":"tests"} shown`;
 }
 
